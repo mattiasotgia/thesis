@@ -1,0 +1,54 @@
+% !TEX TS-program = lualatex
+
+\documentclass[11pt]{scrbook}
+\input{0_preamble/preamble}
+
+\input{0_preamble/1_definitions}
+
+\usepackage[
+    colorinlistoftodos,
+    textsize=footnotesize,
+    linecolor=orange!50!yellow,
+    bordercolor=white, 
+    backgroundcolor=white!50!yellow,
+    format=sffamily
+]{todonotes}
+\todostyle{red}{linecolor=Red,bordercolor=white, backgroundcolor=white!50!Red}
+\todostyle{green}{linecolor=Green,bordercolor=white, backgroundcolor=white!50!Green}
+\usepackage[normalem]{ulem}
+
+\usepackage{lineno} 
+\newif\ifdraft
+\drafttrue %%> Change to \draftfalse to remove draft in titlepage
+
+\linespread{1.25}
+
+\begin{document}
+
+\title{Dedicated study of the automatic event reconstruction in the ICARUS experiment}
+\input{2_frontmatter/0_titlepage}
+
+\cleardoublepage
+
+\thispagestyle{empty}
+
+\cleardoublepage
+
+\input{2_frontmatter/1_abstract}
+
+\frontmatter
+% \input{2_frontmatter/1_acknowledgment}
+\tableofcontents
+
+
+\mainmatter
+\input{3_mainmatter/0_introduction}
+\input{3_mainmatter/1_physics_bkg}
+\input{3_mainmatter/2_ICARUS}
+\input{3_mainmatter/3_pandora_reconstruction_in_TPC}
+
+\bibliographystyle{5_bsts/JHEP}
+% \bibliographystyle{5_bsts/spbasic}
+\bibliography{4_references/references, 4_references/bibsets}
+
+\end{document}

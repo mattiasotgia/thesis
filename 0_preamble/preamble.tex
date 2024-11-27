@@ -1,0 +1,220 @@
+% !TEX root = ../main.tex
+\KOMAoptions{
+    headings=standardclasses,
+    % headings=small,
+    bibliography=totoc,
+    % chapterprefix=true,
+    % twoside=semi,
+    % open=any,
+    toc=indentunnumbered,
+    usegeometry
+}
+
+\let\ifstr\Ifstr
+
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[babel=true]{microtype}
+
+\usepackage[top=3cm,bottom=5cm, inner=2.5cm,outer=4.5cm, marginpar=3.5cm]{geometry}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{siunitx}
+\usepackage{physics}
+
+\usepackage{fontspec}
+\setsansfont{Arial}
+\setmonofont{iMWritingMono Nerd Font Mono}
+\usepackage[varvw]{newtx}
+
+\usepackage[hidelinks,pagebackref=true]{hyperref}
+\usepackage[automark]{scrlayer-scrpage}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{marginnote}
+\usepackage[some]{background}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usepackage[numbers, sort&compress]{natbib}
+\usepackage[american, useregional]{datetime2}
+\usepackage{lastpage}
+\usepackage[figure,table]{totalcount}
+
+\usepackage{lipsum}
+
+
+% Pagestcyle
+\pagestyle{scrheadings}
+\lehead{\thepage \qquad \leftmark}
+\rohead{\rightmark \qquad \thepage}
+% \ohead{\thepage}
+\ofoot{}
+
+
+% Hyperref setup, hidelinks in definition.
+\hypersetup{
+    pdfauthor={M Sotgia <s4942225@studenti.unige.it>},
+    pdfcreator={Latex/UNIGE (\DTMnow)},
+    pdftitle={},
+    pdfsubject={}
+}
+
+% SIUNITX
+\sisetup{
+    per-mode=symbol,
+    separate-uncertainty=true
+}
+
+% Table of contents style
+\RedeclareSectionCommands[%
+  toclinefill={,\qquad},%
+  tocraggedpagenumber,%
+  tocpagenumberbox=\mbox,
+]{part,chapter,section, subsection, subsubsection}
+
+% \RedeclareSectionCommands[
+%     prefixfont=\normalfont
+% ]{chapter}
+
+\RedeclareSectionCommands[%
+    tocdynindent,
+    tocindentfollows=chapter
+]{section}
+
+\RedeclareSectionCommands[%
+    tocdynindent,
+    tocindentfollows=section
+]{subsection}
+
+\RedeclareSectionCommands[%
+    tocdynindent,
+    tocindentfollows=subsection
+]{subsubsection}
+
+\addtokomafont{chapterentry}{\mdseries}
+\DeclareTOCStyleEntry[
+  entrynumberformat=\textbf,
+  dynnumwidth
+]{chapter}{chapter}
+\let\oldaddchaptertocentry\addchaptertocentry
+\renewcommand{\addchaptertocentry}[2]{%
+    \ifstr{#1}{}{%
+        \oldaddchaptertocentry{#1}{#2}}{%
+        \oldaddchaptertocentry{\chapapp{} #1}{#2}%
+}}
+
+% Counter on section, chapter detached, figures, equations, tables on section
+% \counterwithout{section}{chapter}
+% % \counterwithin{equation}{section}
+% \counterwithout{equation}{chapter}
+% % \counterwithin {figure}{section}
+% \counterwithout{figure}{chapter}
+% \counterwithin{table}{section}
+
+% update \appendix definition
+\let\oldappendix\appendix
+\renewcommand{\appendix}{
+\oldappendix
+\counterwithin{equation}{chapter}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+}
+
+% Figures and tables style
+\setcapindent{0pt}
+% \setcapwidth{10cm}
+% \DeclareCaptionLabelFormat{uppercase}{\MakeUppercase{#1}~#2}
+\addtokomafont{captionlabel}{\bfseries}
+% \captionsetup{labelformat=uppercase}
+\renewcommand*{\captionformat}{\ }
+% \renewcommand{\floatpagefraction}{.8}%
+
+% Tikz libraries
+\usetikzlibrary{calc, angles, arrows, arrows.meta, quotes}
+\pgfplotsset{compat=1.18}
+
+% Chapter style
+% \renewcommand{\thechapter}{\Roman{chapter}}
+% \renewcommand{\thesection}{\normalfont \arabic{section}} % Workaraund
+% \addtokomafont{subsection}{\normalfont\itshape}
+% \addtokomafont{chapter}{\MakeUppercase}
+
+% Marginnotes
+% \renewcommand{\marginfont}{\sffamily\small}
+% \newcommand{\note}[1]{\marginnote{
+% \colorbox{yellow}{\begin{minipage}{\marginparwidth}
+% #1
+% \end{minipage}}
+% }}
+
+% \usepackage{showframe}
+
+% Background WM
+\backgroundsetup{
+    position={-1.5cm,-16cm},
+    color=black, opacity=1, scale=1,
+    angle=90
+}
+\SetBgContents{
+    % \hspace{0.1cm}
+    \begin{minipage}[b]{8cm}
+        % \fontfamily{ptm}\selectfont
+        UNIGE / FNAL / THESIS-\the\year-\the\month\\
+        \DTMNow\
+        (\pageref{LastPage} pp, \totalfigures\ figs.)
+    \end{minipage}\includegraphics[height=1cm]{6_figures/FNAL/FNAL-Logo-Black}
+}
+
+% bibliography pageref
+
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{
+    \color{gray}
+    \ifcase #1 (Not cited.)%
+          \or$\to$ p. #2%
+          \else$\to$ pp. #2%
+    \fi%
+}
+
+\renewcommand\bibnumfmt[1]{#1.}
+\urlstyle{sf}
+
+% dictum redefinitions
+% \setkomafont{dictum}{\normalfont}
+\renewcommand*\dictumwidth{0.45\linewidth}
+
+% Title and other strong commands definitions
+
+\DeclareRobustCommand\title[1]{
+\gdef\@title{#1}
+}
+
+\usepackage[Lenny]{fncychap}
+
+% \ChNameVar{\fontsize{14}{16}\usefont{OT1}{phv}{m}{n}\selectfont}
+\ChNameVar{\fontsize{14}{16}\selectfont\sffamily}
+\ChNumVar{\fontsize{60}{62}\usefont{OT1}{ptm}{m}{n}\selectfont}
+\ChTitleVar{\Huge\rmfamily}
+
+\newenvironment{abstract}
+    {%
+    \cleardoublepage
+    \phantom{.}\par%
+    \vfill\par%
+    \begin{center}
+    {\bfseries Abstract}
+    \end{center}
+    }
+    {%
+    \par%
+    \vfill\vfill\phantom{.}
+    }
