@@ -1,6 +1,6 @@
-% !TEX TS-program = lualatex
+% !TEX TS-program = lualatexmk
 
-\documentclass[11pt]{scrbook}
+\documentclass[10pt, b5paper]{scrbook}
 \input{0_preamble/preamble}
 
 \input{0_preamble/1_definitions}
@@ -16,12 +16,21 @@
 \todostyle{red}{linecolor=Red,bordercolor=white, backgroundcolor=white!50!Red}
 \todostyle{green}{linecolor=Green,bordercolor=white, backgroundcolor=white!50!Green}
 \usepackage[normalem]{ulem}
+% \definecolor{chaptergrey}{rgb}{0, 0.2980392157, 0.5921568627} %FNAL Blue
+% \definecolor{chaptergrey}{rgb}{0, 0.4862745098, 0.3450980392} %DIFI Green
 
-\usepackage{lineno} 
-\newif\ifdraft
+% \draftfalse
 \drafttrue %%> Change to \draftfalse to remove draft in titlepage
 
+\ifdraft
+\usepackage[displaymath, mathlines, switch*]{lineno}
+\linenumbers
+\fi
+
 \linespread{1.25}
+
+\usepackage[pazoGreek]{heppennames2}
+% \usepackage{ptdr-definitions}
 
 \begin{document}
 
@@ -47,8 +56,14 @@
 \input{3_mainmatter/2_ICARUS}
 \input{3_mainmatter/3_pandora_reconstruction_in_TPC}
 
-\bibliographystyle{5_bsts/JHEP}
+% \backmatter
+\appendix
+
+\input{3_mainmatter/z1_cheating_mva}
+
+% \bibliographystyle{5_bsts/JHEP}
 % \bibliographystyle{5_bsts/spbasic}
-\bibliography{4_references/references, 4_references/bibsets}
+\bibliographystyle{5_bsts/utphys}
+\bibliography{4_references/references, 4_references/bibsets, 4_references/Theses}
 
 \end{document}

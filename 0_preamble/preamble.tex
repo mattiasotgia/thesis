@@ -1,6 +1,6 @@
 % !TEX root = ../main.tex
 \KOMAoptions{
-    headings=standardclasses,
+    % headings=standardclasses,
     % headings=small,
     bibliography=totoc,
     % chapterprefix=true,
@@ -18,21 +18,27 @@
 
 \usepackage[babel=true]{microtype}
 
-\usepackage[top=3cm,bottom=5cm, inner=2.5cm,outer=4.5cm, marginpar=3.5cm]{geometry}
+% \usepackage[top=3cm,bottom=5cm, inner=2.5cm,outer=4.5cm, marginpar=3.5cm]{geometry}
+\usepackage[bottom=3.5cm, inner=2.5cm,outer=3.5cm, marginpar=3.5cm]{geometry}
+
 
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{siunitx}
 \usepackage{physics}
 
-\usepackage{fontspec}
-\setsansfont{Arial}
-\setmonofont{iMWritingMono Nerd Font Mono}
-\usepackage[varvw]{newtx}
+% \usepackage{fontspec}
+% \setsansfont{Arial}
+% \setmonofont{iMWritingMono Nerd Font Mono}
+\usepackage{helvet}
+\usepackage{mathpazo}
 
-\usepackage[hidelinks,pagebackref=true]{hyperref}
+% \usepackage[varvw]{newtx}
+
+\usepackage[pagebackref=true]{hyperref}
 \usepackage[automark]{scrlayer-scrpage}
 
 \usepackage[dvipsnames]{xcolor}
+
 \usepackage{graphicx}
 \usepackage{marginnote}
 \usepackage[some]{background}
@@ -62,10 +68,10 @@
 
 % Hyperref setup, hidelinks in definition.
 \hypersetup{
-    pdfauthor={M Sotgia <s4942225@studenti.unige.it>},
+    pdfauthor={M Sotgia <mattia.sotgia@ge.infn.it>},
     pdfcreator={Latex/UNIGE (\DTMnow)},
-    pdftitle={},
-    pdfsubject={}
+    pdftitle={Opening Pandora's box},
+    pdfsubject={A dedicated study of the automatic event reconstruction in the ICARUS experiment}
 }
 
 % SIUNITX
@@ -102,7 +108,7 @@
 
 \addtokomafont{chapterentry}{\mdseries}
 \DeclareTOCStyleEntry[
-  entrynumberformat=\textbf,
+  entrynumberformat=\bfseries\sffamily,
   dynnumwidth
 ]{chapter}{chapter}
 \let\oldaddchaptertocentry\addchaptertocentry
@@ -160,14 +166,15 @@
 
 % Background WM
 \backgroundsetup{
-    position={-1.5cm,-16cm},
+    % position={-1.5cm,-16cm},
+    position={-1.5cm,-13cm},
     color=black, opacity=1, scale=1,
     angle=90
 }
 \SetBgContents{
     % \hspace{0.1cm}
     \begin{minipage}[b]{8cm}
-        % \fontfamily{ptm}\selectfont
+        \fontfamily{ptm}\selectfont
         UNIGE / FNAL / THESIS-\the\year-\the\month\\
         \DTMNow\
         (\pageref{LastPage} pp, \totalfigures\ figs.)
@@ -178,7 +185,8 @@
 
 \renewcommand*{\backref}[1]{}
 \renewcommand*{\backrefalt}[4]{
-    \color{gray}
+    % \color{gray}
+    \color{chaptergrey}
     \ifcase #1 (Not cited.)%
           \or$\to$ p. #2%
           \else$\to$ pp. #2%
@@ -198,12 +206,26 @@
 \gdef\@title{#1}
 }
 
-\usepackage[Lenny]{fncychap}
+% \usepackage[Lenny]{fncychap}
+\usepackage[utopia]{quotchap}
 
-% \ChNameVar{\fontsize{14}{16}\usefont{OT1}{phv}{m}{n}\selectfont}
-\ChNameVar{\fontsize{14}{16}\selectfont\sffamily}
-\ChNumVar{\fontsize{60}{62}\usefont{OT1}{ptm}{m}{n}\selectfont}
-\ChTitleVar{\Huge\rmfamily}
+\makeatletter
+\renewcommand*{\sectfont}{\bfseries}
+\renewcommand*{\chapnumfont}{%
+% \usefont{T1}{\@defaultcnfont}{b}{n}\fontsize{130}{160}\selectfont% Default: 100/130
+\usefont{T1}{phv}{b}{n}\fontsize{100}{130}\selectfont% Default: 100/130
+\color{chaptergrey}%
+\phantom{0}% This fixes chapter w/o number
+}
+\makeatother
+\addtokomafont{chapter}{\usefont{T1}{phv}{b}{n}\selectfont}
+\addtokomafont{section}{\sffamily}
+\addtokomafont{subsection}{\sffamily}
+\addtokomafont{subsubsection}{\sffamily}
+
+\definecolor{chaptergrey}{rgb}{0.6862745098,0.1529411765,0.1843137255}
+
+\hypersetup{colorlinks, allcolors=chaptergrey}
 
 \newenvironment{abstract}
     {%
@@ -218,3 +240,39 @@
     \par%
     \vfill\vfill\phantom{.}
     }
+
+\usepackage{listings}
+    
+\definecolor{codegray}{gray}{0.9}
+\definecolor{darkblue}{rgb}{0,0,0.6}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{darkred}{rgb}{0.6,0,0}
+
+%% LISTINGS (ahaahha there ill be a lot :)
+\lstdefinestyle{xmlstyle}{
+    % language=XML,
+    basicstyle=\sffamily\scriptsize,
+    columns=flexible,
+    % numbers=left,
+    % numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    % numbersep=5pt,
+    % backgroundcolor=\color{codegray},
+    showspaces=false,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    morekeywords={version, encoding, type},
+    keywordstyle=\bfseries, % \color{darkblue},
+    stringstyle=\bfseries, % \color{darkred},
+    commentstyle=\itshape\color{gray}
+}
+
+\renewcommand{\labelitemi}{$\textcolor{chaptergrey}{\circ}$}
+\renewcommand{\labelitemii}{$\textcolor{chaptergrey}{\circ}$}
+\renewcommand{\labelitemiii}{$\textcolor{chaptergrey}{\circ}$}
+\renewcommand{\labelitemiv}{$\textcolor{chaptergrey}{\circ}$}
+
+% \lstset{title={\lstname}}
+
+\newif\ifdraft
