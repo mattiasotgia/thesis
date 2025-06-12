@@ -1,6 +1,6 @@
 % !TEX TS-program = lualatexmk
 
-\documentclass[10pt, b5paper]{scrbook}
+\documentclass[10pt, a4paper]{scrbook}
 \input{0_preamble/preamble}
 
 \input{0_preamble/1_definitions}
@@ -49,17 +49,22 @@
 % \input{2_frontmatter/1_acknowledgment}
 \tableofcontents
 
+\listoffigures
 
 \mainmatter
 \input{3_mainmatter/0_introduction}
 \input{3_mainmatter/1_physics_bkg}
 \input{3_mainmatter/2_ICARUS}
 \input{3_mainmatter/3_pandora_reconstruction_in_TPC}
+\input{3_mainmatter/4_validating_the_reconstruction.tex}
+\input{3_mainmatter/5_conclusions.tex}
 
 % \backmatter
 \appendix
 
-\input{3_mainmatter/z1_cheating_mva}
+\input{3_mainmatter/z0_glossary.tex}
+
+% \input{3_mainmatter/z1_cheating_mva}
 
 % \bibliographystyle{5_bsts/JHEP}
 % \bibliographystyle{5_bsts/spbasic}

@@ -1,0 +1,9 @@
+% !TEX root=../main.tex
+
+\chapter{Cheating the track/shower MVA module}
+
+Pandora developers already provide a valid module that cheat the true information for the track/shower classification stage. This fills the PFO metadata with the correct pdg, i.e. assigns pdg $= \pm 13$ \emph{iff} the particle is \PGmpm; 
+
+For the analysis performed in this work the 
+
+\lstinputlisting[style=xmlstyle, language=XML]{7_listings/PandoraSettings_Neutrino_cMva.xml}

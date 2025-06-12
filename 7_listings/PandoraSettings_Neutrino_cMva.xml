@@ -1,0 +1,27 @@
+<pandora>
+  ...
+  <algorithm type = "LArCheatingMvaPfoCharacterisation">
+    <CaloHitListName>CaloHitList2D</CaloHitListName>
+    <MCParticleListName>Input</MCParticleListName>
+    <TrackPfoListName>TrackParticles3D</TrackPfoListName>
+    <ShowerPfoListName>ShowerParticles3D</ShowerPfoListName>
+    <UseThreeDInformation>true</UseThreeDInformation>
+    <PersistFeatures>true</PersistFeatures>
+    <FeatureTools>
+      <tool type = "LArThreeDLinearFitFeatureTool"/>
+      <tool type = "LArThreeDVertexDistanceFeatureTool"/>
+      <tool type = "LArThreeDPCAFeatureTool"/>
+      <tool type = "LArThreeDOpeningAngleFeatureTool"/>
+      <tool type = "LArThreeDChargeFeatureTool"/>
+      <tool type = "LArConeChargeFeatureTool"/>
+    </FeatureTools>
+    <!-- NoCharge features: features w/o W plane information -->
+    <FeatureToolsNoChargeInfo>
+      <tool type = "LArThreeDLinearFitFeatureTool"/>
+      <tool type = "LArThreeDVertexDistanceFeatureTool"/>
+      <tool type = "LArThreeDPCAFeatureTool"/>
+      <tool type = "LArThreeDOpeningAngleFeatureTool"/>
+    </FeatureToolsNoChargeInfo>
+  </algorithm>
+  ...
+</pandora>

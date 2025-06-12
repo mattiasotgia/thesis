@@ -18,11 +18,12 @@
 
 \usepackage[babel=true]{microtype}
 
-% \usepackage[top=3cm,bottom=5cm, inner=2.5cm,outer=4.5cm, marginpar=3.5cm]{geometry}
-\usepackage[bottom=3.5cm, inner=2.5cm,outer=3.5cm, marginpar=3.5cm]{geometry}
+% \usepackage[bottom=3.5cm, inner=2.5cm,outer=3.5cm, marginpar=3.5cm, includeheadfoot]{geometry} % NEL CASO b5paper
+\usepackage[bottom=3.5cm, inner=3.5cm,outer=4.5cm, marginpar=3.5cm, includeheadfoot]{geometry} % NEL CASO a4paper
 
 
 \usepackage{amsmath,amssymb,amsfonts}
+\usepackage[makeroom]{cancel}
 \usepackage{siunitx}
 \usepackage{physics}
 
@@ -49,6 +50,7 @@
 
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage{tikz-feynman}
 
 \usepackage[numbers, sort&compress]{natbib}
 \usepackage[american, useregional]{datetime2}
@@ -188,8 +190,8 @@
     % \color{gray}
     \color{chaptergrey}
     \ifcase #1 (Not cited.)%
-          \or$\to$ p. #2%
-          \else$\to$ pp. #2%
+          \or{Cited on p. #2}%
+          \else{Cited on pp. #2}%
     \fi%
 }
 
@@ -209,7 +211,7 @@
 % \usepackage[Lenny]{fncychap}
 \usepackage[utopia]{quotchap}
 
-\makeatletter
+\makeatletter 
 \renewcommand*{\sectfont}{\bfseries}
 \renewcommand*{\chapnumfont}{%
 % \usefont{T1}{\@defaultcnfont}{b}{n}\fontsize{130}{160}\selectfont% Default: 100/130
@@ -224,6 +226,8 @@
 \addtokomafont{subsubsection}{\sffamily}
 
 \definecolor{chaptergrey}{rgb}{0.6862745098,0.1529411765,0.1843137255}
+\colorlet{chaptergrey}{PineGreen}
+
 
 \hypersetup{colorlinks, allcolors=chaptergrey}
 
