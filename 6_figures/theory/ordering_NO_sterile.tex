@@ -1,0 +1,102 @@
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[
+        nue/.style={fill=Red!70!white},
+        numu/.style={fill=ForestGreen!65!white},
+        nutau/.style={fill=MidnightBlue!65!white},
+        nusterile/.style={fill=Gray!35!white},
+        scale=0.75
+    ]
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%% NORMAL MASS ORDERING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \node[text centered] at (-3,4.5) {Normal ordering};
+        \node[text centered] at (-0.25,4.5) {$\delta_\mathrm{CP}$};
+
+        \node[text centered] at (-5.5, 3.75)  {$\PGn_4$};
+        \node[text centered] at (-5.5, -.75)  {$\PGn_3$};
+        \node[text centered] at (-5.5, -3.75) {$\PGn_2$};
+        \node[text centered] at (-5.5, -4.75) {$\PGn_1$};
+
+        \fill[nusterile] (-1,4) -- (-5,4) -- (-5,3.5) -- (-1,3.5) -- cycle;
+        \fill[nue] (-.9,4) -- (-1,4) -- (-1,3.5) -- (-.9,3.5) -- cycle;
+        \fill[numu] (-.825,4) -- (-.9,4) -- (-.9,3.5) -- (-.825,3.5) -- cycle;
+        \fill[nutau] (-.75,4) -- (-.825,4) -- (-.825,3.5) -- (-.75,3.5) -- cycle;
+
+        \draw[black] (-5,4) rectangle (-0.75,3.5);
+
+        \node[text centered] at (-.25, 4) {\small$\pi$};
+        \node[text centered] at (-.25, 3.5) {\small 0};
+        
+        \fill[nusterile] (-0.75,-.5) -- (-1,-.5) -- (-1,-1) -- (-.75,-1) -- cycle;
+        \fill[nue] (-5,-.5) -- (-4.75,-.5) -- (-4.75,-1) -- (-5,-1) -- cycle;
+        \fill[numu] (-4.75,-.5) -- (-3.,-.5) -- (-3.,-1) -- (-4.75,-1) -- cycle;
+        \fill[nutau] (-3.,-.5) -- (-1,-.5) -- (-1,-1) -- (-3.,-1) -- cycle;
+
+        \draw[black] (-5,-.5) rectangle (-.75,-1);
+
+        \node[text centered] at (-.25, -.5) {\small$\pi$};
+        \node[text centered] at (-.25, -1) {\small 0};
+
+        \fill[nusterile] (-0.75,-3.5) -- (-1,-3.5) -- (-1,-4) -- (-.75,-4) -- cycle;
+        \fill[nue] (-5,-3.5) -- (-4.,-3.5) -- (-4.,-4) -- (-5,-4) -- cycle;
+        \fill[numu] (-4.,-3.5) -- (-2.15,-3.5) -- (-3,-4) -- (-4,-4) -- cycle;
+        \fill[nutau] (-2.15,-3.5) -- (-1,-3.5) -- (-1,-4) -- (-3.,-4) -- cycle;
+
+        \draw[black] (-5,-3.5) rectangle (-.75,-4);
+
+        \node[text centered] at (-.25, -3.5) {\small$\pi$};
+        \node[text centered] at (-.25, -4) {\small 0};
+
+        \fill[nusterile] (-0.75,-4.5) -- (-1,-4.5) -- (-1,-5) -- (-.75,-5) -- cycle;
+        \fill[nue] (-5,-4.5) -- (-2.575,-4.5) -- (-2.575,-5) -- (-5,-5) -- cycle;
+        \fill[numu] (-2.575,-4.5) -- (-2.2,-4.5) -- (-1.25,-5) -- (-2.575,-5) -- cycle;
+        \fill[nutau] (-2.2,-4.5) -- (-1,-4.5) -- (-1,-5) -- (-1.25,-5) -- cycle;
+
+        \draw[black] (-5,-4.5) rectangle (-.75,-5);
+
+        \node[text centered] at (-.25, -4.5) {\small$\pi$};
+        \node[text centered] at (-.25, -5) {\small 0};
+
+        \draw[gray, line width=1mm] (-6.25, -4.85) -- (-6.25, -3.65);
+        \draw[gray, line width=1mm] (-6, -.65) -- (-6, -3.85);
+
+        \draw[gray, line width=1mm] (-6.25, -0.85) -- (-6.25, 0.65);
+        \draw[gray, line width=1mm, dotted] (-6.25, 0.65) -- (-6.25, 2.15);
+        \draw[gray, line width=1mm] (-6.25, 2.15) -- (-6.25, 3.65);
+
+        \node[] at (-8.35, -4.25) {
+            \begin{minipage}{2cm}
+                \raggedleft
+                Solar\\
+                $\sim \SI{e-5}{eV^2}$
+            \end{minipage}
+        };
+
+        \node[] at (-8.35, -2.25) {
+            \begin{minipage}{2cm}
+                \raggedleft
+                Atmospheric\\
+                $\sim \SI{e-3}{eV^2}$
+            \end{minipage}
+        };
+
+        \node[] at (-8.35, 1.5) {
+            \begin{minipage}{2cm}
+                \raggedleft
+                Sterile\\
+                $\sim \SI{1}{eV^2}$
+            \end{minipage}
+        };
+
+        \draw[-*, Red!65!black, shorten >=-2pt] (-4, -5.5) node[below, text centered] {$\PGne$} -- (-4, -5);
+        \draw[-*, ForestGreen!65!black, shorten >=-2pt] (-2, -5.5) node[below, text centered] {$\PGnGm$} -- (-2, -5);
+        \draw[-*, MidnightBlue!65!black, shorten >=-2pt] (-1.15, -5.5) node[below, text centered] {$\PGnGt$} -- (-1.15, -5);
+
+        \draw[-*, Gray!65!black, shorten >=-2pt] (-.85, -3) node[above, text centered] {$\PGns$} -- (-.85, -3.5);
+    \end{tikzpicture}
+    \caption[Neutrino mass ordering with the sterile state]{Representation of mass ordering, mixing, and splitting in the $3+1$ scenario. Normal ordering is assumed for the other three massive states. Expanded from \cite{menaUnifiedGraphicalSummary2004}.}
+    \label{fig:ordering_NO_sterile}
+\end{figure}

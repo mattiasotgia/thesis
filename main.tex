@@ -16,10 +16,9 @@
 \todostyle{red}{linecolor=Red,bordercolor=white, backgroundcolor=white!50!Red}
 \todostyle{green}{linecolor=Green,bordercolor=white, backgroundcolor=white!50!Green}
 \usepackage[normalem]{ulem}
-% \definecolor{chaptergrey}{rgb}{0, 0.2980392157, 0.5921568627} %FNAL Blue
-% \definecolor{chaptergrey}{rgb}{0, 0.4862745098, 0.3450980392} %DIFI Green
 
-% \draftfalse
+% \usepackage{fixmetodonotes}
+
 \drafttrue %%> Change to \draftfalse to remove draft in titlepage
 
 \ifdraft
@@ -34,18 +33,22 @@
 
 \begin{document}
 
-\title{Dedicated study of the automatic event reconstruction in the ICARUS experiment}
-\input{2_frontmatter/0_titlepage}
+% \title{Dedicated study of the automatic event reconstruction in the ICARUS experiment}
+% \input{2_frontmatter/0_titlepage_alt}
 
-\cleardoublepage
+% \cleardoublepage
 
-\thispagestyle{empty}
+% \input{2_frontmatter/0_titlepage}
 
-\cleardoublepage
+% \cleardoublepage
 
-\input{2_frontmatter/1_abstract}
+% \thispagestyle{empty}
+% \dictum[Wolfgang Pauli]{I have done something very bad today by proposing a particle that cannot be detected; it is something no theorist should ever do.}
+% \cleardoublepage
 
-\frontmatter
+% \input{2_frontmatter/1_abstract}
+
+% \frontmatter
 % \input{2_frontmatter/1_acknowledgment}
 \tableofcontents
 
@@ -55,9 +58,9 @@
 \input{3_mainmatter/0_introduction}
 \input{3_mainmatter/1_physics_bkg}
 \input{3_mainmatter/2_ICARUS}
-\input{3_mainmatter/3_pandora_reconstruction_in_TPC}
-\input{3_mainmatter/4_validating_the_reconstruction.tex}
-\input{3_mainmatter/5_conclusions.tex}
+% \input{3_mainmatter/3_pandora_reconstruction_in_TPC}
+% \input{3_mainmatter/4_validating_the_reconstruction.tex}
+% \input{3_mainmatter/5_conclusions.tex}
 
 % \backmatter
 \appendix
@@ -66,8 +69,6 @@
 
 % \input{3_mainmatter/z1_cheating_mva}
 
-% \bibliographystyle{5_bsts/JHEP}
-% \bibliographystyle{5_bsts/spbasic}
 \bibliographystyle{5_bsts/utphys}
 \bibliography{4_references/references, 4_references/bibsets, 4_references/Theses}
 

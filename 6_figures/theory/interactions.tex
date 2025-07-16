@@ -1,0 +1,169 @@
+\begin{figure}
+    \centering
+
+    \subfloat[CC QE]{
+        \begin{tikzpicture}
+            \begin{feynman}
+                \vertex (numu) {$\PGnGm$};
+                \vertex[right=3cm of numu] (mu) {$\PGm$};
+                \vertex[below right=.75cm and 1.5cm of numu] (v0);
+                \vertex[blob, below right=1.cm and .75cm of v0] (v1) {};
+                \vertex[below left=.75cm and 1.5cm of v1] (neutron) {$\Pn$};
+                \vertex[below right=.75cm and 1.5cm of v1] (proton) {$\Pp$}; 
+    
+                \diagram*{
+                    (numu) -- [fermion] (v0) -- [fermion] (mu),
+                    (v0) -- [boson, edge label'=$\PWp$] (v1),
+                    (neutron) -- [fermion] (v1) -- [fermion] (proton)
+                };
+            \end{feynman}
+        \end{tikzpicture}
+        \label{fig:interaction_CCQE}
+    }\hspace{4em}
+    \subfloat[NC El.]{
+        \begin{tikzpicture}
+            \begin{feynman}
+                \vertex (numu) {$\PGnGm$};
+                \vertex[right=3cm of numu] (mu) {$\PGnGm$};
+                \vertex[below right=.75cm and 1.5cm of numu] (v0);
+                \vertex[blob, below right=1.cm and .75cm of v0] (v1) {};
+                \vertex[below left=.75cm and 1.5cm of v1] (neutron) {$\Pp$};
+                \vertex[below right=.75cm and 1.5cm of v1] (proton) {$\Pp$}; 
+    
+                \diagram*{
+                    (numu) -- [fermion] (v0) -- [fermion] (mu),
+                    (v0) -- [boson, edge label'=$\PZz$] (v1),
+                    (neutron) -- [fermion] (v1) -- [fermion] (proton)
+                };
+            \end{feynman}
+        \end{tikzpicture}
+        \label{fig:interaction_NCEl}
+    }
+
+    \subfloat[CC Res.]{
+        \begin{tikzpicture}
+            \begin{feynman}
+                \vertex (numu) {$\PGnGm$};
+                \vertex[right=3cm of numu] (mu) {$\PGm$};
+                \vertex[below right=.75cm and 1.5cm of numu] (v0);
+                \vertex[blob, below right=1.cm and .75cm of v0] (v1) {};
+                \vertex[below left=.75cm and 1.5cm of v1] (neutron) {$\Pp$};
+                \vertex[below right=.25cm and 1.25cm of v1] (DELTA1);
+                \vertex[above right=.5cm and 1.cm of DELTA1] (pi) {$\PGpp$};
+                \vertex[below right=.5cm and 1.cm of DELTA1] (proton) {$\Pp$};
+    
+                \diagram*{
+                    (numu) -- [fermion] (v0) -- [fermion] (mu),
+                    (v0) -- [boson, edge label'=$\PWp$] (v1),
+                    (neutron) -- [fermion] (v1) -- [fermion, edge label=$\PGDpp$] (DELTA1),
+                    (DELTA1) -- [fermion] (pi),
+                    (DELTA1) -- [fermion] (proton)
+                };
+            \end{feynman}
+        \end{tikzpicture}
+        \label{fig:interaction_CCRes}
+    }\hspace{2em}
+    \subfloat[NC Res.]{
+        \begin{tikzpicture}
+            \begin{feynman}
+                \vertex (numu) {$\PGnGm$};
+                \vertex[right=3cm of numu] (mu) {$\PGnGm$};
+                \vertex[below right=.75cm and 1.5cm of numu] (v0);
+                \vertex[blob, below right=1.cm and .75cm of v0] (v1) {};
+                \vertex[below left=.75cm and 1.5cm of v1] (neutron) {$\Pp$};
+                \vertex[below right=.25cm and 1.25cm of v1] (DELTA1);
+                \vertex[above right=.5cm and 1.cm of DELTA1] (pi) {$\PGpp$};
+                \vertex[below right=.5cm and 1.cm of DELTA1] (proton) {$\Pn$};
+    
+                \diagram*{
+                    (numu) -- [fermion] (v0) -- [fermion] (mu),
+                    (v0) -- [boson, edge label'=$\PZz$] (v1),
+                    (neutron) -- [fermion] (v1) -- [fermion, edge label=$\PGDp$] (DELTA1),
+                    (DELTA1) -- [fermion] (pi),
+                    (DELTA1) -- [fermion] (proton)
+                };
+            \end{feynman}
+        \end{tikzpicture}
+        \label{fig:interaction_NCRes}
+    }
+
+    \subfloat[CC DIS]{
+        \begin{tikzpicture}
+            \begin{feynman}
+                \vertex (numu) {$\PGnGm$};
+                \vertex[right=3cm of numu] (mu) {$\PGm$};
+                \vertex[below right=.75cm and 1.5cm of numu] (v0);
+                \vertex[blob, below right=1.cm and .75cm of v0] (v1) {};
+                \vertex[below left=.75cm and 1.5cm of v1] (neutron) {$N^{(0)}$};
+                \vertex[below right=.5cm and 1.45cm of v1] (p0); 
+                \vertex[below right=.25cm and 1.5cm of v1] (p1); 
+                \vertex[right=2.cm of v1] (p2) {$X^{(+)}$}; 
+                \vertex[above right=.25cm and 1.5cm of v1] (p3); 
+                \vertex[above right=.5cm and 1.45cm of v1] (p4);
+    
+                \diagram*{
+                    (numu) -- [fermion] (v0) -- [fermion] (mu),
+                    (v0) -- [boson, edge label'=$\PWp$] (v1),
+                    (neutron) -- [fermion] (v1) -- {(p0), (p1), (p2), (p3), (p4)}
+                };
+            \end{feynman}
+        \end{tikzpicture}
+        \label{fig:interaction_CCDIS}
+    }\hspace{4em}
+    \subfloat[NC DIS]{
+        \begin{tikzpicture}
+            \begin{feynman}
+                \vertex (numu) {$\PGnGm$};
+                \vertex[right=3cm of numu] (mu) {$\PGnGm$};
+                \vertex[below right=.75cm and 1.5cm of numu] (v0);
+                \vertex[blob, below right=1.cm and .75cm of v0] (v1) {};
+                \vertex[below left=.75cm and 1.5cm of v1] (neutron) {$N^{(0)}$};
+                \vertex[below right=.5cm and 1.45cm of v1] (p0); 
+                \vertex[below right=.25cm and 1.5cm of v1] (p1); 
+                \vertex[right=2.025cm of v1] (p2) {$Y^{(0)}$}; 
+                \vertex[above right=.25cm and 1.5cm of v1] (p3); 
+                \vertex[above right=.5cm and 1.45cm of v1] (p4); 
+    
+                \diagram*{
+                    (numu) -- [fermion] (v0) -- [fermion] (mu),
+                    (v0) -- [boson, edge label'=$\PZz$] (v1),
+                    (neutron) -- [fermion] (v1) -- {(p0), (p1), (p2), (p3), (p4)}
+                };
+            \end{feynman}
+        \end{tikzpicture}
+        \label{fig:interaction_NCDIS}
+    }
+    
+    \caption{Diagrams of some interaction topologies for neutrinos in matter}
+    \label{fig:interactions}
+\end{figure}
+
+% \begin{figure}
+%     \[
+%         \begin{tikzpicture}[baseline=(current bounding box.center)]
+%             \begin{feynman}
+%                 \vertex (numu) {$\PGnGm$};
+%                 \vertex[right=3cm of numu] (mu) {$\PGm$};
+%                 \vertex[below right=.75cm and 1.5cm of numu] (v0);
+%                 \vertex[blob, below right=1.5cm and .75cm of v0] (v1) {};
+%                 \vertex[below left=.75cm and 1.5cm of v1] (neutron) {$\Pn$};
+%                 \vertex[below right=.75cm and 1.5cm of v1] (proton) {$\Pp$}; 
+    
+%                 \diagram*{
+%                     (numu) -- [fermion] (v0) -- [fermion] (mu),
+%                     (v0) -- [boson, edge label=$\PW$] (v1),
+%                     (neutron) -- [fermion] (v1) -- [fermion] (proton)
+%                 };
+%             \end{feynman}
+%         \end{tikzpicture}
+%         \qquad\overset{q^2 \ll s}{\looongrightarrow} \qquad
+%         \feynmandiagram[baseline=(current bounding box.center), horizontal=a to b, scale=0.75]{
+%             a [particle=$\Pn$] -- [fermion] e,
+%             c [particle=$\PGne$] -- [fermion] e,
+%             e -- [fermion] b [particle=$\Pp$],
+%             e -- [fermion] d [particle=$\Pem$] 
+%         };
+%     \]
+%     \caption[The link between the Fermi four-fermion interaction and the SM diagrams]{The effect of integrating out the massive boson in the $\beta$ decay process. Neither the proton, nor the neutron are ``elementary'' particles, so their interaction with the $\PW$ boson is not as straight forward, hence the ``blob'' shape replacing the interaction vertex.}
+%     \label{fig:SM2fermi}
+% \end{figure}

@@ -1,73 +1,52 @@
 % !TEX root = ../main.tex
 \KOMAoptions{
-    % headings=standardclasses,
-    % headings=small,
+    headings=standardclasses,
     bibliography=totoc,
-    % chapterprefix=true,
-    % twoside=semi,
-    % open=any,
     toc=indentunnumbered,
     usegeometry
 }
 
+%%% FIX
 \let\ifstr\Ifstr
 
+%%% GEO
+% \usepackage[bottom=3.5cm, inner=2.5cm,outer=3.5cm, marginpar=3.5cm, includeheadfoot]{geometry} % NEL CASO b5paper
+\usepackage[bottom=3.5cm, inner=3.5cm,outer=4.5cm, marginpar=3.5cm, includeheadfoot]{geometry} % NEL CASO a4paper
+
+%% Pagestcyle
+\usepackage[automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\lehead{\thepage \qquad \leftmark}
+\rohead{\rightmark \qquad \thepage}
+\ofoot{}
+
+%%% LANGUAGE AND FONT
 \usepackage{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
 \usepackage[babel=true]{microtype}
-
-% \usepackage[bottom=3.5cm, inner=2.5cm,outer=3.5cm, marginpar=3.5cm, includeheadfoot]{geometry} % NEL CASO b5paper
-\usepackage[bottom=3.5cm, inner=3.5cm,outer=4.5cm, marginpar=3.5cm, includeheadfoot]{geometry} % NEL CASO a4paper
+\usepackage{helvet}
+\usepackage{mathpazo}
 
 
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage[makeroom]{cancel}
 \usepackage{siunitx}
 \usepackage{physics}
+% SIUNITX
+\sisetup{
+    per-mode=symbol,
+    separate-uncertainty=true,
+    range-units=single,
+    range-phrase=\text{\ to\ }
+}
 
-% \usepackage{fontspec}
-% \setsansfont{Arial}
-% \setmonofont{iMWritingMono Nerd Font Mono}
-\usepackage{helvet}
-\usepackage{mathpazo}
-
-% \usepackage[varvw]{newtx}
-
-\usepackage[pagebackref=true]{hyperref}
-\usepackage[automark]{scrlayer-scrpage}
-
-\usepackage[dvipsnames]{xcolor}
-
-\usepackage{graphicx}
-\usepackage{marginnote}
-\usepackage[some]{background}
-\usepackage{subfig}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{multirow}
-
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{tikz-feynman}
 
 \usepackage[numbers, sort&compress]{natbib}
 \usepackage[american, useregional]{datetime2}
-\usepackage{lastpage}
-\usepackage[figure,table]{totalcount}
 
-\usepackage{lipsum}
-
-
-% Pagestcyle
-\pagestyle{scrheadings}
-\lehead{\thepage \qquad \leftmark}
-\rohead{\rightmark \qquad \thepage}
-% \ohead{\thepage}
-\ofoot{}
-
-
+\usepackage[pagebackref=true]{hyperref}
 % Hyperref setup, hidelinks in definition.
 \hypersetup{
     pdfauthor={M Sotgia <mattia.sotgia@ge.infn.it>},
@@ -75,12 +54,30 @@
     pdftitle={Opening Pandora's box},
     pdfsubject={A dedicated study of the automatic event reconstruction in the ICARUS experiment}
 }
+\usepackage{lastpage}
+\usepackage[figure,table]{totalcount}
 
-% SIUNITX
-\sisetup{
-    per-mode=symbol,
-    separate-uncertainty=true
-}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{graphicx}
+\graphicspath{{thesis/6_figures/}}
+\usepackage{marginnote}
+\usepackage[some]{background}
+\usepackage{subfig}
+\usepackage{sidecap}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+
+\usepackage{rotating}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-feynman}
+% Tikz libraries
+\usetikzlibrary{calc, angles, arrows, arrows.meta, quotes}
+\pgfplotsset{compat=1.18}
+
 
 % Table of contents style
 \RedeclareSectionCommands[%
@@ -88,10 +85,6 @@
   tocraggedpagenumber,%
   tocpagenumberbox=\mbox,
 ]{part,chapter,section, subsection, subsubsection}
-
-% \RedeclareSectionCommands[
-%     prefixfont=\normalfont
-% ]{chapter}
 
 \RedeclareSectionCommands[%
     tocdynindent,
@@ -120,13 +113,6 @@
         \oldaddchaptertocentry{\chapapp{} #1}{#2}%
 }}
 
-% Counter on section, chapter detached, figures, equations, tables on section
-% \counterwithout{section}{chapter}
-% % \counterwithin{equation}{section}
-% \counterwithout{equation}{chapter}
-% % \counterwithin {figure}{section}
-% \counterwithout{figure}{chapter}
-% \counterwithin{table}{section}
 
 % update \appendix definition
 \let\oldappendix\appendix
@@ -139,16 +125,10 @@
 
 % Figures and tables style
 \setcapindent{0pt}
-% \setcapwidth{10cm}
-% \DeclareCaptionLabelFormat{uppercase}{\MakeUppercase{#1}~#2}
 \addtokomafont{captionlabel}{\bfseries}
-% \captionsetup{labelformat=uppercase}
 \renewcommand*{\captionformat}{\ }
-% \renewcommand{\floatpagefraction}{.8}%
 
-% Tikz libraries
-\usetikzlibrary{calc, angles, arrows, arrows.meta, quotes}
-\pgfplotsset{compat=1.18}
+
 
 % Chapter style
 % \renewcommand{\thechapter}{\Roman{chapter}}
@@ -221,13 +201,14 @@
 }
 \makeatother
 \addtokomafont{chapter}{\usefont{T1}{phv}{b}{n}\selectfont}
-\addtokomafont{section}{\sffamily}
-\addtokomafont{subsection}{\sffamily}
-\addtokomafont{subsubsection}{\sffamily}
+% \addtokomafont{section}{\sffamily}
+% \addtokomafont{subsection}{\sffamily}
+% \addtokomafont{subsubsection}{\sffamily}
 
 \definecolor{chaptergrey}{rgb}{0.6862745098,0.1529411765,0.1843137255}
 \colorlet{chaptergrey}{PineGreen}
-
+\definecolor{chaptergrey}{rgb}{0.2980392157,0.5490196078,0.168627451} % 76, 140, 43
+\colorlet{chaptergrey}{NavyBlue}
 
 \hypersetup{colorlinks, allcolors=chaptergrey}
 
@@ -280,3 +261,17 @@
 % \lstset{title={\lstname}}
 
 \newif\ifdraft
+\draftfalse
+
+
+\usepackage{eso-pic}
+\usepackage{duerer}
+
+\renewcommand{\floatpagefraction}{.9}%
+
+
+\newenvironment{abbreviations}[1][.5em]{
+\par\vspace{#1}\noindent\begin{tabular}{@{}>{\bfseries}p{0.2\linewidth}@{\hspace{0.025\linewidth}}p{0.775\linewidth}@{}}
+}{
+\end{tabular}
+}

@@ -1,3 +1,13 @@
 % !TEX root = ../main.tex
 \def\mboone{mBooNE}
 \def\uboone{\textmu BooNE}
+
+
+\DeclareRobustCommand{\looongrightarrow}{%
+  \DOTSB\relbar\joinrel\relbar\joinrel\relbar\joinrel\rightarrow
+}
+
+\DeclareRobustCommand{\PGns}{{\HepParticle{\PGn}{\!s}{}}\Xspace} % sterile neutrino
+
+\usepackage{relsize}
+\newcommand{\brabar}[1]{\overset{\text{\relsize{-1}(}-\text{\relsize{-1})}}{#1}}
