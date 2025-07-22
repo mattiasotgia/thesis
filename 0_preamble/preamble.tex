@@ -195,7 +195,7 @@
 \renewcommand*{\sectfont}{\bfseries}
 \renewcommand*{\chapnumfont}{%
 % \usefont{T1}{\@defaultcnfont}{b}{n}\fontsize{130}{160}\selectfont% Default: 100/130
-\usefont{T1}{phv}{b}{n}\fontsize{100}{130}\selectfont% Default: 100/130
+\usefont{T1}{phv}{bx}{n}\fontsize{100}{130}\selectfont% Default: 100/130
 \color{chaptergrey}%
 \phantom{0}% This fixes chapter w/o number
 }
@@ -270,8 +270,9 @@
 \renewcommand{\floatpagefraction}{.9}%
 
 
+\usepackage{longtable}
 \newenvironment{abbreviations}[1][.5em]{
-\par\vspace{#1}\noindent\begin{tabular}{@{}>{\bfseries}p{0.2\linewidth}@{\hspace{0.025\linewidth}}p{0.775\linewidth}@{}}
+\par\vspace{#1}\noindent\begin{longtable}{@{}>{\bfseries}p{0.25\linewidth}@{\hspace{0.025\linewidth}}p{0.725\linewidth}@{}}
 }{
-\end{tabular}
+\end{longtable}
 }
