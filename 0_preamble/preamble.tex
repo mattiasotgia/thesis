@@ -21,11 +21,11 @@
 \ofoot{}
 
 %%% LANGUAGE AND FONT
-\usepackage{babel}
+\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
-\usepackage[babel=true]{microtype}
+% \usepackage[babel=true]{microtype}
 \usepackage{helvet}
 \usepackage{mathpazo}
 
@@ -41,7 +41,7 @@
     range-units=single,
     range-phrase=\text{\ to\ }
 }
-
+\DeclareSIPrefix\micro{\text{\textmu}}{-3}
 
 \usepackage[numbers, sort&compress]{natbib}
 \usepackage[american, useregional]{datetime2}
@@ -75,7 +75,20 @@
 \usepackage{pgfplots}
 \usepackage{tikz-feynman}
 % Tikz libraries
-\usetikzlibrary{calc, angles, arrows, arrows.meta, quotes}
+\usetikzlibrary{
+    angles, 
+    arrows, 
+    arrows.meta, 
+    backgrounds,
+    calc, 
+    decorations.pathmorphing, 
+    intersections, 
+    positioning, 
+    quotes, 
+    shapes, 
+    shapes.geometric,
+    spath3
+}
 \pgfplotsset{compat=1.18}
 
 

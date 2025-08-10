@@ -15,7 +15,7 @@ Albeit the original plan for a three-detector program \cite{acciarriProposalThre
 
 Both collect data from the common Booster Neutrino Beam (BNB); additionally, the ICARUS detector is located such that it is sensible to off-axis neutrinos coming from the Neutrino at the Main Injector (NuMI) beam. 
 
-ICARUS is the far detector for the SBN program, employing an active mass of \SI{476}{\tonne} of liquid argon (LAr), at a distance of \SI{600}{\meter} from the neutrino source; its position was chosen so as to maximise the oscillation probability. The ICARUS detector started its data taking independently from the SBN program in June of 2022, after the initial commissioning phase. It has now finished the fourth data collection campaign, collecting $\sim \SI{7.54e20}{POT}$ (proton-on-target), corresponding to about \num{e6} neutrino events.
+ICARUS is the far detector for the SBN programme, employing an active mass of \SI{476}{\tonne} of liquid argon (LAr), at a distance of \SI{600}{\meter} from the neutrino source; its position was chosen so as to maximise the oscillation probability. The ICARUS detector started its data taking independently from the SBN program in June of 2022, after the initial commissioning phase. It has now finished the fourth data collection campaign, collecting $\sim \SI{7.54e20}{POT}$ (proton-on-target), corresponding to about \num{e6} neutrino events.
 
 At a distance of \SI{110}{\meter}, SBND is the near detector of the SBN program, with an active LAr mass of \SI{112}{\tonne}. After commissioning, it started data taking in December of 2024, joining the far detector and allowing for a precise knowledge of the neutrino flux. 
 
@@ -60,7 +60,7 @@ Recently the first physics paper by the ICARUS collaboration was published, expl
 
 The location for the SBN programme was selected to make use of the already existing accelerator infrastructure at Fermilab. \autoref{fig:accelerator_complex} shows the FNAL accelerator complex schematic overview. This complex provides a powerful beam of neutrinos using protons extracted from the Booster accelerator, core to the operation of the SBN experiment, as well as multiple other particle beams (neutrinos and muons, as well as protons) which are employed in other experiments, such as the Neutrinos at the Main Injector Beam. 
 
-The common starting point is the Linac (Linear accelerator), boosting protons up to \SI{400}{MeV} of energy (or $\sim\SI{954}{MeV}$ of momentum) using radiofrequency (RF) cavities. Accelerated protons are extracted and boosted to an energy of \SI{8}{GeV} within the Booster ring. 
+The common starting point is the Linac (linear accelerator), boosting protons up to \SI{400}{MeV} of energy (or $\sim\SI{954}{MeV}$ of momentum) using radiofrequency (RF) cavities. Accelerated protons are extracted and boosted to an energy of \SI{8}{GeV} within the Booster ring. 
 
 \begin{figure}
     \centering
@@ -76,30 +76,93 @@ From the Booster ring, a fraction of protons is extracted to be used for the Boo
     \subfloat[]{\includegraphics[trim={0 6cm 0 6cm}, width=0.5\linewidth]{thesis/6_figures/beams/BNB_flux_lar1nd.pdf}\label{fig:BNB_flux_SBND}}
     \subfloat[]{\includegraphics[trim={0 6cm 0 6cm}, width=0.5\linewidth]{thesis/6_figures/beams/BNB_flux_icarus.pdf}\label{fig:BNB_flux_ICARUS}}
 
-    \subfloat[]{\includegraphics[trim={0 0cm 0 0cm}, width=0.5\linewidth]{thesis/6_figures/beams/BNB_flux_ratio_icarus_lar1nd.pdf}\label{fig:BNB_flux_ICARUS_SBND_ratio}}
-    \caption[BNB flux predictions at the near and far detectors]{Predictions of the neutrino flux as computed by the MicroBooNE collaboration \cite{aguilar-arevaloNeutrinoFluxPrediction2009} at distances of \SI{110}{m} \ref{sub@fig:BNB_flux_SBND} and \SI{600}{m} \ref{sub@fig:BNB_flux_ICARUS} from the beryllium target, i.e., for the SBND and ICARUS detectors, respectively. \ref{sub@fig:BNB_flux_ICARUS_SBND_ratio} shows the predicted ratio of the two fluxes under the hypothesis of no sterile-mediated oscillation anomaly. }
+    % \subfloat[]{\includegraphics[trim={0 0cm 0 0cm}, width=0.5\linewidth]{thesis/6_figures/beams/BNB_flux_ratio_icarus_lar1nd.pdf}\label{fig:BNB_flux_ICARUS_SBND_ratio}}
+    \caption[BNB flux predictions at the near and far detectors]{Predictions of the neutrino flux as computed by the MicroBooNE collaboration \cite{miniboonecollaborationNeutrinoFluxPrediction2009} at distances of \SI{110}{m} \ref{sub@fig:BNB_flux_SBND} and \SI{600}{m} \ref{sub@fig:BNB_flux_ICARUS} from the beryllium target, i.e., for the SBND and ICARUS detectors, respectively. }
+    % \ref{sub@fig:BNB_flux_ICARUS_SBND_ratio} shows the predicted ratio of the two fluxes under the hypothesis of no sterile-mediated oscillation anomaly. }
     \label{fig:BNB_flux}
 \end{figure}
 
-\paragraph{Booster Neutrino Beam} Protons accelerated up to \SI{8}{GeV} inside the Booster ring are extracted in groups of 81 bunches, each wide $\sim\SI{2}{ns}$ and \SI{19}{ns} apart. The repetition rate for the extraction, mainly limited by the focusing horn power supply, is of \SI{5}{\hertz}. Each pulse collides \SI{5e12}{p} onto a beryllium target. The target is embedded within a pulsed electromagnet (the ``horn'') that produces a toroidal magnetic field to focus positive secondary particles and defocus negative secondary particles emerging from proton-beryllium interactions. 
+\paragraph{Booster Neutrino Beam} Protons accelerated up to \SI{8}{GeV} inside the Booster ring are extracted in groups of 81 bunches, each wide $\sim\SI{2}{ns}$ and \SI{19}{ns} apart. The repetition rate for the extraction, mainly limited by the focusing horn power supply, is of \SI{5}{\hertz}. Each pulse collides \SI{5e12}{p} onto a beryllium target. The target is embedded within a pulsed electromagnet (the ``horn'') that produces a toroidal magnetic field to focus positive secondary particles and defocus negative secondary particles emerging from proton-beryllium interactions. Charged mesons, which constitute the majority of the secondary particles emerging from $\Pp$-Be interaction, decay in a 50-meter-long decay region. Within the decay region, charged pions undergo weak decay \begin{equation}
+    \PGppm \to \PGmpm + \brabar\PGnGm, \label{eq:pion_decay}
+\end{equation} resulting in an (anti)neutrino beam. The length of the decay pipe was chosen so as to maximise the muon (anti)neutrino content and minimise the electron (anti)neutrino content coming from the decay of secondary muons \begin{equation}
+    \PGmpm \to \Pepm + \brabar \PGnGm + \brabar \PGne \label{eq:muon_decay}
+\end{equation} at $\sim \SI{0.5}{\percent}$ level. Neutrinos produced by BNB have a most probable value for the energy at $E_\PGn\simeq \SI{700}{MeV}$, and a maximum energy around \SI{2.5}{GeV}. When the beam is in FHC (forward horn current, selecting primarily positive mesons), the beam composition is dominated by muon neutrinos $\sim\SI{93.6}{\percent}$, with neutrinos coming from pion decay and kaon decay for neutrinos with energies greater than \SI{2}{GeV}; the second major component is given by $\PAGnGm$ coming mainly from not-defocused $\PGpm$ \eqref{eq:pion_decay} and decaying muons \eqref{eq:muon_decay}; the same decay accounts for, together with neutral kaon decays, an intrinsic $\sim\SI{0.5}{\percent}$ fraction of $\PGne + \PAGne$. 
 
-\paragraph{Neutrinos at the Main Injector off-axis beam}
+A detailed study of the beam profile and composition, to allow for precise simulations, was performed by the MiniBooNE collaboration \cite{miniboonecollaborationNeutrinoFluxPrediction2009}, and experimentally verified using the Hadron Production Experiment (HARP). \autoref{fig:BNB_flux} shows the beam fractional composition as a function of the energy of the neutrino. 
 
-\subsection{Liquid Argon Time Projection Chambers}
+\paragraph{Neutrinos at the Main Injector off-axis beam} Once protons are accelerated within the Booster ring, they are then transferred inside the Main Injector ring. There protons are accelerated up to an energy of \SI{120}{GeV}. The MI circumference is roughly seven times that of the Booster ring, so it can hold up to seven entire Booster cycles in it. However, to make space for the pulse kicker rise time, only six are filled, adding up the spill time to \SI{9.5}{\micro\second}: in such time window, NuMI is able to provide a flux of \SI{6.5e13}{POT}. Protons are collided against a graphite target, and produced mesons decay inside a \SI{675}{\meter} long decay tunnel. As for BNB, the main decay products are \eqref{eq:pion_decay} muons and muon neutrinos, with a small fraction of muon antineutrinos and electron neutrinos. 
 
-\subsection{The SBN near detector: SBND}
+ICARUS is, however, detecting neutrinos from NuMI at an off-axis angle of $\sim\SI{5.7}{\degree}$ with respect to the detector $z$ coordinate, corresponding to BNB direction. This changes drastically the composition of the beam detected by ICARUS, as off-axis neutrinos and antineutrinos have pretty much the same flux, and overall the fraction of electron (anti)neutrinos is larger. This different beam composition, added to the fact that the energy range is higher than BNB energy range, peaking at \SI{1.5}{GeV} and extending up to \SI{4}{GeV}, allows NuMI to be crucial for ICARUS operations: higher energies overlap better with the expected energy spectrum of future experiments, as for example the DUNE experiment, whilst a greater fraction of electron neutrinos allows for the study of both muon- and electron-neutrino argon interaction cross-sections. Additionally, off-axis detection is core for BSM physics searches since it allows to probe the decay of high-energy mesons at high angles with respect to the beam direction. This is the case, for example, for the first physics paper published by the ICARUS collaboration at Fermilab, looking at di-muon final state topologies to probe the existence of long-lived particles (LLPs) in kaon decays involving a di-muon FSI, $\PK \to \PGp + \mathrm{LLP}(\to \PGm\PGm)$ \cite{icaruscollaborationSearchHiddenSector2025}. 
 
-\section{The ICARUS-T600 detector}
+\section{Liquid Argon Time Projection Chambers} 
+
+Core to the high sensitivity of the SBN programme is the shared Liquid Argon Time Projection Chamber technology between the two functionally identical near and far detectors, respectively the SBND and ICARUS detectors. The Time Projection Chamber technology was first proposed by David R. Nygren \cite{Marx:1978zz}. This technology, whose working principle is pictured in \autoref{fig:TPC}, allows both 3D reconstruction as well as calorimetric capabilities. The basic idea of a TPC detector is that of a large volume, filled with gas or liquid, acting as the interaction medium. Charged particles interact inside this volume, producing ionisation pairs. Free electrons produced in the ionisation process are drifted by means of a strong electric field from the cathode toward the anode, where the ionisation electron charge information is collected by a position-sensitive plane, providing one or more 2D projections of the interaction. The drifting time is used as the third missing component to perform 3D event reconstruction inside the detector. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth, trim={0 0 1.5cm 0}]{thesis/6_figures/detector/TPC_argon.pdf}
+    \caption[LArTPC illustration]{Illustration of the working principle of a LArTPC detector. Once neutrinos undergo weak interaction, they ionise the material, producing a large quantity of free electrons that are drifted towards the wireplanes. }
+    \label{fig:TPC}
+\end{figure}
+
+The first TPCs were built primarily for high energy physics (HEP) applications, and many are still in use for major experiments, such as the ALICE tracker \cite{Lippmann:2014lay}. Carlo Rubbia proposed using liquid argon (LAr) as an interaction target for a TPC, thereby inventing the LArTPC concept for neutrino detection \cite{rubbiaLiquidArgonTime1977}. Liquid argon is an attractive material for particle detection, especially for neutrino physics, given its physical properties \begin{enumerate}
+    \item LAr has a high density at \SI{1.39}{\gram\per\centi\meter\cubed} and a high atomic mass, which, combined with the small cross-section of $\PGn$-Ar interaction, allows for more probable detection than most gases.
+    \item Being argon a noble gas, it does not attach free electrons, allowing for a longer drift lifetime.
+    \item It has high electron mobility, $\mu\simeq \SI{320}{\centi\metre\squared\per\volt\per\second}$ for $E\simeq\SI{0.5}{\kilo\volt\per\centi\metre}$ and $T=\SI{87}{\kelvin}$, allowing for fast drift velocity $v=\mu E \simeq \SI{1.6}{\metre\per\milli\second}$.
+    \item The LAr radiation length $X_0\simeq\SI{14}{\centi\metre}$ allows mm-scale calorimetry sampling of neutrino events while having a precise discrimination between electron- and photo-induced electromagnetic showers. Photons produced at the primary vertex usually show a greater conversion gap between the interaction and the starting points of the EM shower; additionally, photo-induced electromagnetic showers display an ionisation pattern in the first centimetres of the shower development compatible with two minimum ionising particles (MIP), whereas electron-induced showers show a pattern compatible with a single MIP.
+    \item Ar is both easy and cheap to obtain. In Earth's atmosphere, it is the third most abundant gas, and can be liquified using nitrogen: this allows for great scalability required to use it for large-scale detectors.
+    \item LAr boiling temperature of \SI{87.3}{\kelvin} causes most organic impurities to be frozen out to very low levels. This increases the drift electron lifetime. 
+\end{enumerate}
+
+Inside a LArTPC, once the neutrino undergoes weak interaction, it produces secondary charged ionising particles. These ionise LAr nuclei, creating $\mathrm{Ar^+},\ \Pem$ ionisation pairs and producing scintillation light. Roughly \SI{42}{\kilo e} are produced for each MeV of deposited energy\footnote{This number is dependent on the electric field strength inside the detector. This value is the reference with a nominal electric field of $\sim \SI{500}{\volt\per\centi\meter}$.}, which are then drifted by means of an electric field toward the anode plane assembly (APA). At the anode three planes of wires are placed in sequence, referred to as induction-1 (I-1), induction-2 (I-2) and collection (C) planes --- \autoref{fig:TPC} shows the common convention, which is to call the three planes U (I-1), V (I-2) and W (C). The planes are properly voltage biased to achieve a nearly perfect transparency of the first two wire planes (I-1 and I-2) with respect to the drift electrons, enabling them to induce a charge on the first two planes and only be collected by the third plane. Given a nominal electric field inside the detector $E$, a good ``transparency'' of the successive wire planes to the drifting electrons is obtained by requiring that $E_2\geq F\times E_1$, and $E_1 \geq F \times E$ --- where $E_1$ and $E_2$ are respectively the field values in the I-1 to I-2 gap and I-2 to C gap --- with the scaling factor $F\in(1.2, 1.5)$.
+
+The three planes of wires have their wires orientated at different angles to be able to  collect different ``projections'' of the same interaction happening inside the detector. Using this information, it is possible, in the reconstruction stage, to obtain a $\mathcal O(\si{mm^2})$-scale $(y,z)$ image of the interaction. The third $x$ coordinate is recovered using the timing information. In fact, when charged particles cross LAr, aside from creating ionisation pairs, they produce scintillation light, which constitutes a prompt signal used to assign the $t_0$ information. This way, the missing coordinate is reconstructed by comparing the time at which the electron is recorded on the wire with the prompt scintillation reference time $t_0$, and knowing the drift velocity of ionisation electrons inside LAr, $x = v_\mathrm{d}\times (t - t_0)$. 
+
+Contributing to the formation of scintillation light within LAr are two processes, pictured in the inset of \autoref{fig:TPC} \begin{itemize}
+    \item excitation of Ar followed by the formation of the excimer state $\mathrm{Ar_2^*}$, which decay with the production of scintillation photons, \begin{equation}
+        \mathrm{Ar^* + Ar} \to \mathrm{Ar_2^*} \to \mathrm{2Ar}+\PGg;
+    \end{equation}
+    \item recombination of ionized argon atoms with a free electron, especially frequent with clouds of $\Pem$ around ionized $\mathrm{Ar^+}$ nuclei, \begin{equation}
+        \mathrm{Ar^++Ar} \to \mathrm{Ar_2^+}\Pem \to \mathrm{Ar_2^*} \to \mathrm{2Ar}+\PGg;
+    \end{equation}
+\end{itemize}
+
+These two processes combined produce \num{20000} monochromatic vacuum ultraviolet (VUV) photons per MeV of deposited energy, with a wavelength of $\lambda = \SI{128}{\nano\metre}$. This light presents two components, one so-called ``fast'', with a characteristic time $\tau\sim\SI{6}{\nano\second}$, and one ``slow'', $\tau\sim\SI{1.5}{\micro\second}$ components. Scintillation light is crucial, as already mentioned, for precise determination of the global timing required to reconstruct the missing coordinate in the 3-dimensional interaction from the 2-dimensional ``views''. Additionally, as I will briefly discuss later on, scintillation light is core for double-checking the $(y,z)$ positioning of the interaction, providing the so-called ``light barycenter''. 
+
+It should be noted, however, that aside from all the mentioned great properties, there are some drawbacks to the use of LAr for particle detection. First and foremost, a complete understanding of the $\PGn$-Ar interaction has not been reached yet, so there are great systematic uncertainties related to the parametrisation of the interaction cross-section. Secondly, in order to keep argon in its liquid phase and minimise the organic impurities, a great effort is required for the design of the cryogenic infrastructure. 
+
+Whilst this latter problem is intrinsic to the LArTPC design and requires ad hoc designs and implementations of the cryogenic infrastructure to be optimised, the former problem is addressed in the SBN programme by using two functionally identical LArTPC detectors, which allows the cancellation of many systematic uncertainties when performing a joint oscillation analysis. 
+
+Finally, even though LAr was chosen for its large electron mobility, LArTPCs are intrinsically slow detectors, with drift times in the order of milliseconds. Hence, detectors operating at shallow depth, much like the two LArTPCs in the SBN programme, during the readout time window record significant cosmic activity. This reason led both the SBND and ICARUS collaborations to design the detectors to include an external cosmic ray tagger detector system (CRT) with nearly complete $4\pi$ coverage to veto most of the cosmic activity. 
+
+\section{The SBN near detector: SBND} 
+
+The Short Baseline Near Detector, SBND, is the near detector of the SBN programme at Fermilab. Positioned at a distance of \SI{110}{\metre} from the proton-beryllium interaction target, with a total mass of \SI{112}{\tonne} of LAr, SBND will provide a precise flux measurement of unoscillated neutrinos for the far detector, ICARUS. SBND as a ``flux monitor'' will allow a great reduction of the impact of systematic uncertainties related to the interaction of neutrinos in argon and the event reconstruction inside a LArTPC. After nearly a decade of design, construction, and installation, SBND began operation in July 2024 and started collecting stable BNB data in December 2024 with an unprecedented rate of $\sim\num{7000}$ neutrino events per day \cite{SBND:2025lha}. 
+
+As for the ICARUS experiment, the physics goals of the SBND collaboration extend beyond the search for eV-scale sterile neutrinos; making use of its huge statistics, due to its proximity to the beam source point, SBND will allow for extremely precise $\PGn$-Ar interaction cross-section measurements in both the sub-GeV and GeV energy ranges. Additionally, the proximity to the neutrino source point allows the detector to cover both the on-axis as well as the off-axis phase space for BNB, expanding its capabilities to BSM physics studies like what is possible using NuMI for the ICARUS detector. 
+
+SBND's LarTPC consist of a single module, with dimensions of $\qtyproduct[product-units = power]{5x4x4}{\meter}$, holding a total of \SI{112}{\tonne} of LAr. The structure contains two TPCs sharing two common cathode plane assemblies (CPAs) at the centre, parallel to the beam direction, and four anode plane assemblies (APAs) at the other two ends. The maximum drift length for the SBND detector is \SI{2}{\meter} which, for the nominal electric field of \SI{500}{\volt\per\cm}, leads to a maximum drift time of \SI{1.3}{\ms}. Each APA holds three planes of wires spaced \SI{3}{\mm} apart from each other, each hosting \num{2816} wires orientated at \SI{+-60}{\degree} (I-1/U and I-2/V, respectively) and \SI{0}{\degree} with respect to the vertical $y$ axis. 
+
+\section{The ICARUS-T600 detector} 
 
 \input{thesis/6_figures/detector/icarus}
 
-\subsection{The ICARUS subsystems}
+\subsection{The ICARUS subsystems} 
 
-\paragraph{TPC}
+\paragraph{TPC} 
 
-\paragraph{Light collection system}
+\begin{figure}
+    \centering
+    \subfloat[]{\includegraphics[height=5.5cm]{thesis/6_figures/detector/TPC_wires_texts.pdf}}
+    \hspace{1em}
+    \subfloat[]{\includegraphics[height=5.5cm, trim={8cm 2cm 8cm 2cm}, clip]{thesis/6_figures/detector/TPC_inner.pdf}}
+    \caption[ICARUS TPC wires and field cage]{}
+    \label{fig:ICARUS_photo}
+\end{figure}
 
-\paragraph{Cosmic ray tagger}
+\paragraph{Light collection system} 
+
+\paragraph{Cosmic ray tagger} 
 
 
 % Firstly proposed by Nobel laureate Carlo Rubbia \cite{Rubbia:1977zz}, the concept of Liquid Argon Time Projection Chambers (LArTPCs for short) was implemented in the Gran Sasso National Laboratories (LNGS) near L'Aquila (Italy) in the ICARUS (Imaging Cosmic And Rare Underground Signals) detector \cite{Bettini:1991fh, Cennini:1994pk, Cennini:1995tt, ICARUS:1995nrd}, which collected data between 2006 and 2011 \cite{Rubbia:2011ft}, alongside the OPERA, LVD and BOREXINO detectors from the CERN Neutrinos to Gran Sasso (CNGS) neutrino beam \cite{Kodama:2004db}. The main detectors for this project were the OPERA and ICARUS experiments, and were therefore called respectively CNGS1 and CNGS2.

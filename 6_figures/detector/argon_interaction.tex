@@ -1,0 +1,56 @@
+\begin{tikzpicture}[
+  % node distance=1.8cm and 2.2cm,
+  lightblue/.style={circle, fill=cyan!15, draw=black, thin, minimum size=0.4cm},
+  midblue/.style={circle, fill=blue!30!cyan!50!white, draw=black, thin, minimum size=0.4cm},
+  simplecircle/.style={circle, draw=black, thin, minimum size=0.4cm},
+  normalblue/.style={circle, fill=blue!50!cyan!50!white, draw=black, thin, minimum size=0.4cm},
+  photon/.style={thick, draw=violet, decorate, decoration={snake, amplitude=1mm, segment length=3mm}},
+  electron/.style={circle, fill=orange!10, draw=black, minimum size=0.05cm},
+  arrow/.style={-Latex, thin},
+  every label/.style={font=\small}
+]
+
+\draw[arrow]  (-5.55, .0) to coordinate[pos=.5] (A)  (-4.15, -.15);
+\node[star, draw, star points=7,star point ratio=0.6, fill=orange!50!yellow!50] at (A) {};
+
+\node[lightblue] at (-5,-1) {Ar};
+
+\node at (-2.15,0.35) {*};
+\node[midblue] at (-2.5,0) {Ar};
+
+\node[black] at (-2.5, 1) {Excitation};
+\node[black] at (-2.5, -3.25) {Ionization};
+
+\node[black] at (.5, -3.25) {Recombination};
+
+\path [draw=black, fill=orange!50] (0,0.25) arc(45:315:0.4cm) arc(-135:135:0.4cm) -- cycle;
+\node at (0,0.25) [below] {Ar$_2^*$};
+
+\node[normalblue] at (-2.8,-2.275) {Ar};
+\node at (-2.4,-1.9) {+};
+\path [draw=black, fill=orange!30] (0,-2) arc(45:315:0.4cm) arc(-135:135:0.4cm) -- cycle;
+\node at (0,-1.95) [below] {Ar$_2^+$};
+\node[electron] at (1.2, -2.05) [] {};
+\node[black] at (1.4, -2.35) [below] {e$^-$};
+
+\draw[arrow]  (-1.95, -2.05) to  (-1.45, -2.65);
+\node[electron] at (-1.95, -2.05) [] {};
+\node[black] at (-1.95, -2.35) [below] {e$^-$};
+
+\node[lightblue] at (3.3,0) [above=0.1cm] {Ar};
+\node[lightblue] at (3.0,0) [below=0.1cm] {Ar};
+\draw[photon] (3.6,-0.2) -- (4.7, 0.1) node[right] {$\gamma$};
+
+\draw[arrow]  (-4.15, -1.05) to  (-3.45, -1.75);
+\draw[arrow]  (-4.15, -1.05) to  (-3.25, -.15);
+
+
+\draw[arrow] (.95, -1.75) to[out=55, in=-35] coordinate[pos=.65] (M) (+0.5, -0.5);
+\coordinate (M1) at ($(M) + (0.02,0)$);
+\draw[thin] (1.25, -1.75) to[out=85, in=-49] (M1);
+
+\draw[arrow]  (-1.35, -2.3) to  (-1., -2.3);
+\draw[arrow]  (-1.55, +.0) to  (-1., +.0);
+\draw[arrow]  (+.95, +.0) to  (+2.45, +.0);
+
+\end{tikzpicture}
