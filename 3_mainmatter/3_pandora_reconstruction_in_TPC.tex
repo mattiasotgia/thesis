@@ -1,9 +1,17 @@
 % !TEX root=../main.tex
 
-\chapter{Event reconstruction for the ICARUS detecotr}
+\chapter{ICARUS-T600 detector operations and event reconstruction}
 \label{chap:event_reconstruction}
 
+The ICARUS detector, described in \autoref{sec:ICARUS_T600} is a complex system, and a precise operation is required to make the most out of all its subcomponents. Each part of the online operation is essential and preliminary to the offline operations, consisting of the wireplane signal processing, the reconstruction of all the signals coming from the different subsystems and their combination to obtain a final physics result. 
+
 \section{Data acquisition}
+
+The data that comes out of the detector is, much like many other experiments, organised in events. The definition of an event is unique to each experiment, as different experiments collecting different data might prefer one classification  type over another. In the case of LArTPC, an event is defined as the collection of the readout signal from all the wires, each with information on the wire position and orientation, and the raw waveform coming from all the other subdetectors modules --- CRT and PMT --- collected in a time window defined by the properties of each detector starting from a defined $t_0$. Being PMTs a fast technology, the time window of the collected waveforms is smaller than, for example, that of the TPC. The start time $t_0$ is usually defined by means of a triggering system. 
+
+The ICARUS trigger employs the coincidence between the signal from the beams (BNB and NuMI) spill gates with the scintillation light to provide a global signal that activates  the acquisition windows for the TPC and PMT subsystems. For TPC, the acquisition window is driven by the time it takes for drift electrons to cross half of each T300 module: with a nominal electric drift field of \SI{500}{\volt\per\cm}, and a half-width of $\sim\SI{1.5}{\m}$, the drift time is chosen to be $\SI{1.6}{\ms}$. The acquisition window for PMTs is driven by the mean lifetime of LAr excited states. De-excitation of LAr produces scintillation light in two components, one fast $\tau\simeq \SI{6}{\ns}$ and one slow $\tau\simeq\SI{1.6}{\us}$. To collect the full scintillation light, the time window has to be thus greater than \SI{1.6}{\us}. Additionally, in the case of a second light trigger in the \SI{10}{\us} immediate subsequent window --- this could be the case for a cosmic-induced muon crossing the detector during the drifting of the electrons ---, the readout is extended by \SI{7}{\us}. Finally, a \SI{7}{\us} buffer before the global trigger is also kept, adding up to a total of \SI{26}{\us} of PMT acquisition window.  
+
+The ICARUS trigger architecture allows for multiple configuration, i.e. the acquisition of different types of events \cite{ICARUS:2025kai}. 
 
 \section{Wireplanes signal processing}
 
