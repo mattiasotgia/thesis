@@ -1,0 +1,95 @@
+%%%---thumb indices using chapterthumb
+
+% the following bases on an example in the KOMA-Script book:
+\newcommand*{\firstchapterthumbskip}{.1\paperheight}
+\newcommand*{\lastchapterthumbskip}{\firstchapterthumbskip}
+\newcommand*{\chapterthumbheight}{.1\paperheight}
+\newcommand*{\chapterthumbwidth}{.01\paperheight}
+\newcommand*{\chapterthumbskip}{.1\paperheight}
+\colorlet{chapterthumbboxcolor}{chaptergrey!75}
+\newcommand*{\chapterthumbcolor}{white}
+\newcommand*{\chapterthumbformat}{\thechapter}
+\newkomafont{chapterthumb}{\normalfont\Large\color{\chapterthumbcolor}}
+
+\makeatletter
+\newcommand*\chapterthumb@box{%
+    \usekomafont{chapterthumb}%
+    \parbox[c][\chapterthumbheight][c]{\chapterthumbwidth}{%
+        \centering
+        \begin{tikzpicture}
+        \node[minimum width=2.5cm, minimum height=2.5cm, fill=chapterthumbboxcolor] % chapterthumbboxcolor
+        {\ifodd\value{page}\makebox[0pt][c]{\hspace{-1cm}\chapterthumbformat} \else\makebox[0pt][c]{\hspace{1cm}\chapterthumbformat}\fi};
+        \end{tikzpicture}%
+    }%
+}
+\newcommand*{\chapterthumbbox}{%
+    \if@mainmatter
+    \ifnum\value{chapter}>\z@
+    \ifnum \value{chapterthumb}<\z@
+    \else
+    \begingroup
+    \protected@edef\reserved@a{\chapterthumbformat}%
+    \ifx\reserved@a\lastchapterthumbformat\else
+    \stepcounter{chapterthumb}%
+    \global\let\lastchapterthumbformat\reserved@a
+    \fi
+    \@tempcnta=\numexpr
+    \dimexpr
+    \paperheight
+    -\firstchapterthumbskip
+    -\chapterthumbwidth
+    -\lastchapterthumbskip
+    \relax / \dimexpr
+    \chapterthumbskip
+    \relax
+    +1
+    \relax
+    \ifnum \value{chapterthumb}<\@tempcnta
+    \else
+    \setcounter{chapterthumb}{0}%
+    \fi
+    \vspace*{%
+        \dimexpr
+        \firstchapterthumbskip
+        + ( \chapterthumbskip )
+        * \value{chapterthumb}%
+        - \baselineskip
+        \relax
+    }\par
+    \setlength{\fboxsep}{0pt}%
+    \ifodd\value{page}
+    \hfill
+    \makebox[0pt][r]{%
+        \rotatebox[origin=c]{0}{\chapterthumb@box}}%
+    \hspace*{1.5cm}
+    \else
+    \hspace*{-0.8cm}
+    \makebox[0pt][l]{%
+        \rotatebox[origin=c]{0}{\chapterthumb@box}}%
+    \fi
+    \endgroup
+    \fi
+    \fi
+    \fi
+}
+\makeatother
+
+\newcounter{chapterthumb}
+\setcounter{chapterthumb}{10000}
+\newcommand*{\lastchapterthumbformat}{\relax}
+
+\DeclareNewLayer[%
+background,%
+outermargin,%
+contents=\chapterthumbbox
+]{chapterthumb}
+
+\newcommand*\EnableChapterthumb{%
+    \IfLayerAtPageStyle{scrheadings}{chapterthumb}{}
+    {\AddLayersToPageStyle{@everystyle@}{chapterthumb}}%
+}
+\newcommand*\DisableChapterthumb{%
+    \RemoveLayersFromPageStyle{@everystyle@}{chapterthumb}%
+}
+
+\EnableChapterthumb
