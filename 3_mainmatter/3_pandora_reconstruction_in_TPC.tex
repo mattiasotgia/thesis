@@ -19,7 +19,7 @@ Customised \emph{BoardReaders} acquire data fragments from all ICARUS subdetecto
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{thesis/6_figures/detector/DAQ_simplified.pdf}
+    \includegraphics[width=\linewidth]{detector/DAQ_simplified.pdf}
     \caption[ICARUS DAQ illustration]{Simplified illustration of the ICARUS DAQ system. Further information is found in \autoref{sec:DAQ}. The number of parallel \emph{EventBuilder} instances could be defined $\geq1$, to allow for faster processing.}
     \label{fig:DAQ}
 \end{figure}
@@ -40,27 +40,113 @@ When an event is saved from DAQ to data files and stored to tape, it is then ava
 
 In the \emph{Stage0/reco1} step, all data  from the three sub-detectors is processed to produce a ``simpler'' description of the raw signal. This means to decode the raw signal and translate it into objects in the \emph{LArSoft} format for offline reconstruction. It also performs signal processing of the waveforms to identify physical signals, \emph{Hits}, that can then be used as input to the higher-level event reconstruction tools implemented in the \emph{Stage1/reco2} steps. 
 
-% path: [
-%       "pmtfixedthr",
-%       "pmtlvdsgates",
-%       "pmttriggerwindows",
-%       "triggersimgates",
-%       "emuTrigger",
-%       "pmtbaselines",
-%       "ophit",
-%       "mcophit",
-%       "opflashCryoE",
-%       "opflashCryoW",
-%       "MCDecodeTPCROI",
-%       "decon1droi",
-%       "roifinder1d",
-%       "gaushit1dTPCEW",
-%       "gaushit1dTPCEE",
-%       "gaushit1dTPCWW",
-%       "gaushit1dTPCWE",
-%       "purityana0",
-%       "purityana1",
-%       "simChannelROI",
+\begin{table}
+    \centering
+    \begin{tabular}{
+    @{}>{\itshape}
+    m{0.1\linewidth}
+    @{\hspace{0.05\linewidth}}
+    p{0.25\linewidth}
+    @{\hspace{0.05\linewidth}}
+    p{0.25\linewidth}
+    @{\hspace{0.05\linewidth}}
+    p{0.25\linewidth}
+    @{}
+    }
+         & TPC & PMT & CRT \\
+         \hline 
+         Stage0 & TPC wire signal decoding & Waveform analysis (pedestrian, thresholds, \dots) & CRT \emph{Hit} finding \\
+         & Signal deconvolution & \emph{OpHit} creation & CRT track \\\
+         & ROI finding & \emph{OpFlash} creation & \\
+         & \emph{Hit} finding & \multicolumn{2}{c}{CRT-PMT matching} \\
+         \hline
+         Stage1 & \\
+    \end{tabular}
+    \caption[]{}
+    \label{tab:reco_stages}
+\end{table}
+
+%% ADD HERE 
+
+\section{Light reconstruction}
+
+One of the first steps in \emph{Stage0} reconstruction addresses the reconstruction of the light signal. Reconstruction of the light signal associated with the event of interest is based on the recorded PMT signals in the events, sampled at \SI{500}{\mega\hertz}. For any event triggered in coincidence with the beam spill, the digitised signals of all 360 PMTs are recorded in \SI{30}{\us} long time intervals. In addition to this data, whenever an off-time cosmic ray event crosses the volume, triggering scintillation light acquired by the PMTs in the \SI{+-1}{\ms} around the beam gate, all 180 PMTs belonging to the T300 module containing the interaction are recorded in \SI{10}{\us} long time intervals. 
+
+The first step in the light reconstruction is the identification of the PMT signal, using a threshold-based approach. To do so, a ``baseline'' has to be defined, which is performed by a sliding window. The pedestal (the \emph{baseline}) is used to then identify the signal over the threshold, using three thresholds defining the start, tail and end points of the PMT hit, called \emph{OpHit}. The algorithm identifies an \emph{OpHit} as the ensemble of these three values and some information about the integral collected charge of the PMT, which is proportional to the light collected. If a start threshold is reached before the end of a previoud \emph{OpHit} the hit is truncated. \autoref{fig:PMT_reco}b shows the example of a PMT with a clear single \emph{OpHit}. 
+
+After individual optical hits are reconstructed, they are clustered together into higher-level objects, called \emph{OpFlash}, corresponding to multiple optical hits happening in proximity inside the detector, hence corresponding to the same physical event inside the volume. \autoref{fig:PMT_reco}a shows multiple PMTs whose \emph{OpHit} are going to be clustered into a single \emph{OpFlash}, corresponding to collected light produced by a single interaction inside the detector. 
+
+All data products created in the \emph{Stage0} PMT processing are saved using the same \emph{LArSoft}-based structure to \emph{ROOT} \cite{rene_brun_2019_3895860} files. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth,trim={5.5cm 7cm 3.5cm 9cm},clip]{detector/PMT_reco.pdf}
+    \caption[PMT reconstructed \emph{OpHits}]{Illustration of an interaction as seen by the PMTs inside the detector volume. (a) shows all the PMTs activated, and a pedestal-subtracted waveform is shown in (b), where also the \emph{OpHit} reconstruction information is pictured. The PMTs which are over threshold in (a), coloured yellow, will constitute the \emph{OpFlash} object.}
+    \label{fig:PMT_reco}
+\end{figure}
+
+\section{Wireplanes signal reconstruction}
+
+After the PMT data has been processed, it is time for the TPC wire data. The wire data is the waveform readout of the \num{53248} individual wires, with coherent noise removed by the readout cards. Only minimal further processing is performed online, which leaves more scope for reprocessing the raw data using improved signal processing tools. The recorded waveforms are in ADC count/tick units, where the amplitude of the signal is expressed in ADC counts and the time information in ticks, each corresponding to \SI{0.4}{\us} in the ICARUS TPC timing. \autoref{fig:TPC_signal} shows a sample of the data collected by the three planes, exhibiting the characteristic bipolar shape for the two induction wire planes and a unipolar signal for the collection plane. 
+
+\begin{figure}
+    \centering
+    \subfloat[]{\includegraphics[width=0.3\linewidth]{thesis/6_figures/detector/wvf_data_MCNominal_a20_P0.pdf}\label{fig:TPC_wire_i1}}
+    \subfloat[]{\includegraphics[width=0.3\linewidth]{thesis/6_figures/detector/wvf_data_MCNominal_a20_P1.pdf}\label{fig:TPC_wire_i2}}
+    \subfloat[]{\includegraphics[width=0.3\linewidth]{thesis/6_figures/detector/wvf_data_MCNominal_a20_P2.pdf}\label{fig:TPC_wire_c}}
+    \caption[TPC plane signal]{Typical \emph{raw} signal captured by the three planes (induction-1 \ref{sub@fig:TPC_wire_i1}, induction-2 \ref{sub@fig:TPC_wire_i2} and collection \ref{sub@fig:TPC_wire_c}) showing the characteristic bipolar signal for the two induction plane and the unipolar shape for the collection plane. Taken from \cite{ICARUS:2024hmk}. }
+    \label{fig:TPC_signal}
+\end{figure}
+
+In order to obtain a simplified representation of the information collected by the wireplanes, three major steps are addressed in \emph{Stage0}: \begin{inparaenum}
+    \item the wire signals are deconvolved from the TPC electronic response functions, so that all three wire signal are also unipolar in shape;
+    \item the signal is analysed in order to define the region-of-interest (ROI) with a threshold-based algorithm; 
+    \item each ROI is finally fit using a Gaussian function, whose area is proportional to the number of drift electrons generating the signal. 
+\end{inparaenum}
+
+\paragraph{Wire signal processing} The raw decoded wire signal shape is dependent on the distribution of drift electrons, which is core to obtaining calorimetric and particle identification information, but in order to explain such dependency, the raw signal must be processed. The resulting signal $R(t)$ on the wires can be seen as the convolution of serial effects of signal formation, electron propagation, electrostatic field response around the wires and processing by the DAQ to the true electronic signal, so that the response function can be factorised as \begin{equation}
+    \begin{aligned}
+        R(t, t')&=\mathrm{Ionization\ \otimes\ Recombination\ \otimes\ Diffusion\ and\ Attachment\ \otimes} \\
+        &\quad \quad \mathrm{\otimes\ Field\ response\ \otimes\ Electronic\ response\ \otimes\ Electronic\ noise}
+    \end{aligned} 
+\end{equation} In order to recover the desired ionisation electron yield, useful to have a knowledge of the deposited energy per wire inside the detector as a function of time, it is necessary to unfold these effects. 
+
+The ICARUS detector exploit a signal processing chain similar to other LArTPC experiments, performing a deconvolution in time of the signal waveforms. Ideally, after the deconvolution step, the signal pulse produced by a charged track on the wire would be Gaussian-shaped, with an integral area proportional to the deposited energy inside LAr. The signal recorded on the wires is the convolution of the response function $R$ with the ``true'' $S$ signal, \begin{equation}
+    M(t') = \int_{-\infty}^{+\infty} R(t'-t)\ S(t)\ \dd t;
+\end{equation} Using the properties of the Fourier transforms, this can be written in the frequency space as $\mathcal M(\omega) = \mathcal R(\omega)\cdot \mathcal S(\omega)$, which can be easily inverted, retrieving the ``true'' signal shape $\mathcal S(\omega)$. This approach, referred to as ``one-dimensional'' deconvolution, is currently employed in most of LArTPC detectors. However, this assumes that the charge distribution on each wire is independent on the charge distribution on the wires in its vicinity. It has been demonstrated that this is not completely true, as can be seen in references \cite{MicroBooNE:2018swd,MicroBooNE:2018vro}. Though it implies small corrections to the overall deposited charge in general, this is not always the case. For example, for isochronous tracks (i.e. tracks lying parallel to the wires, which is somewhat common for the induction-1 wires given the ICARUS geometry), these vicinity effects can create destructive interference patterns.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.85\linewidth]{detector/noiseVs1DVs2D.pdf}
+    \caption[TPC signal processing]{Example of the effect of signal processing using the one-dimensional deconvolution approach used in ICARUS (b) with respect to the noise-filtered data (a). (c) shows the same event using a two-dimensional deconvolution approach, performing the deconvolution both in the time direction as well as in the direction of the wires. Taken from \cite{MicroBooNE:2018swd}. }
+    \label{fig:uBooNE_signalProc}
+\end{figure}
+
+In \cite{MicroBooNE:2018swd,MicroBooNE:2018vro} a solution, adopting two-dimensional deconvolution techniques over both the wire time as well as the wire number, is presented; these provide a strong and computationally efficient method to better extract the distribution of ionisation electrons. \autoref{fig:uBooNE_signalProc} shows the result of the 1D and 2D approaches as tested by the MicroBooNE detector. Tests towards adapting the 2D signal deconvolution are being made, and once validated, should provide a better reconstruction efficiency for the ICARUS TPC detector. 
+
+\paragraph{ROI finding} Once the signal is unipolar in all planes, the next step to define the TPC hits is to select only the ``interesting'' regions of the wires. These regions of interest (ROI) are identified by performing a threshold search in the time domain, allowing to restrict the area on which the \emph{Hits} are created to small portions of the wires. ROIs can be actually relevant to iteratively improve the performances of the 1D/2D deconvolution steps, minimising the time-domain region over which the deconvolution is performed. Once ROIs are identified, a baseline value can be assumed for all other times in the waveform, drastically reducing the size of these data products inside the data files. 
+
+\paragraph{\emph{Hit} creation} Upon the identification of ROIs, the final step is the creation of the \emph{Hit}s objects. A \emph{Hit} is a two-dimensional object representing a cluster of electric drift charges, arriving at a certain time on a certain wire. The \emph{Hit} finding algorithm runs under the assumption the distribution of the drift charges is gaussian. Operating on the deconvolved ROI segments of the waveforms, it tries to fit one or multile Gaussian distributions onto the signal shape. The extracted parameters from the fit process of the Gaussian distribution(s) --- the area, FWHM, the mean, and their multiplicity --- are the properties of the \emph{Hit} objects. The area is proportional to the cumulative charge deposited by the electrons, proportional to the deposited energy inside the detector; the mean and the FWHM represent the \emph{Hit} peak time and its width; the multiplicity can be used to perform operations between adjacent hits. 
+
+At this point, a collection of 2D \emph{Hit}s for each plane of wires has been created. The three 2D views of the planes are stored and used as input for the event reconstruction taking place inside \emph{Stage1}. 
+
+\section{Cosmic ray tagger reconstruction} 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{detector/CRT_all.pdf}
+    \caption[CRT Hit reconstruction in space]{Illustration of CRT \emph{Hit} reconstruction position. (a) shows the reconstruction for the top CRT modules, where the coincidence between two scintillation bars is required. (b) shows the distribution of the CRT hits reconstructed in the different regions of the Top CRT. Blue regions
+correspond to malfunctioning channels. (b) is taken from \cite{Poppi:2023zmp}, (a), (c) and (d) are adapted from \cite{arteroponsStudyReconstructionNuMuCC}.}
+    \label{fig:CRT_reco}
+\end{figure}
+
+% \section{TPC event reconstruction}
+
+
+% \subsection{Sequential approach: Pandora}
+
+% \subsection{Machine Learning approach: SPINE}
+
 %       "crthit",
 %       "crttrack",
 %       "crtpmt"
@@ -89,17 +175,3 @@ In the \emph{Stage0/reco1} step, all data  from the three sub-detectors is proce
 %       "mcassociationsGausCryoE",
 %       "mcassociationsGausCryoW"
 %    ]
-
-
-\section{Light reconstruction}
-
-\section{Cosmic ray ragger reconstruction}
-
-\section{TPC event reconstruction}
-
-\subsection{Wireplanes signal processing}
-
-\subsection{Sequential approach: Pandora}
-
-\subsection{Machine Learning approach: SPINE}
-
