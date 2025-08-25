@@ -1,34 +1,36 @@
-\chapter{Training of the track/shower classification BDT}
+\chapter{The track/shower classification BDT in the Pandora reconstruction}
+\label{chap:mva_internship}
+\stepcounter{page}
 
 The content of this chapter is taken from the technical report produced during the two-month internship I attended at Fermilab in the 2024 summer as part of the ``\emph{2024 Summer Student Italian Program at Fermi National Accelerator Laboratory and at Other US Laboratories}''. 
 
-\section{The track/shower Boosted Decision Tree in Pandora} \label{sec:A_bdt}
+% \section{The track/shower Boosted Decision Tree in Pandora} \label{sec:A_bdt}
 
-At the very basic level, a \textbf{b}oosted \textbf{d}ecision \textbf{t}ree (BDT) algorithm involves a set of subsequent cuts made on the input dataset, each at a different node, and multiple node combinations lead to different outcomes of the selection. 
-The end nodes are called leaves, in agreement with the tree analogy. 
-The single decision tree described here is then copied over multiple times to provide for better stability in the classification \cite{Cornell:2021gut, FREUND1997119}. A schematic representation of the idea behind a boosted decision tree is shown in \autoref{fig:BDT_trees}. 
+% At the very basic level, a \textbf{b}oosted \textbf{d}ecision \textbf{t}ree (BDT) algorithm involves a set of subsequent cuts made on the input dataset, each at a different node, and multiple node combinations lead to different outcomes of the selection. 
+% The end nodes are called leaves, in agreement with the tree analogy. 
+% The single decision tree described here is then copied over multiple times to provide for better stability in the classification \cite{Cornell:2021gut, FREUND1997119}. A schematic representation of the idea behind a boosted decision tree is shown in \autoref{fig:BDT_trees}. 
 
-\begin{figure*}
-    \centering
-    \includegraphics[width=\linewidth]{appendix/BDT_trees.pdf}
-    \caption{The underlying structure of a boosted decision tree algorithm, showing the individual subsequent trees. In the inset plots, the performance of a single decision tree classifier is compared to the boosted version, implemented in the AdaBoost \cite{FREUND1997119} algorithm.}
-    \label{fig:BDT_trees}
-\end{figure*}
+% \begin{figure*}
+%     \centering
+%     \includegraphics[width=\linewidth]{appendix/BDT_trees.pdf}
+%     \caption{The underlying structure of a boosted decision tree algorithm, showing the individual subsequent trees. In the inset plots, the performance of a single decision tree classifier is compared to the boosted version, implemented in the AdaBoost \cite{FREUND1997119} algorithm.}
+%     \label{fig:BDT_trees}
+% \end{figure*}
 
-The algorithm is composed of two fundamental phases; the first is the training/testing phase, where, comparing the true information from the Monte Carlo simulation with the reconstructed information from the PandoraPFA chain, the cuts are chosen, the interesting variables selected, and the algorithm performance is fully characterised; the second is the offline analysis phase, where the algorithm is used to perform data analysis and test the results. The results from the first phase are used to take into account every possible uncertainty introduced by the algorithm itself. 
+% The algorithm is composed of two fundamental phases; the first is the training/testing phase, where, comparing the true information from the Monte Carlo simulation with the reconstructed information from the PandoraPFA chain, the cuts are chosen, the interesting variables selected, and the algorithm performance is fully characterised; the second is the offline analysis phase, where the algorithm is used to perform data analysis and test the results. The results from the first phase are used to take into account every possible uncertainty introduced by the algorithm itself. 
 
-The training process of the first phase is the centrepiece of this work. The training is done to find the best parameters to best fit the data and get a single discriminator value, in this case called \emph{track score}, used to classify track-like and shower-like particles. This is the actual score of the BDT algorithm, the single variable on which the cut will be performed to distinguish between the two classes. 
+% The training process of the first phase is the centrepiece of this work. The training is done to find the best parameters to best fit the data and get a single discriminator value, in this case called \emph{track score}, used to classify track-like and shower-like particles. This is the actual score of the BDT algorithm, the single variable on which the cut will be performed to distinguish between the two classes. 
 
-To perform the training process for a BDT can be performed, like for many other machine learning algorithms, multiple times, changing the hyperparameters that describe the model to increase its performance. This process can be long and not easy and can be automated by scanning the space of hyperparameters and considering those that \emph{fit} the data better, that is, those that converge to a better training for the model. This process is done using a grid cross-validation technique. 
+% To perform the training process for a BDT can be performed, like for many other machine learning algorithms, multiple times, changing the hyperparameters that describe the model to increase its performance. This process can be long and not easy and can be automated by scanning the space of hyperparameters and considering those that \emph{fit} the data better, that is, those that converge to a better training for the model. This process is done using a grid cross-validation technique. 
 
-The BDT hyperparameters encompass the following aspects\begin{itemize}
-    \item \verb=n_estimators=, or the number of decision tree in the boosting algorithm;
-    \item \verb=max_depth=, or the maximum layer number of subsequent nodes, remembering the number of maximum final leafs scale as $2^\texttt{max\_depth}$;
-    \item \verb=learning_rate=, or the rate at which the gradient descent is performed to search for the minimum;
-    \item \verb=min_samples_leaf=/\verb=_split=, being the two parameters that control how many samples in each node are at least necessary for it to still be considered a node or a final leaf;
-    \item \verb=min_impurity_decrease=, being the parameter that control the minimum impurity decrease in each node to consider it a node or a final leaf of the decision tree
-    \item \verb=ccp_alpha=, being the parameter that controls when a subtree is to be pruned from the decision tree, being too complex at archiving the same classification that can be archived with an \emph{easier} tree.
-\end{itemize}
+% The BDT hyperparameters encompass the following aspects\begin{itemize}
+%     \item \verb=n_estimators=, or the number of decision tree in the boosting algorithm;
+%     \item \verb=max_depth=, or the maximum layer number of subsequent nodes, remembering the number of maximum final leafs scale as $2^\texttt{max\_depth}$;
+%     \item \verb=learning_rate=, or the rate at which the gradient descent is performed to search for the minimum;
+%     \item \verb=min_samples_leaf=/\verb=_split=, being the two parameters that control how many samples in each node are at least necessary for it to still be considered a node or a final leaf;
+%     \item \verb=min_impurity_decrease=, being the parameter that control the minimum impurity decrease in each node to consider it a node or a final leaf of the decision tree
+%     \item \verb=ccp_alpha=, being the parameter that controls when a subtree is to be pruned from the decision tree, being too complex at archiving the same classification that can be archived with an \emph{easier} tree.
+% \end{itemize}
 
 % The grid cross-validation procedures enable the search for the best hyperparameters, i.e., those that can archive the highest accuracy score \footnote{Accuracy, defined as the distance of the prediction from the truth, is chosen as the primary metric for the CV process; however, a valid metric to test the algorithm is also he AUC (\textbf{a}rea \textbf{u}nder the \textbf{c}urve) of the \textbf{r}eceiver \textbf{o}perating \textbf{c}haracteristic curve (ROC curve)}. The CV process is performed on 80\% of the training data sample, leaving the remaining 20\% to test the results after the process of training is performed. The CV process is briefly illustrated in figure \ref{fig:BDT_DT_cross_validation}. In that is also clear the implementation of the $k$-folding method used to perform the cross validation. $k$-folding allows for the cross-validation to take into account the possibility of overtraining of the model. A model is trained on $k-1$ folds of the data sample, whereas the last fold is used to compute the scoring metric. This is repeated, leaving a different sub-dataset out each time. The folding procedure is also illustrated in figure \ref{fig:BDT_DT_cross_validation}. 
 

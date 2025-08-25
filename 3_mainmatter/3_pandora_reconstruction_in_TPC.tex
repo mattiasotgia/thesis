@@ -132,7 +132,7 @@ For the side CRT modules the reconstruction is slightly different. The coinciden
 
 The last step performed in \emph{Stage0} concerns the temporal matching of the light and CRT information. This step is crucial, especially for higher-level processing, where it can be exploited to improve the efficiency by which correct interactions are selected inside the detector, rejecting out-of-time activity using the CRT-PMT match. 
 
-\section{TPC event reconstruction}
+\section{TPC event reconstruction} \label{sec:TPC_reco_gen}
 
 \emph{Stage1} is almost completely dedicated to performing the high-level event reconstruction, taking the \emph{Hit} objects created by the modules of \emph{Stage0} and transforming them to build the full interaction picture. This part of the event reconstruction interests primarily the TPC and PMT sub-detectors, since it is expected for most neutrino interactions to be contained inside the LAr volume, hence not to have any relation to CRT hits. 
 
@@ -225,7 +225,7 @@ The reconstruction of the neutrino interaction vertex proceed via two steps. Fir
 
 After the identification of the candidate neutrino vertices, it is necessary to identify the most probable vertex candidate. This is archived by using a BDT algorithm, which assigns each vertex a score. The vertex candidate with the highest score is finally selected to be the correct neutrino interaction vertex. 
 
-The variables used to perform the classification and identify the most suitable vertex candidate include both properties of the reconstructed event and features of the candidate vertices. The former variables include the total number of hits, clusters and vertex candidates associated to the event; the fraction of hits likely originating from a shower based on cluster length and true associated particle; an estimate of the energy and of the area of the event, extracted from the total clusters span along x and z directions; and an estimate of how longitudinal the event is with respect to the beam direction. 
+The variables used to perform the classification and identify the most suitable vertex candidate include both properties of the reconstructed event and features of the candidate vertices. The former variables include the total number of hits, clusters and vertex candidates associated to the event; the fraction of hits likely originating from a shower based on cluster length and true associated particle; an estimate of the energy and of the area of the event, extracted from the total clusters span along $x$ and $z$ directions; and an estimate of how longitudinal the event is with respect to the beam direction. 
 
 This is the first of the two ``machine-learning''-like currently used algorithms in the Pandora-based event reconstruction for the ICARUS detector. 
 
@@ -241,7 +241,14 @@ After the 3D showers are finally built, a second pass of the 3D track reconstruc
 
 \subsubsection{Particle hierarchy reconstruction}
 
+After the 3D reconstruction has taken place, the nex step in the PandoraNeutrino reconstruction is to organise the reconstructed particles into a hierarchy. This follows some subsequent steps, namely \begin{itemize}
+    \item The neutrino particle is created and associated with the 3D interaction vertex.
+    \item The 3D particles deemed to be associated with the interaction vertex are added as primary daughters of the neutrino particle.
+    \item Algorithm tools look to add subsequent daughter particles to the existing primary daughter of the neutrino --- for example, the decay electron might be added to a primary muon particle. 
+    \item 3D vertex position (endpoints) are calculated for each of the particles in the neutrino hierarchy. This is the neutrino interaction vertex for primary particles, and the point of closest approach to their parents for secondaries
+\end{itemize}
 
+The last step of the PandoraNeutrino reconstruction handles the classification, by means of a BDT algorithm, of reconstructed particles as tracks or showers. The classification is performed on a set of topological and calorimetric variables. A detailed description of the variables, the training process and the classification efficiency is discussed in \autoref{chap:mva_internship}, as part of the work performed during an internship at Fermilab. 
 
 \subsection{PandoraCosmic: cosmic-ray muon reconstruction}
 
@@ -253,8 +260,71 @@ The PandoraCosmic path is very similar to the PandoraFastReco path since it aims
 
 Unique to the PandoraCosmic path, before actually performing the creation of the 3D position inside the detector volume (see, for reference, Figure \ref{fig:PandoraCosmic}), a delta-ray reconstruction step dissolves any 2D clusters that have not been assigned to any reconstructed particle. The assumption for these algorithms is that these clusters likely represent fragments of delta-ray showers. Once 2D clusters are created, the between-views match is performed primarily exploiting the common $x$ coordinate. Parent cosmic ray particles are identified via comparisons of intra-cluster distances. 
 
-\section{Calorimetry and particle identification}
+\section{Calorimetry and particle identification} 
+
+Following the topological event reconstruction performed by the Pandora algorithm, calorimetric information is computed with the use of multiple LArSoft modules. 
+
+Once 3D trajectories, made of 3D space-points, have been reconstructed, using the relevant quantities associated with the hits --- hit area, hit time, and the track pitch lenght --- the aim is to be able to reconstruct the energy loss, $\dv*{E}{x}$, which is core to the  subsequent particle identification. The energy loss is computed for each hit from the $\dv*{Q}{x}$, expressed in ADC counts per centimetre. This is obtained, in turn, by the ratio of the area under the hit ($\dd Q$) and the track pitch ($\dd x$), which is computed from the direction of the track, knowing that the wire pitch for the ICARUS detector is of \SI{3}{\mm}, $\dd x = \SI{3}{\mm}/\cos\gamma$, where $\gamma$ is the three-dimensional angle between the local direction of the track and the wire direction. 
+
+Calorimetry measurements require a good understanding of the charge response of the wires inside a LArTPC. The $\dv*{Q}{x}$ measured on the wires might substantially differ from the original $\dv*{Q}{x}$ at the location where the ionisation occurred; hence, it needs to be corrected before charge deposition is converted into energy loss. The process of removing these charge response effects takes the name of ``charge equalisation''. This process happens in three parts: \begin{inparaenum}
+    \item charge equalisation in the drift direction $x$;
+    \item the equalisation on the wireplane direction $y$ and $z$; and 
+    \item the equalisation across the four TPCs in the ICARUS detector. 
+\end{inparaenum} Charge equalisation is performed using a cosmic off-beam dataset that crosses both the LAr volume and leaves a hit on the CRT panels. 
+
+The main effects that affect the $\dv*{Q}{x}$ in the ICARUS detector are \begin{itemize}
+    \item Argon impurities: when electron drift toward the anode, they can be captured by the electronegative impurities (mainly $\mathrm{O_2}$ and $\mathrm{H_2O}$). Since the electron attachment is modeled as an exponential decay, the measured $\dv*{Q}{x}$ is corrected as \begin{equation}
+        \eval{\dv{Q}{x}}_\mathrm{corrected} = \eval{\dv{Q}{x}}_\mathrm{measured} \exp(\frac{t_\mathrm{hit}-t_0}{\tau}),
+    \end{equation} where $\tau$ is the electron lifetime. The electron lifetime measured in the ICARUS detector range between \qtyrange{4}{8}{\ms}. 
+
+    \item Drift field distortions: the ionisation process inside liquid argon, other than producing a plethora of free electrons, gives rise to Ar ions. Those contribute to disuniformities of the drift electric field. Additionally, the ICARUS cathode plane is not completely flat, and this also produces disuniformities of the field. 
+
+    \item Diffusion: electrons do not drift in perfect linear paths to the anodes but get diffused by elastic interaction in LAr. 
+\end{itemize} Details on what the individual steps are to correct these effects are given in \cite{arteroponsStudyReconstructionNuMuCC}. 
+
+After the calibration steps, to convert the $\dv*{Q}{x}$ into a deposited energy value, we need to take into account the fraction of electrons that survive the recombination without ion, $\mathcal{R}$, the amount of energy it it required to ionise an argon atom, $W_\mathrm{ion} = \SI{23.6}{eV}$ and the electronic gain $\mathcal{G}$ that converts ADC counts into the number of drifted electrons collected on the readout planes. With these information, it is possible to compute the $\dv*{E}{x}$ like \begin{equation}
+    \dv{E}{x} = \frac{W_\mathrm{ion}}{\mathcal{R\cdot G}} \dv{Q}{x}. 
+\end{equation}
+
+From the reconstructed energy deposition per centimetre, it is possible to compute the full deposited energy like \begin{equation}
+    E = \sum_i^\mathrm{all\ hits} \qty(\dv{E}{x} )_i \cdot \dd x_i. 
+\end{equation}
+
+Using the calorimetric information, it is possible to develop a $\chi^2$-like score that helps us identify the particle species. The underlying assumption is that, if the particle stops inside the TPC active volume, the $\dv*{E}{x}$ energy loss versus the residual range\footnote{Residual range is defined as the distance of an energy deposition within a track from the track's endpoint.} is a powerful tool to distinguish charged particles. The PID score is defined, therefore, as \cite{arteroponsStudyReconstructionNuMuCC} \begin{equation}
+    \mathrm{PID} = \chi^2/\mathrm{ndof} = \sum_\mathrm{hit} \qty(\frac{{\dv*{E}{x}}_\mathrm{measured} - {\dv*{E}{x}}_\mathrm{theory}}{\sigma_{\dv*{E}{x}}})^2 \Big/ n_\mathrm{hits}.
+\end{equation}
 
 \section{SPINE: machine learning particle identification} \label{sec:SPINE}
 
+This thesis focuses on developing tools for the event reconstruction process described above, which is referred to as ``Pandora event reconstruction'' within the collaboration. However, recent inroads in Computer Vision (CV) and Machine Learning (ML) have motivated a new approach to the analysis of particle imaging detector data. Additionally, having multiple different approaches to event reconstruction can be crucial in proving the robustness of each one. 
+
+Inside the ICARUS collaboration, an effort to develop an ML-based end-to-end reconstruction chain started and has now reached a mature stage, at which the performances and the robustness of the tools allow for analyses to be performed. This approach, named SPINE (Scalable Particle Imaging with Neural Embedding), consists of a hierarchical set of neural networks that are optimisable end-to-end. 
+
+A schematic representation of the SPINE framework is shown in \autoref{fig:SPINE}. 
+
+The starting point for the reconstruction are the same three readout planes that are processed through the Cluster3D algorithm. The Cluster3D algorithm is used (see \autoref{sec:TPC_reco_gen}) as a hit filter but does actually perform a simil-3D reconstruction that is used as auxiliary input to the SPINE processing. The hits that come out of the Cluster3D algorithm are passed through a UResNet architecture that aims at removing the so-called ghost hits. These are 3D hits created by an incorrect combination of 2D hits. Filtered positions are referred to as ``deghosted'' 3D space points. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{detector/mlreco_full_chain.pdf}
+    \caption[SPINE end-to-end machine learning approach]{Schematic architecture of the end-to-end, ML-based reconstruction chain for LArTPCs. Taken from \cite{Drielsma:2021jdv}. }
+    \label{fig:SPINE}
+\end{figure}
+
+The next step in the reconstruction chain is the classification of the deghosted 3D hits into categories based on the activity that produced them --- tracks, electromagnetic showers, Michel electrons, delta rays and low-energy depositions. This algorithm (shown in blue in \autoref{fig:SPINE}) uses the same UResNet architecture as the previous step. Parallel to this (shown in red in \autoref{fig:SPINE}) is a similar algorithm that aims at identifying and building dense particle clusters. The two outputs are aggregated and then passed as input to the next steps of the reconstruction. 
+
+
+At this point of the SPINE reconstruction chain, groups of spacepoints corresponding to particle fragments have been identified, with semantic labels assigned to them. A Graph Neural Network aims then at clustering these groups of hits into particles. Two functionally identical GNNs are employed, called GrapPA-Track and GrapPA-Shower, targeting specific interaction topologies, namely tracks and showers. Details on the implementation and working of these algorithms are given in \cite{Drielsma:2021jdv}. 
+
+The final stage of the SPINE reconstruction is to cluster particles into interactions. One interaction (the equivalent to the Pandora slice) is a collection of particles originating from the same interaction vertex. Particles directly associated with the interaction vertex are called primary particles, whereas other particles are labelled as secondaries. In addition to the interaction clustering, the network is also tasked with predicting the particle type (photon, electron, muon, proton, or pion; see \cite{DeepLearnPhysics:2020hut}). The architecture is still that of a GNN. The output of this network are all the interaction primary particles, each with a list of secondary particles, all with their types. 
+
 \section{Simulation of the full detector}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{pandora/LArSoft_all.drawio.pdf}
+    \caption[LArSoft complete overview]{Complete processing flow for both data and simulation, from the collection/simulation to the final analysis. }
+    \label{fig:LArSoft_flow}
+\end{figure}
+
+The LArSoft framework that runs the full event reconstruction is also used to perform event simulation, from the generation of the interaction, performed using the GENIE Monte Carlo neutrino generator, to the particle passage, performed using the GEANT4 package, accessed through the LArG4 framework, to detector simulation, covering all the individual subsystems of the ICARUS detector. The output of the simulation is identical to the datastream collected by the detector and therefore can be used to perform Monte Carlo studies on the reconstruction pipeline. Details of the full event simulation are in \cite{arteroponsStudyReconstructionNuMuCC}, and \autoref{fig:LArSoft_flow} shows a full overview of the flow data product and simulations follow within the LArSoft infrastructure.
