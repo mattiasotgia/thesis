@@ -4,24 +4,127 @@
 
 The Pandora-based event reconstruction pipeline, as described in \autoref{sec:TPC_reco_gen}, has been --- and continues to be --- central to the physics analyses conducted with the ICARUS detector. Its use across the LArTPC community ensures it is a set of tools that is actively developed. Any improvement made by each collaboration sharing this tool is thus an improvement that can be exploited on all the experiments that use it.
 
-The ICARUS collaboration...
+The Pandora framework in ICARUS employes the same structure inherithed from the MicroBooNE collaboration, shared also with the SBND experiment. Especially important for the success of the SBN programme is the fact that the reconstruction is nearly identical for both the near and the far detector, in order to make systematic uncertainties related to the reconstruction as less relevant as possible. 
+
+Recent efforts were made to better align the Pandora reconstruction paths between ICARUS and SBND, with the inclusion of shower-targeted algorithms, aiming at refining the shower clusters. Moving in the same direction, this work focuses on the implementation of a set of tools that enable the use of true Monte Carlo information to alter the reconstruction output of the different stages. This comprehensive set of tools has already been tested and used in the context of the SBND reconstruction, as well as for other Pandora-based reconstruction pipelines \cite{Mawby:2023nws}. 
+
+These tools allow to disect the impact of each step of the Pandora reconstruction by altering the reconstructed objects using the true Monte Carlo information. Using these methods provide for validation tools of the event reconstruction chain. 
+
+However, developing reconstruction improvement in vacuum is both difficult and do not provide all the times a clear quantification of the impact made.
+So, I instead targeted my studies toward a precise analysis to be able to identify pain points of the reconstruction chain. 
+
+The ICARUS collaboration, using the collected data of the second physics data taking campaign, performed as a standalone one-detector campaign, is moving towards a first oscillation analysis, preliminary to the two-detector oscillation analysis expected with the data collected by the SBN programme. This preliminry analysis is targeted at studying the muon neutrino disappearance channel to project sensitivity curves onto the $(\Delta m^2, \sin^22\theta_{\PGm\PGm})$. 
+
+The $\PGnGm$-disappearance analysis ongoing within the collaboration uses a precise event topology, namely the muon neutrino charged current quasi elastic topology, with one muon in the final state, any number greater than ero of protons, and requires zero electromagnetic showers (both from electrons and from photons) and zero charged pions. This selection is reffered to as $\PGnGm$CC N$\Pp$ QE \cite{particles8010018, arteroponsStudyReconstructionNuMuCC}.  
 
 \section{Data sample and selection}
 
+The $1\PGm N\Pp$ event topology used in the muon neutrino disappearance study are selected automatically using a thorougly tuned and tested selection procedure \cite{particles8010018}. I will now delve a little bit inside the details of the event selection procedure, highlighting the decisions that went behind the variables cuts. 
 
+\paragraph{CRT-PMT match} Exploiting the CRT-PMT match performed in the event reconstruction, non-contained neutrinos or cosmic-ray particles are rejected. The cut searches for coincidences in the \SI{150}{\ns} gate between CRT hits and an optical flash. All optical flashes are looked into the \qtyrange{0}{1.6}{\us} spill gate, and only the spills that have no CRT hit associated are kept. This first contributes to reducing the huge amount of cosmic ray interactions in the detector, thus slightly improving on the selection purity. 
 
-\section{\emph{Cheating} the Pandora reconstruction}
+\paragraph{Optical flash barycenter match} The light information coming from the PMTs is also used to improve the selection by exploiting its 3D information. Using the light from the triggering PMT flash, the barycenter of the light hit is computed. The barycenter is computed as the mean of optical hits, weighted on the signal integral on each optical hit, \begin{equation}
+    \vec{x} = \frac{\sum_i \vec x_i \cdot \mathrm{PE}_i}{\sum_i \mathrm{PE}_i}.  
+\end{equation} Here $\vec x_i$ represent the position of the PMT producing the $i$-th, with a signal integral of $\mathrm{PE}_i$ photo-electrons collected by the $i$-th photomultiplier. This position information is used to reject all slices whose charged $z$-barycenter was more than \SI{1}{\m} away from the light $z$-barycenter. This choice was made considering the best cut to minimise he contamination from other interaction types, as well as maximise the selection efficiency. 
+
+\paragraph{Vertex and tracks containment} Two basic selection cuts are then applied to the vertices and track in the interaction selected by the first two cuts. The vertex is required to be insde the fiducial volume (requiring more than \SI{25}{\cm} apart from the lateral TPC walls and 30/\SI{50}{\cm} from the upstream/downstream walls) of the ICARUS detector, defined in \cite{arteroponsStudyReconstructionNuMuCC}, whereas all the tracks inside the interaction are required to be contained in the active volume of the TPC within \SI{5}{\cm} from all the sides. This request ensures that the PID score described in \eqref{eq:PID} can be computed and provides for a great separation between different particle species. 
+
+The interactions that pass these preliminary quality cuts are then analysed by term of particle content, so each particle in the interaction is classified as such, and interactions with one muon, $N$ protons (with $N\geq1$), zero charged pions and zero showers are selected. I will now define the variable cuts applied to identify each particle species. 
+
+\paragraph{Muon identification} The muon track is identified as the reconstructed longest particle fulfilling the following set of requests \begin{itemize}
+    \item It should be tagged as a primary particle, so its parent should be the neutrino associated with the interaction vertex. 
+    \item It should be identified as a track-like object. The BDT implemented at the end of the Pandora reconstruction chain performs a topological classification of  each object inside the interaction, assigning a ``trackscore'' value between zero and one. The more an object is ``track-like'', the closer to one this score should be. The requirement for muons is a trackscore $\geq 0.5$. 
+    \item The reconstructed muon length should be greater than \SI{50}{\cm}
+    \item The track starting point should be less than \SI{10}{\cm} from the interaction vertex.
+    \item Finally, the PID information is considered. This requires the $\chi^2$ value to be $\chi^2_\PGm < 30$ (using the $\dv*{E}{x}$ energy loss under the hypothesis that the object is a muon) and also $\chi^2_\Pp > 60$ (using the $\dv*{E}{x}$ energy loss under the hypothesis that the object is a proton). 
+\end{itemize} In the reconstructed interaction, only one muon is required, passing this selection. 
+
+\paragraph{Proton identification} The identification of the proton follows similar cuts as for the muon, with less strict selections \begin{itemize}
+    \item The requirement to be tagged as a primary particle is the same as that which was present for muons.
+    \item The track score, by looking at its distribution, was found to be slightly shifted to lower values, so a lower threshold is required of $\geq 0.45$. 
+    \item It is required that primary protons should have a length greater than \SI{2.3}{\cm}, so a request of a minimum of \SI{50}{\mega\electronvolt} of deposited energy is required, which corresponds to a proton length of \SI{2.3}{\cm}. 
+     \item The track starting point should be less than \SI{10}{\cm} from the interaction vertex.
+     \item PID is then considered, requiring that $\chi^2_\Pp < 100$. 
+\end{itemize} Any number greater than zero of protons is required in the $\PGnGm$CC Np QE selection. 
+
+\paragraph{Pion identification and rejection} Pions are identified using very identical selection cuts as protons, with the only exception of requiring $\chi^2_\Pp > 100$, and a deposited energy of \SI{25}{\mega\electronvolt}. If one or more pions are identified within a certain slice, the slice gets rejected. 
+
+\paragraph{Electromagnetic shower identification} Electromagnetic showers are identified by means of trackscore alone; everything with a value lower than 0.5, which is not classified as a proton (so $\chi^2_\Pp > 100$, among other cuts), is identified as an electromagnetic shower. If more than zero showers are reconstructed and identified  in a given slice, the slice gets rejected. 
+
+The performances of the aforementioned selection have been  evaluated \cite{artero_pons_2024_13841852, particles8010018} by computing the selection efficiency and selection purity, respectively \begin{equation}
+    \begin{aligned}
+        \mathrm{Efficiency} &\equiv \frac{\text{Selected signal}}{\text{True signal}} = \SI{49}{\percent} \\
+        \mathrm{Purity} &\equiv \frac{\text{Selected signal}}{\text{All selected}} = \SI{84}{\percent}
+    \end{aligned}
+\end{equation} The selection, with minor changes related to the differences in the reconstruction paradigm, is applied also to data reconstructed with the SPINE chain, described in \autoref{sec:SPINE}. Using this different reconstruction paradigm, the efficiency and purity values obtained are, respectively, of $\sim\SI{75}{\percent}$ and $\sim\SI{80}{\percent}$. 
+
+Parallel to both reconstruction chains, the efficiencies and purities were validated by visual scan using a small data sample ($\sim\SI{2e18}{POT}$), confirming the aforementioned values for both analyses. 
+
+\section{\emph{Cheating} the Pandora reconstruction} 
+
+The modular structure of the Pandora reconstruction allows for great flexibility of the tools and algorithms involved in the reconstruction. As described in \autoref{sec:TPC_reco_gen}, and pictured in \autoref{fig:PandoraFastReco}, \ref{fig:PandoraCosmic} and \ref{fig:PandoraNeutrino}, a sequence of multiple algorithms is applied to the hit objects, resulting in reconstructed objects. The steering of the Pandora reconstruction chain is performed by XML configuration files where each algorithm is declared and configured. An example of the steering algorithm for the TrackClusterCreation algorithm, present in both the PandoraFastReco, PandoraCosmic and PandoraNeutrino paths is displayed below.
+
+\begin{lstlisting}[style=xmlstyle]
+<pandora>
+    ...
+    <!-- TwoDReconstruction -->
+    <algorithm type = "LArClusteringParent">
+        <algorithm type = "LArTrackClusterCreation" description = "ClusterFormation"/>
+        <InputCaloHitListName>CaloHitListU</InputCaloHitListName>
+        <ClusterListName>ClustersU</ClusterListName>
+        <ReplaceCurrentCaloHitList>true</ReplaceCurrentCaloHitList>
+        <ReplaceCurrentClusterList>true</ReplaceCurrentClusterList>
+    </algorithm>
+    ...
+</pandora>
+\end{lstlisting}
+
+This modular approach of the Pandora topological event reconstruction can be exploited to allow an algorithm to be replaced with a functionally identical algorithm, which, instead of relying on the actual tools to perform the reconstruction task, uses the underlying Monte Carlo information. This approach, developed as part of the Pandora reconstruction framework, is in this thesis referred to as ``\emph{cheating}'' of the reconstruction. The powerfulness of this concept has been shown already with reconstruction studies in other experiments, where it is employed to pinpoint the ``failure points'' of the topological event reconstruction and understand the ceiling performances of the Pandora reconstruction, assuming certain steps of the reconstruction are perfect \cite{Mawby:2023nws, Mawby:2025_FCCee, Nguyen:2023_cheatingPandora}. 
+
+In practical terms, cheating one or multiple algorithms involves replacing the corresponding algorithm in the steering XML configuration file with the respective cheating counterpart. For example, the configuration shown above, guiding the creation of two-dimensional clusters on the $u$ view, is replaced by the CheatingClusterCreation algorithm, which performs the cheating of the cluster creation (which is the first step of both the PandoraCosmic and PandoraNeutrino paths, see \autoref{fig:PandoraCosmicNeutrino}), listed below 
+
+\begin{lstlisting}[style=xmlstyle]
+<pandora>
+    ...
+    <algorithm type = "LArClusteringParent">
+        <algorithm type = "LArCheatingClusterCreation" description = "ClusterFormation">
+            <CollapseToPrimaryMCParticles>false</CollapseToPrimaryMCParticles>
+            <MCParticleListName>Input</MCParticleListName>
+        </algorithm>
+        <InputCaloHitListName>CaloHitListU</InputCaloHitListName>
+        <ClusterListName>ClustersU</ClusterListName>
+        <ReplaceCurrentCaloHitList>false</ReplaceCurrentCaloHitList>
+        <ReplaceCurrentClusterList>true</ReplaceCurrentClusterList>
+    </algorithm>
+    ...
+</pandora>
+\end{lstlisting}
+
+The action of cheating one algorithm can be seen as making the cheated step of the reconstruction have a perfect success rate. Due to the approach of the Pandora reconstruction, cheating different steps takes into account the action of each step of the reconstruction. The 
 
 \subsection{Two-dimensional clustering}
 
+
+
 \subsection{Three-dimensional vertex}
+
+
 
 \subsection{Three-dimensional track and shower reconstruction}
 
+
+
 \subsection{Particle hierarchy reconstruction}
+
+
 
 \subsection{Particle classification}
 
+
+
 \section{Evaluating subsequent reconstruction stages}
 
+
+
 \section{Impact of the vertex reconstruction}
+

@@ -28,6 +28,7 @@
 % \usepackage[babel=true]{microtype}
 \usepackage{helvet}
 \usepackage{mathpazo}
+% \usepackage{vicent}
 
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -210,7 +211,9 @@
 \renewcommand*{\sectfont}{\bfseries}
 \renewcommand*{\chapnumfont}{%
 % \usefont{T1}{\@defaultcnfont}{b}{n}\fontsize{130}{160}\selectfont% Default: 100/130
-\usefont{T1}{phv}{bx}{n}\fontsize{100}{130}\selectfont% Default: 100/130
+% \cursiveshape
+\usefont{T1}{phv}{bx}{n}%
+\fontsize{100}{130}\selectfont% Default: 100/130
 \color{chaptergrey}%
 \phantom{0}% This fixes chapter w/o number
 }
@@ -250,11 +253,11 @@
 
 %% LISTINGS (ahaahha there ill be a lot :)
 \lstdefinestyle{xmlstyle}{
-    % language=XML,
-    basicstyle=\sffamily\scriptsize,
+    language=XML,
+    % basicstyle=\small,
     columns=flexible,
-    % numbers=left,
-    % numberstyle=\tiny\color{gray},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
     stepnumber=1,
     % numbersep=5pt,
     % backgroundcolor=\color{codegray},
@@ -262,9 +265,10 @@
     showstringspaces=false,
     breaklines=true,
     frame=single,
-    morekeywords={version, encoding, type},
-    keywordstyle=\bfseries, % \color{darkblue},
-    stringstyle=\bfseries, % \color{darkred},
+    % frame=l,
+    morekeywords={pandora, algorithm,InputCaloHitListName, ClusterListName, ReplaceCurrentCaloHitList, ReplaceCurrentClusterList, CollapseToPrimaryMCParticles, MCParticleListName},
+    keywordstyle=\color{RoyalBlue},
+    stringstyle=\color{Peach},
     commentstyle=\itshape\color{gray}
 }
 
@@ -282,7 +286,7 @@
 \usepackage{eso-pic}
 \usepackage{duerer}
 
-\renewcommand{\floatpagefraction}{.9}%
+\renewcommand{\floatpagefraction}{.95}%
 
 
 \usepackage{longtable}

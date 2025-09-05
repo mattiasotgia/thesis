@@ -114,7 +114,7 @@ At this point, a collection of 2D hits for each plane of wires has been created.
     n_\mathrm{p.e.} = \frac{\mathrm{\#ADC} - \mathrm{ped}}{G}. 
 \end{equation} 
 
-A preliminary selection for the side CRT data is performed, requiring a \SI{7.5}{pe} threshold. The top CRT does not require a preliminary selection based on a threshold but instead requires a quadruple coincidence to generate a hit (see \autoref{fig:CRT_reco}a). At this point it is possible to create the CRT \emph{Hit} objects for side and top CRTs. To each hit object are associated two timestamps,  $T_0$ identifying the global timing of the recorded hit, provided by the White Rabbit switch system and $T_1$ which identifies the relative timing of the hit with respect to the trigger. Additionally, the CRT hits contain the position in the ICARUS detector frame of reference. Due to the differences in the CRT modules between side and top CRT, the position computation is slightly different. 
+A preliminary selection for the side CRT data is performed, requiring a \SI{7.5}{pe} threshold. The top CRT does not require a preliminary selection based on a threshold but instead requires a quadruple coincidence to generate a hit (see \autoref{fig:CRT_reco}a). At this point it is possible to create the CRT \emph{Hit} objects for side and top CRTs. To each hit object are associated two timestamps:  $T_0$ identifying the global timing of the recorded hit, provided by the White Rabbit switch system, and $T_1$ which identifies the relative timing of the hit with respect to the trigger. Additionally, the CRT hits contain the position in the ICARUS detector frame of reference. Due to the differences in the CRT modules between side and top CRT, the position computation is slightly different. 
 
 \begin{figure}
     \centering
@@ -291,7 +291,7 @@ From the reconstructed energy deposition per centimetre, it is possible to compu
 \end{equation}
 
 Using the calorimetric information, it is possible to develop a $\chi^2$-like score that helps us identify the particle species. The underlying assumption is that, if the particle stops inside the TPC active volume, the $\dv*{E}{x}$ energy loss versus the residual range\footnote{Residual range is defined as the distance of an energy deposition within a track from the track's endpoint.} is a powerful tool to distinguish charged particles. The PID score is defined, therefore, as \cite{arteroponsStudyReconstructionNuMuCC} \begin{equation}
-    \mathrm{PID} = \chi^2/\mathrm{ndof} = \sum_\mathrm{hit} \qty(\frac{{\dv*{E}{x}}_\mathrm{measured} - {\dv*{E}{x}}_\mathrm{theory}}{\sigma_{\dv*{E}{x}}})^2 \Big/ n_\mathrm{hits}.
+    \mathrm{PID} = \chi^2/\mathrm{ndof} = \sum_\mathrm{hit} \qty(\frac{{\dv*{E}{x}}_\mathrm{measured} - {\dv*{E}{x}}_\mathrm{theory}}{\sigma_{\dv*{E}{x}}})^2 \Big/ n_\mathrm{hits}. \label{eq:PID}
 \end{equation}
 
 \section{SPINE: machine learning particle identification} \label{sec:SPINE}
