@@ -205,7 +205,7 @@ At this point, the assignment of hits to reconstructed particles is complete, ea
 
 After the 3D hit creation, candidate muon cosmic-ray particles are created, and they are tagged to filter out hits belonging to the unambiguously cosmic-ray particles. Ambiguous hits are passed to subsequent paths of the reconstruction, namely PandoraCosmic and PandoraNeutrino. 
 
-\subsection{PandoraNeutrino: topological neutrino event reconstruction} 
+\subsection{PandoraNeutrino: topological neutrino event reconstruction} \label{sec:PandoraNeutrino}
 
 A key requirement for the PandoraNeutrino reconstruction path is that it should be able to deal with the presence of cosmic-ray muon remnants. The approach to address this problem is therefore to run the same 2D clustering, 3D cluster matching and 3D hit reconstruction described in \autoref{sec:fast_reco}. This is actually the second purpose of the PandoraFastReco path. After this path is run, 3D hits are divided into \emph{slices}, which are separate lists of hits, using proximity-based metrics. The idea is to isolate neutrino interaction and cosmic-ray interaction in different slices. The original 2D hits associated with each slice are then used as an input to the dedicated neutrino reconstruction, which is described in this section. 
 
