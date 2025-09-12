@@ -109,24 +109,81 @@ All three paths employed in the ICARUS event reconstruction share a set of algor
 
 As most of the algorithms used within the Pandora framework, itis highly customizable, allowing only one view of the three to be cheated, and also allowing only one type of particle to have its cluster created by using true information. Due to the ICARUS geometry, and the details discussed in \autoref{sec:ICARUS_T600} (illustrated in \autoref{fig:i2_c_planes_wirepitch_detail}), the first option is only possible considering either the induction-1 plane and/or the induction-2 and collection plane together.
 
-\autoref{fig:CheatingClusterCreation} illustrate the action of the cheated algorithm, showing the clusters created after a single pass of the TrackClusterCreation algorithm and the cluster created by the CheatingClusterCreation algorithm. {\color{red} still need to finish writing this part when image is ready} 
+\autoref{fig:CheatingClusterCreation} illustrate the action of the cheated algorithm, showing the clusters created after a single pass of the TrackClusterCreation algorithm and the cluster created by the CheatingClusterCreation algorithm. The effect, thought very subtle for track particles, which are the star of the $\PGnGm$CC QE Np selection in use, is noticeable especially in the cluster refinements. Less noisy hits are clustered together, resulting in an overall improvement in the downstream reconstruction of the 3D particles. 
 
 \begin{figure}
     \centering
-    \caption[CheatingClusterCreation versus TrackClusterCreation algorithm]{\color{red} Effect of cheating the cluster creation for tracks and showers}
+    \includegraphics[width=0.85\linewidth, trim={12cm 0 11cm 0}, clip]{pandora/chapter_4/cluster2D.pdf}
+    \caption[CheatingClusterCreation versus TrackClusterCreation algorithm]{Illustation of the effect of the CheatingClusterCreation algorithm, with a $1\PGm1Pp$ event. The amount of noise in the proton daughter particles is greater, resulting in a lower hit purity, whereas the cheated clusters show a better refinement. The center panel shows the true underlying neutrino interaction, where the secondary protons created from the reinteraction of the primary proton are illustrated. }
     \label{fig:CheatingClusterCreation}
+\end{figure}
+
+To assess that the effect of the CheatingClusterCreation algorithm was as expected, a downstream metric has to be selected. Given that the TrackClusterCreation algorithm objective is to assign the correct hits to the respective track in each plane, two valid metrics are the \emph{hit completeness} and \emph{hit purity} scores. Given the hits on the readout plane, its possible to define the MC matched hits, that are the hits that are associated with the MCParticle andh are also associated by Pandora to the PFParticle \begin{equation}
+    \mathrm{Matched\ hits} \equiv \mathrm{hits_{MCParticle} \cap hits_{PFParticle}}.
+\end{equation} Looking at the illustration in \autoref{fig:hit_pur_eff}, two particles are present. The reconstructed PFParticle $j$ has a total of seven hits associated by the Pandora reconstruction, whereas PFParticle $k$ has six; The true MCParticle $j$ has nine hits, and $k$ has four. So for Particle $j$ the matched hits are seven, and for $k$ are four. We can therefore define the hit purity and hit completeness as \begin{equation}
+    \mathrm{Hit\ purity} \equiv \frac{\mathrm{Matched\ hits}}{\mathrm{hits_{PFParticle}}}, 
+\end{equation} and \begin{equation}
+    \mathrm{Hit\ completeness} \equiv \frac{\mathrm{Matched\ hits}}{\mathrm{hits_{MCParticle}}}. 
+\end{equation} So, in the example in \autoref{fig:hit_pur_eff}, we have a purity of \SI{100}{\percent} and \SI{66.7}{\percent}, and a completeness of \SI{77.8}{\percent} and \SI{100}{\percent}, for the $j$ and $k$ particle respectively. 
+
+\begin{figure}
+    \centering
+    % \subfloat[]{
+    \begin{tikzpicture}
+        \node[] at (0,0) {\includegraphics[width=0.5\linewidth, trim={18cm 0 18cm 0}, clip]{pandora/chapter_4/HIT_PUR_EFF.pdf}};
+        \node[] at (6, 0) {
+        \begin{minipage}[b]{5cm}
+            \begin{tabular}{ccc}
+                & Particle $j$ & Particle $k$ \\
+                $\mathrm{hits_{MCParticle}}$ & 9 & 4 \\
+                $\mathrm{hits_{PFParticle}}$ & 7 & 6 \\
+                Matched hits & 7 & 4 \\
+                Purity & 1 & 0.667 \\
+                Completeness & 0.778 & 1
+            \end{tabular}
+        \end{minipage}
+        };
+    \end{tikzpicture}
+    
+    \caption[Definition of hit purity and completeness]{Illustration closeup of the MC hits with their association to both the true MCParticle (indicated by the border style) and the Pandora reconstructed PFParticle (indicated by the fill color). More detail is found in the text. }
+    \label{fig:hit_pur_eff}
+\end{figure}
+
+Having provided the definition of hit purity and hit completeness, it is interesting to look at the effect of the CheatingClusterCreation algorithm in terms of hit purity and hit completeness. \autoref{fig:hit_purity_completeness_CCC} illustrate both the hit purity an the hit completeness for a sample of $1\PGm N\Pp$ selected using the true signal definition \cite{artero_pons_2024_13841852}, for both the protons and the muons involved in the process. Both the hit purity and hit completeness spectra show a preference for the higher part of the spectra in the case of the CheatedClusterCreation algorithm. 
+
+Even though the cheated spectra show a improvement, there is a non-zero fraction of events for which the muon completeness is lower than \num{0.4}. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\linewidth]{pandora/chapter_4/toSlide_completeness_purity.pdf}
+    \caption[Hit purity and completeness with CheatingClusterCreation algorithm]{Hit purity and hit completeness spectra for the proton (blue) and muon (red) population, for both the cheated cluster reconstruction (thick line) and the nominal reconstruction (thin line). }
+    \label{fig:hit_purity_completeness_CCC}
 \end{figure}
 
 \subsection{Three-dimensional vertex}
 
 There are two way true information can be used to inform the reconstruction of the interaction vertex. 
 
-The straight-forward mode is to replace both the created vertex candidates and the selected interaction vertex with the the true $(x,y,z)$ position of the vertex as generated by Monte Carlo simulation. This operation is performed by the CheatingVertexCreation algorithm that replace all the vertex creation and selection algorithms in the XML steering configuration. {\color{red} Some words on 1. injecting true vertex is not that safe (example of OoFV vertex), 2. true vertex $\neq$ reco vertex even in some cases $\to$ is the first hit reconstructed nearby? 3. other considerations?}
+The straight-forward mode is to replace both the created vertex candidates and the selected interaction vertex with the the true $(x,y,z)$ position of the vertex as generated by Monte Carlo simulation. This operation is performed by the CheatingVertexCreation algorithm that replace all the vertex creation and selection algorithms in the XML steering configuration. 
 
 \begin{figure}
     \centering
+    \includegraphics[width=0.95\linewidth, trim={12cm 0 11cm 0}, clip]{pandora/chapter_4/vertex.pdf}
     \caption[CheatingVertexCreation and CheatingVertexSelection algorithms]{}
-    \label{fig:enter-label}
+    \label{fig:CheatingVertexCreation}
+\end{figure}
+
+\autoref{fig:CheatingVertexCreation} shows an example of one event where 
+
+
+{\color{red} Some words on 1. injecting true vertex is not that safe (example of OoFV vertex), 2. true vertex $\neq$ reco vertex even in some cases $\to$ is the first hit reconstructed nearby? 3. other considerations?}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.55\linewidth, trim={18.5cm 0 22cm 0}, clip]{pandora/chapter_4/vertex_OoFV.pdf}
+    \caption[CheatingVertexCreation with an OoFV vertex]{}
+    \label{fig:CheatingVertexCreation}
 \end{figure}
 
 A second point where the true Monte Carlo information can be used to inform the vertex aglorithms is in the selection of the correct interaction vertex from the list of candidates created by the nominal CandidateVertexCreation algorithm. This operation is essentially bypassing the BdtVertexSelection algorithm and selecting, from the list of vertex candidates created as described in \autoref{sec:PandoraNeutrino}, the vertex which lies closest to the true interaction vertex based on a three-dimensional distance metric alone. 
@@ -143,6 +200,8 @@ A second point where the true Monte Carlo information can be used to inform the 
 \subsection{Three-dimensional track and shower reconstruction}
 
 Like the other steps in the reconstruction, cheating the three-dimensional reconstruction steps follows from the nominal version of the algorithm. The idea is that a cheated version of a reconstruction step should replace the nominal version in the chain. This is why the cheating of the three-dimensional reconstruction stage is made of a cheated step, namely the CheatingPfoCreation algorithm, followed by the same ThreeDHitCreation algorithm employed in the nominal version of the reconstruction. In fact, event though the interaction is generated in three-dimensional space, the simulation of the hits is performed only on the 2D readout planes, so there is no possibility to really inject the true $(x,y,z)$ position of each hit, since it is not known. 
+
+The CheatingPfoCreation algorithm goes through all the 2D clusters created by upstream stages of the reconstruction to identify those from each view that share the same true MCParticle. This operation is performed, similarly to the CheatingClusterCreation algorithm, exploiting the MCweight associated with the hits in the cluster. Clusters sharing more than \SI{50}{\percent} of the weighted hits with a given MCParticle are added together. 
 
 
 \subsection{Particle hierarchy reconstruction}
