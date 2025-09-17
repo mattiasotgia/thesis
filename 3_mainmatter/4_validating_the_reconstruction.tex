@@ -4,30 +4,30 @@
 
 The Pandora-based event reconstruction pipeline, as described in \autoref{sec:TPC_reco_gen}, has been --- and continues to be --- central to the physics analyses conducted with the ICARUS detector. Its use across the LArTPC community ensures it is a set of tools that is actively developed. Any improvement made by each collaboration sharing this tool is thus an improvement that can be exploited on all the experiments that use it.
 
-The Pandora framework in ICARUS employes the same structure inherithed from the MicroBooNE collaboration, shared also with the SBND experiment. Especially important for the success of the SBN programme is the fact that the reconstruction is nearly identical for both the near and the far detector, in order to make systematic uncertainties related to the reconstruction as less relevant as possible. 
+The Pandora framework in ICARUS employs the same structure inherited from the MicroBooNE collaboration, shared also with the SBND experiment. Especially important for the success of the SBN program is the fact that the reconstruction is nearly identical for both the near and the far detector, in order to make systematic uncertainties related to the reconstruction as less relevant as possible. 
 
 Recent efforts were made to better align the Pandora reconstruction paths between ICARUS and SBND, with the inclusion of shower-targeted algorithms, aiming at refining the shower clusters. Moving in the same direction, this work focuses on the implementation of a set of tools that enable the use of true Monte Carlo information to alter the reconstruction output of the different stages. This comprehensive set of tools has already been tested and used in the context of the SBND reconstruction, as well as for other Pandora-based reconstruction pipelines \cite{Mawby:2023nws}. 
 
-These tools allow to disect the impact of each step of the Pandora reconstruction by altering the reconstructed objects using the true Monte Carlo information. Using these methods provide for validation tools of the event reconstruction chain. 
+These tools allow to dissect the impact of each step of the Pandora reconstruction by altering the reconstructed objects using the true Monte Carlo information. Using these methods provides validation tools for the event reconstruction chain. 
 
-However, developing reconstruction improvement in vacuum is both difficult and do not provide all the times a clear quantification of the impact made.
+However, developing reconstruction improvement in vacuum is both difficult and does not provide all the time a clear quantification of the impact made.
 So, I instead targeted my studies toward a precise analysis to be able to identify pain points of the reconstruction chain. 
 
-The ICARUS collaboration, using the collected data of the second physics data taking campaign, performed as a standalone one-detector campaign, is moving towards a first oscillation analysis, preliminary to the two-detector oscillation analysis expected with the data collected by the SBN programme. This preliminry analysis is targeted at studying the muon neutrino disappearance channel to project sensitivity curves onto the $(\Delta m^2, \sin^22\theta_{\PGm\PGm})$. 
+The ICARUS collaboration, using the collected data of the second physics data-taking campaign, performed as a standalone one-detector campaign, is moving towards a first oscillation analysis, preliminary to the two-detector oscillation analysis expected with the data collected by the SBN programme. This preliminary analysis is targeted at studying the muon neutrino disappearance channel to project sensitivity curves onto the $(\Delta m^2, \sin^22\theta_{\PGm\PGm})$. 
 
-The $\PGnGm$-disappearance analysis ongoing within the collaboration uses a precise event topology, namely the muon neutrino charged current quasi elastic topology, with one muon in the final state, any number greater than ero of protons, and requires zero electromagnetic showers (both from electrons and from photons) and zero charged pions. This selection is reffered to as $\PGnGm$CC N$\Pp$ QE \cite{particles8010018, arteroponsStudyReconstructionNuMuCC}.  
+The $\PGnGm$-disappearance analysis ongoing within the collaboration uses a precise event topology, namely the muon neutrino charged current quasi-elastic topology, with one muon in the final state, any number greater than zero of protons, and requires zero electromagnetic showers (both from electrons and from photons) and zero charged pions. This selection is referred to as $\PGnGm$CC N$\Pp$ QE \cite{particles8010018, arteroponsStudyReconstructionNuMuCC}.  
 
-\section{Data sample and selection}
+\section{Data sample and selection} \label{sec:dataSample_and_selection}
 
-The $1\PGm N\Pp$ event topology used in the muon neutrino disappearance study are selected automatically using a thorougly tuned and tested selection procedure \cite{particles8010018}. I will now delve a little bit inside the details of the event selection procedure, highlighting the decisions that went behind the variables cuts. 
+The $1\PGm N\Pp$ event topologies used in the muon neutrino disappearance study are selected automatically using a thoroughly tuned and tested selection procedure \cite{particles8010018}. I will now delve a little bit inside the details of the event selection procedure, highlighting the decisions that went behind the variable cuts. 
 
 \paragraph{CRT-PMT match} Exploiting the CRT-PMT match performed in the event reconstruction, non-contained neutrinos or cosmic-ray particles are rejected. The cut searches for coincidences in the \SI{150}{\ns} gate between CRT hits and an optical flash. All optical flashes are looked into the \qtyrange{0}{1.6}{\us} spill gate, and only the spills that have no CRT hit associated are kept. This first contributes to reducing the huge amount of cosmic ray interactions in the detector, thus slightly improving on the selection purity. 
 
-\paragraph{Optical flash barycenter match} The light information coming from the PMTs is also used to improve the selection by exploiting its 3D information. Using the light from the triggering PMT flash, the barycenter of the light hit is computed. The barycenter is computed as the mean of optical hits, weighted on the signal integral on each optical hit, \begin{equation}
+\paragraph{Optical flash barycentre match} The light information coming from the PMTs is also used to improve the selection by exploiting its 3D information. Using the light from the triggering PMT flash, the barycenter of the light hit is computed. The barycenter is computed as the mean of optical hits, weighted on the signal integral on each optical hit, \begin{equation}
     \vec{x} = \frac{\sum_i \vec x_i \cdot \mathrm{PE}_i}{\sum_i \mathrm{PE}_i}.  
-\end{equation} Here $\vec x_i$ represent the position of the PMT producing the $i$-th, with a signal integral of $\mathrm{PE}_i$ photo-electrons collected by the $i$-th photomultiplier. This position information is used to reject all slices whose charged $z$-barycenter was more than \SI{1}{\m} away from the light $z$-barycenter. This choice was made considering the best cut to minimise he contamination from other interaction types, as well as maximise the selection efficiency. 
+\end{equation} Here $\vec x_i$ represents the position of the PMT producing the $i$-th, with a signal integral of $\mathrm{PE}_i$ photoelectrons collected by the $i$-th photomultiplier. This position information is used to reject all slices whose charged $z$-barycenter was more than \SI{1}{\m} away from the light $z$-barycenter. This choice was made considering the best cut to minimise the contamination from other interaction types, as well as maximise the selection efficiency. 
 
-\paragraph{Vertex and tracks containment} Two basic selection cuts are then applied to the vertices and track in the interaction selected by the first two cuts. The vertex is required to be insde the fiducial volume (requiring more than \SI{25}{\cm} apart from the lateral TPC walls and 30/\SI{50}{\cm} from the upstream/downstream walls) of the ICARUS detector, defined in \cite{arteroponsStudyReconstructionNuMuCC}, whereas all the tracks inside the interaction are required to be contained in the active volume of the TPC within \SI{5}{\cm} from all the sides. This request ensures that the PID score described in \eqref{eq:PID} can be computed and provides for a great separation between different particle species. 
+\paragraph{Vertex and tracks containment} Two basic selection cuts are then applied to the vertices and track in the interaction selected by the first two cuts. The vertex is required to be inside the fiducial volume (requiring more than \SI{25}{\cm} apart from the lateral TPC walls and 30/\SI{50}{\cm} from the upstream/downstream walls) of the ICARUS detector, defined in \cite{arteroponsStudyReconstructionNuMuCC}, whereas all the tracks inside the interaction are required to be contained in the active volume of the TPC within \SI{5}{\cm} from all the sides. This request ensures that the PID score described in \eqref{eq:PID} can be computed and provides for a great separation between different particle species. 
 
 The interactions that pass these preliminary quality cuts are then analysed by term of particle content, so each particle in the interaction is classified as such, and interactions with one muon, $N$ protons (with $N\geq1$), zero charged pions and zero showers are selected. I will now define the variable cuts applied to identify each particle species. 
 
@@ -62,7 +62,7 @@ Parallel to both reconstruction chains, the efficiencies and purities were valid
 
 \section{\emph{Cheating} the Pandora reconstruction} 
 
-The modular structure of the Pandora reconstruction allows for great flexibility of the tools and algorithms involved in the reconstruction. As described in \autoref{sec:TPC_reco_gen}, and pictured in \autoref{fig:PandoraFastReco}, \ref{fig:PandoraCosmic} and \ref{fig:PandoraNeutrino}, a sequence of multiple algorithms is applied to the hit objects, resulting in reconstructed objects. The steering of the Pandora reconstruction chain is performed by XML configuration files where each algorithm is declared and configured. An example of the steering algorithm for the TrackClusterCreation algorithm, present in both the PandoraFastReco, PandoraCosmic and PandoraNeutrino paths is displayed below.
+The modular structure of the Pandora reconstruction allows for great flexibility of the tools and algorithms involved in the reconstruction. As described in \autoref{sec:TPC_reco_gen}, and pictured in \autoref{fig:PandoraFastReco}, \ref{fig:PandoraCosmic} and \ref{fig:PandoraNeutrino}, a sequence of multiple algorithms is applied to the hit objects, resulting in reconstructed objects. The steering of the Pandora reconstruction chain is performed by XML configuration files where each algorithm is declared and configured. An example of the steering algorithm for the TrackClusterCreation algorithm, present in both the PandoraFastReco, PandoraCosmic and PandoraNeutrino paths, is displayed below.
 
 \begin{lstlisting}[style=xmlstyle]
 <pandora>
@@ -81,7 +81,7 @@ The modular structure of the Pandora reconstruction allows for great flexibility
 
 This modular approach of the Pandora topological event reconstruction can be exploited to allow an algorithm to be replaced with a functionally identical algorithm, which, instead of relying on the actual tools to perform the reconstruction task, uses the underlying Monte Carlo information. This approach, developed as part of the Pandora reconstruction framework, is in this thesis referred to as ``\emph{cheating}'' of the reconstruction. The powerfulness of this concept has been shown already with reconstruction studies in other experiments, where it is employed to pinpoint the ``failure points'' of the topological event reconstruction and understand the ceiling performances of the Pandora reconstruction, assuming certain steps of the reconstruction are perfect \cite{Mawby:2023nws, Mawby:2025_FCCee, Nguyen:2023_cheatingPandora}. 
 
-In practical terms, cheating one or multiple algorithms involves replacing the corresponding algorithm in the steering XML configuration file with the respective cheating counterpart. For example, the configuration shown above, guiding the creation of two-dimensional clusters on the $u$ view, is replaced by the CheatingClusterCreation algorithm, which performs the cheating of the cluster creation (which is the first step of both the PandoraCosmic and PandoraNeutrino paths, see \autoref{fig:PandoraCosmicNeutrino}), listed below 
+In practical terms, cheating one or multiple algorithms involves replacing the corresponding algorithm in the steering XML configuration file with the respective cheating counterpart \cite{Nguyen:2023_cheatingPandora}. For example, the configuration shown above, guiding the creation of two-dimensional clusters on the $u$ view, is replaced by the CheatingClusterCreation algorithm, which performs the cheating of the cluster creation (which is the first step of both the PandoraCosmic and PandoraNeutrino paths; see \autoref{fig:PandoraCosmicNeutrino}), listed below 
 
 \begin{lstlisting}[style=xmlstyle]
 <pandora>
@@ -103,24 +103,26 @@ In practical terms, cheating one or multiple algorithms involves replacing the c
 
 The action of cheating one algorithm can be seen as making the cheated step of the reconstruction have a perfect success rate. Cheating different steps takes into account the action of each step of the reconstruction. The next paragraphs are entirely dedicated to delving into the details of how cheating is applied to different algorithms of the Pandora reconstruction chain. 
 
+Given the $\PGnGm$CC QE Np sample of events used for this study, the following sections are focused on cheating specifically the PandoraNeutrino reconstruction path. However, it should be noted that most of the algorithms that wil be addressed in this section are also implemented in the PandoraFastReco and PandoraCosmic reconstruction paths: this highlights the true power of the Pandora-based reconstruction pipeline, which allows for a large degree of flexibility. 
+
 \subsection{Two-dimensional clustering}
 
-All three paths employed in the ICARUS event reconstruction share a set of algorithm, the firsts being involved with the clustering of the hits on each of the three readout planes. Cheating this step is pretty straightforward. Using simulated data, the hits on the three $u$, $v$ nd $w$ views have associated with them a value called ``MCWeight'', expressing how much a given MCParticle in the interaction is related to the simulated deposited hit on the readout plane. Using the MCWeights it is possible for the hits to get mapped to the respective MCParticle, and thus build cluster on each of the 2D planes using the simulation true information. The effect for tracks, like muons and protons, is noticeable but yet not striking, whereas the effect for electromagnetic showers is huge, since this approach does not just cluster continuous lines of hits, but, using MC association to the true underlying event, can group together hits in more complex topologies. Hence, the presence of the CheatingClusterCreation algorithm makes some of the subsequent algorithms, used in the nominal (i.e. not ``cheated'') reconstruction chain, irrelevant. 
+The first algorithms in the PandoraNeutrino reconstruction path aim at clustering of the hits on each of the three readout planes. Cheating this step is straightforward. Using simulated data, the hits on the three $u$, $v$ nd $w$ views have associated with them a value called ``MCWeight'', expressing how much a given MCParticle in the interaction is related to the simulated deposited hit on the readout plane. Using the MCWeights, it is possible for the hits to get mapped to the respective MCParticle and thus build a cluster on each of the 2D planes using the simulation's true information. The effect for tracks, like muons and protons, is noticeable but not striking, whereas the effect for electromagnetic showers is huge, since this approach does not just cluster continuous lines of hits but, using MC association to the true underlying event, can group together hits in more complex topologies. Hence, the presence of the CheatingClusterCreation algorithm makes some of the subsequent algorithms, used in the nominal (i.e., not ``cheated'') reconstruction chain, irrelevant. 
 
-As most of the algorithms used within the Pandora framework, itis highly customizable, allowing only one view of the three to be cheated, and also allowing only one type of particle to have its cluster created by using true information. Due to the ICARUS geometry, and the details discussed in \autoref{sec:ICARUS_T600} (illustrated in \autoref{fig:i2_c_planes_wirepitch_detail}), the first option is only possible considering either the induction-1 plane and/or the induction-2 and collection plane together.
+Like most of the algorithms used within the Pandora framework, it is highly customisable, allowing only one view of the three to be cheated and also allowing only one type of particle to have its cluster created by using true information. Due to the ICARUS geometry and the details discussed in \autoref{sec:ICARUS_T600} (illustrated in \autoref{fig:i2_c_planes_wirepitch_detail}), the first option is only possible considering either the induction-1 plane (associated with the $w$ view) and/or the induction-2 and collection plane together (associated with a mix of $u$ and $v$ views).
 
-\autoref{fig:CheatingClusterCreation} illustrate the action of the cheated algorithm, showing the clusters created after a single pass of the TrackClusterCreation algorithm and the cluster created by the CheatingClusterCreation algorithm. The effect, thought very subtle for track particles, which are the star of the $\PGnGm$CC QE Np selection in use, is noticeable especially in the cluster refinements. Less noisy hits are clustered together, resulting in an overall improvement in the downstream reconstruction of the 3D particles. 
+\autoref{fig:CheatingClusterCreation} illustrate the action of the cheated algorithm, showing the clusters created after a single pass of the TrackClusterCreation algorithm and the cluster created by the CheatingClusterCreation algorithm. The effect, though very subtle for track particles, which are the star of the $\PGnGm$CC QE Np selection in use, is noticeable, especially in the cluster refinements. Less noisy hits are clustered together, resulting in an overall improvement in the downstream reconstruction of the 3D particles. 
 
 \begin{figure}
     \centering
     \includegraphics[width=0.85\linewidth, trim={12cm 0 11cm 0}, clip]{pandora/chapter_4/cluster2D.pdf}
-    \caption[CheatingClusterCreation versus TrackClusterCreation algorithm]{Illustation of the effect of the CheatingClusterCreation algorithm, with a $1\PGm1Pp$ event. The amount of noise in the proton daughter particles is greater, resulting in a lower hit purity, whereas the cheated clusters show a better refinement. The center panel shows the true underlying neutrino interaction, where the secondary protons created from the reinteraction of the primary proton are illustrated. }
+    \caption[CheatingClusterCreation versus TrackClusterCreation algorithm]{Illustration of the effect of the CheatingClusterCreation algorithm, with a $1\PGm1Pp$ event. The amount of noise in the proton daughter particles is greater, resulting in a lower hit purity, whereas the cheated clusters show a better refinement. The centre panel shows the true underlying neutrino interaction, where the secondary protons created from the reinteraction of the primary proton are illustrated. }
     \label{fig:CheatingClusterCreation}
 \end{figure}
 
-To assess that the effect of the CheatingClusterCreation algorithm was as expected, a downstream metric has to be selected. Given that the TrackClusterCreation algorithm objective is to assign the correct hits to the respective track in each plane, two valid metrics are the \emph{hit completeness} and \emph{hit purity} scores. Given the hits on the readout plane, its possible to define the MC matched hits, that are the hits that are associated with the MCParticle andh are also associated by Pandora to the PFParticle \begin{equation}
+To assess that the effect of the CheatingClusterCreation algorithm was as expected, a downstream metric has to be selected. Given that the TrackClusterCreation algorithm objective is to assign the correct hits to the respective track in each plane, two valid metrics are the \emph{hit completeness} and \emph{hit purity} scores. Given the hits on the readout plane, it's possible to define the MC matched hits, that are the hits that are associated with the MCParticle and are also associated by Pandora to the PFParticle \begin{equation}
     \mathrm{Matched\ hits} \equiv \mathrm{hits_{MCParticle} \cap hits_{PFParticle}}.
-\end{equation} Looking at the illustration in \autoref{fig:hit_pur_eff}, two particles are present. The reconstructed PFParticle $j$ has a total of seven hits associated by the Pandora reconstruction, whereas PFParticle $k$ has six; The true MCParticle $j$ has nine hits, and $k$ has four. So for Particle $j$ the matched hits are seven, and for $k$ are four. We can therefore define the hit purity and hit completeness as \begin{equation}
+\end{equation} Looking at the illustration in \autoref{fig:hit_pur_eff}, two particles are present. The reconstructed PFParticle $j$ has a total of seven hits associated by the Pandora reconstruction, whereas PFParticle $k$ has six; The true MCParticle $j$ has nine hits and $k$ has four. So for Particle $j$ the matched hits are seven, and for $k$ are four. We can therefore define the hit purity and hit completeness as \begin{equation}
     \mathrm{Hit\ purity} \equiv \frac{\mathrm{Matched\ hits}}{\mathrm{hits_{PFParticle}}}, 
 \end{equation} and \begin{equation}
     \mathrm{Hit\ completeness} \equiv \frac{\mathrm{Matched\ hits}}{\mathrm{hits_{MCParticle}}}. 
@@ -145,79 +147,356 @@ To assess that the effect of the CheatingClusterCreation algorithm was as expect
         };
     \end{tikzpicture}
     
-    \caption[Definition of hit purity and completeness]{Illustration closeup of the MC hits with their association to both the true MCParticle (indicated by the border style) and the Pandora reconstructed PFParticle (indicated by the fill color). More detail is found in the text. }
+    \caption[Definition of hit purity and completeness]{Illustration closeup of the MC hits with their association to both the true MCParticle (indicated by the border style) and the Pandora reconstructed PFParticle (indicated by the fill colour). More detail is found in the text. }
     \label{fig:hit_pur_eff}
 \end{figure}
 
-Having provided the definition of hit purity and hit completeness, it is interesting to look at the effect of the CheatingClusterCreation algorithm in terms of hit purity and hit completeness. \autoref{fig:hit_purity_completeness_CCC} illustrate both the hit purity an the hit completeness for a sample of $1\PGm N\Pp$ selected using the true signal definition \cite{artero_pons_2024_13841852}, for both the protons and the muons involved in the process. Both the hit purity and hit completeness spectra show a preference for the higher part of the spectra in the case of the CheatedClusterCreation algorithm. 
-
-Even though the cheated spectra show a improvement, there is a non-zero fraction of events for which the muon completeness is lower than \num{0.4}. 
+Having provided the definition of hit purity and hit completeness, it is interesting to look at the effect of the CheatingClusterCreation algorithm in terms of hit purity and hit completeness. \autoref{fig:hit_purity_completeness_CheatingClusterCreation} illustrates both the hit purity and the hit completeness for a sample of $1\PGm N\Pp$ selected using the true signal definition \cite{artero_pons_2024_13841852}, for both the protons and the muons involved in the process. Both the hit purity and hit completeness spectra show a preference for the higher part of the spectra when the clusters are cheated with the CheatedClusterCreation algorithm. 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.95\linewidth]{pandora/chapter_4/toSlide_completeness_purity.pdf}
-    \caption[Hit purity and completeness with CheatingClusterCreation algorithm]{Hit purity and hit completeness spectra for the proton (blue) and muon (red) population, for both the cheated cluster reconstruction (thick line) and the nominal reconstruction (thin line). }
-    \label{fig:hit_purity_completeness_CCC}
+    \includegraphics[width=\linewidth]{pandora/chapter_4/toSlide_completeness_purity.pdf}
+    \caption[Hit purity and completeness with CheatingClusterCreation algorithm]{Hit purity and hit completeness spectra for the proton (blue) and muon (red) population, for both the cheated cluster reconstruction (thick line) and the nominal reconstruction (thin line).}
+    \label{fig:hit_purity_completeness_CheatingClusterCreation}
+\end{figure}
+
+Even though the cheated spectra show an improvement, there is a non-zero fraction of events for which the muon completeness is lower than \num{0.4}. 
+
+Visually scanning these events unveiled that two main issues arise: \begin{enumerate}
+    \item Particles have poorly reconstructed hits on some of the wireplanes, making the correct association between views in downstream algorithm tough even though cluster are nearly perfect;
+    \item Sometimes the upstream slice creation fails and splits the muon into two or more slices. The slice that is identified as a true and reconstructed $1\PGm N\Pp$ interaction in these cases contains a shorter muon, therefore having higher hit purity but lower hit completeness. 
+\end{enumerate}
+
+It is also worth noting that, although Pandora algorithms are decoupled by design, the hit purity and hit efficiency metrics are computed downstream of all the steps of the Pandora reconstruction. After the two-dimensional clusters are created, clusters are modified iteratively by the Overshoot- and UndershootTracksTool algorithms that help perform the 3D reconstruction. Similar clustering improvements are performed also before three-dimensional reconstruction is done, once the interaction vertex is created, and after 3D particle creation when the particle refinement tools are run. These downstream operations can cause a cluster to be split into multiple smaller clusters, thus creating multiple reconstructed particles that are matched to the same true particle. Selecting all the particles that are truth-matched to a muon in the interaction, those smaller fragments are retrieved. Comparing the hit completeness with the number of reconstructed hits on the collection plane, left and right plots in \autoref{fig:CompletenessVsHits}, it is possible to observe that low hit completeness values are related to a small number of reconstructed hits. 
+
+\begin{figure}
+    \centering
+    \subfloat[]{\includegraphics[width=0.5\linewidth]{pandora/chapter_4/muonCompletenessVsHits_cheated2d.pdf}\label{fig:muonCompletenessVsHits_cheated2d}}
+    \subfloat[]{\includegraphics[width=0.5\linewidth]{pandora/chapter_4/protonCompletenessVsHits_cheated2d.pdf}\label{fig:protonCompletenessVsHits_cheated2d}}
+    \caption[Hit completeness versus number of hits on collection plane]{Number of hits reconstructed on the collection plane associated with a reconstructed particle versus the hit completeness of the same reconstructed particle. On the left there are reconstructed particles associated to true muons, whereas on the right there are true protons. Both plots are produced when performing the cheating of the cluster creation. }
+    \label{fig:CompletenessVsHits}
+\end{figure}
+
+In \autoref{fig:lowCompleteness_sliceErr}, for example, it is shown one case where the slice creation fails, thus lowering the muon efficiency to less than half. 
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.75\linewidth, trim={17cm 0 17cm 0}, clip]{pandora/chapter_4/lowCompleteness_sliceErr.pdf}
+    \caption{Example of an event for which the muon completeness is lower than $0.4$, $\PGm_\mathrm{completeness} \simeq \num{0.318}$. In this case the lower completeness is due to the event being split into two slices, only one (slice A) reconstructed as a $1\PGm5\Pp$ event that is selected. }
+    \label{fig:lowCompleteness_sliceErr}
 \end{figure}
 
 \subsection{Three-dimensional vertex}
 
-There are two way true information can be used to inform the reconstruction of the interaction vertex. 
+There are two ways true information can be used to inform the reconstruction of the interaction vertex. 
 
-The straight-forward mode is to replace both the created vertex candidates and the selected interaction vertex with the the true $(x,y,z)$ position of the vertex as generated by Monte Carlo simulation. This operation is performed by the CheatingVertexCreation algorithm that replace all the vertex creation and selection algorithms in the XML steering configuration. 
+The straightforward mode is to replace both the created vertex candidates and the selected interaction vertex with the true $(x,y,z)$ position of the vertex as generated by Monte Carlo simulation. This operation is performed by the CheatingVertexCreation algorithm that replaces all the vertex creation and selection algorithms in the XML steering configuration. 
 
-\begin{figure}
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.95\linewidth, trim={12cm 0 11cm 0}, clip]{pandora/chapter_4/vertex.pdf}
-    \caption[CheatingVertexCreation and CheatingVertexSelection algorithms]{}
+    \caption[CheatingVertexCreation and CheatingVertexSelection algorithms]{Illustration of the operation of the CheatedVertexCreation algorithm. On the left panel the true neutrino interaction vertex is shown by a dotted cross $+$, whereas the filled circle ($\circ$) indicates the Pandora-reconstructed neutrino interaction vertex. In the right panel the vertex position is cheated, and the filled circle corresponds to the true neutrino interaction vertex. Additionally, the vertex selected by the CheatingVertexSelection algorithm is shown with the dashed circle. }
+    % This is a $1\PGm1\Pp$ event where the primary proton (short track) and the muon (long track) are produced nearly back-to-back. The muon decay producing a Michel electron. 
     \label{fig:CheatingVertexCreation}
 \end{figure}
 
-\autoref{fig:CheatingVertexCreation} shows an example of one event where 
+\autoref{fig:CheatingVertexCreation} shows, for example, one event where the nominal reconstruction misplaced the interaction vertex. The event is a $1\PGm1\Pp$ event where the primary proton (short track) and the muon (long track) are produced nearly back-to-back. The muon decay to a Michel electron. Due to the topological features of the interaction, the vertex in the nominal reconstruction is placed at a distance of ${\sim}\SI{50}{\cm}$ from the truth. In the example, on the left panel, the true vertex is indicated using a dotted black cross, whereas the reconstructed neutrino interaction vertex is indicated with a filled grey circle. Using the CheatedVertexCreation algorithm, the correct interaction vertex is assigned, as shown in the right panel of \autoref{fig:CheatingVertexCreation} where the true and reconstructed vertices are identical. It is worth noting that, due to the interaction vertex correct placement, particle clusters are improved drastically: in this example, the proton (the particle on the left side of the vertex), which is not present in the nominal reconstruction, is correctly identified by the cheated vertex reconstruction. 
 
-
-{\color{red} Some words on 1. injecting true vertex is not that safe (example of OoFV vertex), 2. true vertex $\neq$ reco vertex even in some cases $\to$ is the first hit reconstructed nearby? 3. other considerations?}
-
+There are, however, some caveats to be considered that follow from the way the nominal vertex creation is addressed. Since Pandora operates its algorithms on the reconstructed and filtered hits, it can only add vertices at the endpoint of 2D clusters. However, there are cases when the true interaction vertex position does not correspond with any reconstructed hits. This can happen for three major cases: \begin{enumerate}
+    \item the interaction vertex lies outside the active volume of the TPC, therefore not producing any signal in the wires in its vicinity;
+    \item the conversion gap for the final state particles involved in the interaction is large due to the underlying physics (for example, the production of a $\PGpz$, that is detected through the identification of two $\PGg$ yielding electromagnetic showers in LAr);
+    \item the hits near the true interaction vertex are lost in the signal processing stage. 
+\end{enumerate}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.55\linewidth, trim={18.5cm 0 22cm 0}, clip]{pandora/chapter_4/vertex_OoFV.pdf}
-    \caption[CheatingVertexCreation with an OoFV vertex]{}
-    \label{fig:CheatingVertexCreation}
+    \caption[CheatingVertexCreation with an OoFV vertex]{The illustration shows an example of a vertex generated outside the TPC fiducial volume, for which the vertex creation was cheated. However, as briefly described in the text, the reconstructed vertex is different from the true one. }
+    \label{fig:CheatingVertexCreation_errors}
 \end{figure}
 
-A second point where the true Monte Carlo information can be used to inform the vertex aglorithms is in the selection of the correct interaction vertex from the list of candidates created by the nominal CandidateVertexCreation algorithm. This operation is essentially bypassing the BdtVertexSelection algorithm and selecting, from the list of vertex candidates created as described in \autoref{sec:PandoraNeutrino}, the vertex which lies closest to the true interaction vertex based on a three-dimensional distance metric alone. 
-{\color{red} Missing image. Show here the effects of the cheating and a metric valid to check it is working or later?}
+In all these cases, cheating the vertex with the CheatingVertexCreation algorithm results in a vertex placed far from reconstructed hits on the three views. In these cases, Pandora algorithms downstream of the vertex creation try to correct by assigning the vertex to the closest hit in 3D space. \autoref{fig:CheatingVertexCreation_errors} shows one of the mentioned cases. In this example, the generated vertex is outside the fiducial volume (hence out of the active TPC volume), and the candidate reconstructed vertex by Pandora is highlighted yellow, far from the truth. 
+
+A second point where the true Monte Carlo information can be used to inform the vertex algorithms is in the selection of the correct interaction vertex from the list of candidates created by the nominal CandidateVertexCreation algorithm. This operation is essentially bypassing the BdtVertexSelection algorithm and selecting, from the list of vertex candidates created as described in \autoref{sec:PandoraNeutrino}, the vertex which lies closest to the true interaction vertex based on a three-dimensional distance metric alone. \autoref{fig:CheatingVertexCreation}, on the right panel, shows the result of cheating the vertex selection (dashed circle). 
+
+Checking whether the vertex cheating happens is straightforward: it is possible to check the distance of the true vertex with respect to the reconstructed vertex of the interaction. \autoref{fig:vertex_cheated_dispacement} shows this for both the cheating of the vertex creation (thick black line) as well as the cheating of the vertex selection (thin black line), comparing the two cases with the distribution of the vertex distance when the nominal reconstruction is performed. 
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{pandora/chapter_4/toSlide_vertexStudy.pdf}
-    \caption[Vertex displacement from truth]{Displacement of the reconstructed vertex from the true vertex, computed when performing the nominal vertex recosntruction (shaded area), cheating the vertex selection (thin black line) and cheating the vertex creation algortithm (thick black line). }
-    \label{fig:enter-label}
+    \caption[Vertex displacement from truth]{Displacement of the reconstructed vertex from the true vertex, computed when performing the nominal vertex reconstruction (shaded area), cheating the vertex selection (thin black line) and cheating the vertex creation algorithm (thick black line). }
+    \label{fig:vertex_cheated_dispacement}
 \end{figure}
 
 
 \subsection{Three-dimensional track and shower reconstruction}
 
-Like the other steps in the reconstruction, cheating the three-dimensional reconstruction steps follows from the nominal version of the algorithm. The idea is that a cheated version of a reconstruction step should replace the nominal version in the chain. This is why the cheating of the three-dimensional reconstruction stage is made of a cheated step, namely the CheatingPfoCreation algorithm, followed by the same ThreeDHitCreation algorithm employed in the nominal version of the reconstruction. In fact, event though the interaction is generated in three-dimensional space, the simulation of the hits is performed only on the 2D readout planes, so there is no possibility to really inject the true $(x,y,z)$ position of each hit, since it is not known. 
+Like the other steps in the reconstruction, cheating the three-dimensional reconstruction steps follows from the nominal version of the algorithm. The idea is that a cheated version of a reconstruction step should replace the nominal version in the chain. This is why the cheating of the three-dimensional reconstruction stage is made of a cheated step, namely the CheatingPfoCreation algorithm, followed by the same ThreeDHitCreation algorithm employed in the nominal version of the reconstruction. In fact, even though the interaction is generated in three-dimensional space, the simulation of the hits is performed only on the 2D readout planes, so there is no possibility to really inject the true $(x,y,z)$ position of each hit, since it is not known. 
 
-The CheatingPfoCreation algorithm goes through all the 2D clusters created by upstream stages of the reconstruction to identify those from each view that share the same true MCParticle. This operation is performed, similarly to the CheatingClusterCreation algorithm, exploiting the MCweight associated with the hits in the cluster. Clusters sharing more than \SI{50}{\percent} of the weighted hits with a given MCParticle are added together. 
+The CheatingPfoCreation algorithm goes through all the 2D clusters created by upstream stages of the reconstruction to identify those from each view that share the same true MCParticle. This operation is performed, similarly to the CheatingClusterCreation algorithm, exploiting the MCweight associated with the hits in the cluster. Clusters sharing more than \SI{50}{\percent} of the weighted hits with a given MCParticle are added together. Once they are added together, no further operation is performed other than the geometrical reconstruction, which is performed in the same way it is done for the nominal reconstruction, by creating 3D hits from the sets of 2D clusters. 
+
+It is worth noting that, in order to apply cheating to the 3D matching, the starting point 2D clusters must be as good as they can be. In the nominal reconstruction, the assumption of not fully complete 2D clusters requires the use of the Under-/OverShootTracksTools to remove ambiguous clusters. In the cheated 3D matching, these tools are not run in the standard configuration. In the case of two ambiguous clusters being found on one plane, for example a split cluster, only the cluster with the most shared hits with the true underlying MCParticle will be used, and the remaining cluster is left out of the reconstruction. This is why the cheating of this step of the reconstruction is only performed when the previous steps are also cheated, and not as an individual module. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{pandora/chapter_4/toSlide_completeness_purity_3d.pdf}
+    \caption[Hit purity and completeness with CheatingPfoCreation algorithm]{Hit purity and hit completeness spectra for the proton (blue) and muon (red) population when the nominal reconstruction is applied (thin line), when the 2D clusters are cheated (dashed line) and when all the steps up to the 3D cluster matching are cheated (thick line).}
+    \label{fig:hit_purity_completeness_CheatingPfoCreation}
+\end{figure}
+
+To validate the effectiveness of cheating the three-dimensional cluster matching, the same metric as the two-dimensional cluster creation is used. This makes the metric not ubiquitous for either algorithm. However, a smaller, yet not zero, improvement would indicate that the algorithm is performing as expected. This is illustrated in \autoref{fig:hit_purity_completeness_CheatingPfoCreation}, where an improvement with respect to the cheating step of the 2D cluster creation (shown in the dashed line) is visible. 
+
+Similarly to the cheated 2D cluster creation case, a lower hit completeness for both muons and protons is correlated with a lower number of hits in the collection plane, suggesting that either there are more than one reconstructed particles associated with the true underlying MCParticle or that the particle is split into two slices. This is shown in \autoref{fig:CompletenessVsHits_cheated2dVtx3d}, closely matching the same trend that was highlighted for muons and protons when performing the cheating of the two-dimensional cluster creation. 
+
+\begin{figure}
+    \centering
+    \subfloat[]{\includegraphics[width=0.5\linewidth]{pandora/chapter_4/muonCompletenessVsHits_cheated2dVtx3d.pdf}\label{fig:muonCompletenessVsHits_cheated2dVtx3d}}
+    \subfloat[]{\includegraphics[width=0.5\linewidth]{pandora/chapter_4/protonCompletenessVsHits_cheated2dVtx3d.pdf}\label{fig:protonCompletenessVsHits_cheated2dVtx3d}}
+    \caption[Hit completeness versus number of hits on collection plane]{Number of hits reconstructed on the collection plane associated with a reconstructed particle versus the hit completeness of the same reconstructed particle. On the left there are reconstructed particles associated with true muons, whereas on the right there are true protons. Both plots are produced when performing the cheating of the three-dimensional cluster matching and creation. }
+    \label{fig:CompletenessVsHits_cheated2dVtx3d}
+\end{figure}
+
+\subsection{Particle hierarchy reconstruction} 
+
+The cheating of the particle hierarchy reconstruction, implemented by the CheatingNeutrinoCreation and CheatingNeutrinoDaughterVertices algorithms, aims at assigning the correct parent-daughter relationship to all reconstructed particles in the interaction. Using MCWeights associates a reconstructed particle with the underlying MCParticle that is most compatible. Using this association then assigns the reconstructed neutrino interaction vertex to the reconstructed particles identified as primary from the underlying MCParticle. The same is then performed for secondary particles in the interaction, also assigning the daughter vertices to the daughter particles. 
+
+It is not immediate, given that this step is very downstream of the reconstruction chain, to validate that cheating the particle hierarchy creation is working as planned. As for previous algorithms, it is required that the upstream reconstruction be as perfect as it can be, since the MCParticle-reconstructed particle association is performed using the MCWeights: if an MCParticle gets split into two or more reconstructed particles, only the particle sharing the most weighted hits will be assigned the correct parent-daughter hierarchy.
+
+Ideally, assigning the correct parent-daughter relations would result in more primary particles getting assigned as primary particles. Also, a greater purity of the events selected should be observed: no contamination from reinteracting particles that are not individually reconstructed should be present. Thus, for the $\PGnGm$CC QE Np analysis, cheating the particle hierarchy should result in the proton multiplicity being assigned correctly. \autoref{fig:Np} shows the comparison of reconstructed and true proton multiplicity, highlighting that if the reconstruction is cheated all the way up to the particle hierarchy creation, as shown in \autoref{fig:Np}\ref{sub@fig:Np_cheated_2d_vtx_3d_nu}, the diagonal is more prominent with respect to the nominal reconstruction, shown in \autoref{fig:Np}\ref{sub@fig:Np_nominal}. 
+
+\begin{figure}[!htb]
+    \centering
+    \subfloat[]{\includegraphics[width=\linewidth]{pandora/chapter_4/Np_comparison_nominal.pdf}\label{fig:Np_nominal}}
+    
+    \subfloat[]{\includegraphics[width=\linewidth]{pandora/chapter_4/Np_comparison_cheated_2d_vtx_3d_nu.pdf}\label{fig:Np_cheated_2d_vtx_3d_nu}}
+    \caption[True versus reconstructed primary proton multiplicity]{True versus reconstructed proton multiplicity distribution. The numbers are normalised with respect to the true multiplicity. These plots show that when all the steps of the reconstruction up to the particle hierarchy creation are cheated, more events are assigned the correct number of primary protons. The numbers on the plots are the entries normalised on a column base, i.e, on the true number of protons in the interaction. }
+    \label{fig:Np}
+\end{figure}
+
+This step is, however, delicate; hence, some remarks are mandatory to better understand the plots. Firstly, although correctly assigning the particle hierarchy is crucial for the downstream event selection, it is not the only piece of the puzzle, as the multiplicity of the reconstructed protons highly depends on the efficiency of the particle identification. Furthermore, in \autoref{fig:Np}\ref{sub@fig:Np_cheated_2d_vtx_3d_nu} there are some cases, especially when the proton multiplicity is higher, where the reconstruction fails to reconstruct the associated hits. This is due to the fact that, if the interaction energy is fixed to that of the incoming neutrino (peaked at \SI{800}{\mega\electronvolt}), more protons in the final state will each have allocated less energy, therefore making the hit reconstruction on the wireplanes more difficult. Finally, given the event selection cuts presented in \autoref{sec:dataSample_and_selection}, two things have to be highlighted: \begin{enumerate}
+    \item The present selection relies strongly on this step, since it requires both the muon and the protons identified within the interaction to be primary particles, as well as ensuring that any other particle identified not as a proton or a muon is not primary in the interaction. 
+    \item Given that Pandora fails most of the time to identify daughter particles, collapsing them onto the primaries, the event selection was tuned accordingly. This is why in the event selection the requirement for the primary protons to have at least \SI{50}{\mega\electronvolt} of deposited energy was extended, at the truth level, to the proton itself and all its daughter particles, to correctly match the fact that in the signal selection for reconstructed particles those daughter particles were collapsed to the primary. 
+\end{enumerate} 
+
+These conditions imply that the event selection does not fully exploit the correct creation of the particle hierarchy. Therefore, altering this step by injecting the true MC information to improve its performances,  does not necessarily have a proportional impact on the reconstruction and selection efficiency. In reality, the situation is diametrically opposed to this: when the true particle hierarchy is injected into the reconstructed particles, there are multiple events that get lost solely due to event selection inefficiencies. 
 
 
-\subsection{Particle hierarchy reconstruction}
+The issues preventing the correct reconstruction of the particle hierarchy and the correct identification of the interaction are multiple. Here are highlighted two of the most common cases: \begin{itemize}
+    \item There are cases where all the particles in the final state are reconstructed. Thus it should be expected the correct particle hierarchy to improve the selection efficiency. However, in such events, the prompt proton, fully reconstructed with high hit completeness and purity, can be shorter than the \SI{2.3}{\cm} lower threshold (equivalent to the $\SI{50}{\MeV}$ threshold) required, even if in the true selection the $E_\mathrm{dep}>\SI{50}{\MeV}$ requisite is fulfilled, since its daughter particles are added into the total computation. An example of this case is found in \autoref{fig:particleHierarchy}\ref{sub@fig:particleHierarchy_lowEProton}. Such events get otherwise selected when performing the cheating up to the stage that performs the three-dimensional reconstruction, since Pandora (mis-)identify the daughter proton of the prompt proton reinteraction as a primary particle. In such cases, the energy difference due to the missing prompt proton is small; hence, the event selection does not reject the event. 
+    
+    \item Another possibility is having the prompt proton produce visible hits only on one readout plane. This also happens for very short prompt protons that reinteract in LAr, producing a daughter proton. \autoref{fig:particleHierarchy}\ref{sub@fig:particleHierarchy_missingHits} illustrates this failure mode with an example. In this case, the prompt proton is not reconstructed (Pandora requires at least two planes to perform a three-dimensional reconstruction). If the particle hierarchy creation is left nominal, its daughter particle gets assigned as a primary particle of the interaction vertex. When the particle hierarchy is, however, cheated, the correct hierarchy is assigned, therefore resulting in an event with no primary proton $1\PGm0\Pp$: such an event gets rejected by the event selection.
+\end{itemize}
+
+\begin{sidewaysfigure}
+    \centering
+    \subfloat[]{\includegraphics[height=8cm, trim={10cm 0 22cm 0}, page=2]{pandora/chapter_4/particle_hierarchy_error.pdf}\label{fig:particleHierarchy_lowEProton}}
+    \subfloat[]{\includegraphics[height=8cm, trim={22cm 0 8cm 0}, page=1]{pandora/chapter_4/particle_hierarchy_error.pdf}\label{fig:particleHierarchy_missingHits}}
+    \caption[Particle hierarchy cheating failure modes]{\ref{sub@fig:particleHierarchy_lowEProton} illustrates one event where the primary (prompt) proton is shorter than the lower threshold of \SI{2.3}{\cm} or equivalently \SI{50}{\MeV} of deposited energy. This event is therefore not selected if the daughter proton of the prompt proton is assigned the correct parent-daughter hierarchy, like when performing the cheating of the particle hierarchy. \ref{sub@fig:particleHierarchy_missingHits} illustrates the case where the prompt proton is not reconstructed due to missing information on some of the readout planes. This event is not selected since the secondary proton, daughter to the prompt proton, is not identified as primary when the particle hierarchy is cheated. }
+    \label{fig:particleHierarchy}
+\end{sidewaysfigure}
 
 
+
+Having deeply studied the effect of cheating the particle hierarchy creation algorithm, it was then chosen, for the purpose of this thesis, to leave this step of the reconstruction nominal, therefore not implementing it in any further studies. 
 
 \subsection{Particle classification}
 
+The last step of the PandoraNeutrino reconstruction path, aimed at classifying particles, based solely on topological features, into tracks or electromagnetic showers, can be cheated in two different ways. 
 
-\subsection{Slice }
+The easiest is to just take the Particle Data Group (PDG) code, uniquely identifying each MC particle and assigning it correctly to the reconstructed particle. This is the way that it was originally implemented in the Pandora chain but proved not very useful to the tests performed in this work, since the event selection for the $\PGnGm$CC QE Np analysis, used downstream of the event reconstruction, does not rely on this information but instead makes use of the track/shower classification BDT score that is produced by the nominal reconstruction algorithm. So another way of cheating this stage of the reconstruction was implemented as part of this work. This implementation uses the true PDG code associated with MCParticles to cheat the value of the BDT track score, effectively making the track-shower separation perfect. 
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.95\linewidth]{pandora/chapter_4/toSlide_BDT_trackscore.pdf}
+    \caption[Track and shower classification BDT score]{Plot of the score coming out of the track and shower BDT classification algorithm. Tracks have a score of 1, whereas showers have a score of 0. In the two panels there are muons (upper half, in red) and protons (lower half, in blue) with both the nominal reconstruction (thin line) as well as the cheated reconstruction and classification (thick line). }
+    \label{fig:trackScoreCheated}
+\end{figure}
+
+Checking this stage downstream of the reconstruction is immediate by looking at the value of the BDT score in the particles that have true PDG code associated with muons and protons, or electrons and photons, that should be classified as tracks and electromagnetic showers, respectively. Tracks have a score of 1, whereas showers have a score of 0. \autoref{fig:trackScoreCheated} shows the assigned BDT score with the nominal (thin line) and cheated (thick line) particle classification stage for protons (blue) and muons (red). 
+
+\subsection{Slice creation and tagging}
+
+All these algorithms are part of the PandoraNeutrino reconstruction path, with both the 2D clustering and the 3D reconstruction stages also implemented in the PandoraFastReco and PandoraCosmic reconstruction paths. The PandoraFastReco is crucial, as part of the reconstruction chain, to perform a ``fast reconstruction'', allowing the slice creation tools to create the interaction slices. 
+
+% why is slice creation core to the reconstruction?
+Since this stage is run upstream of the PandoraNeutrino reconstruction path, ensuring a correct creation of the slices is core for the success of the subsequent reconstruction steps. As a matter of fact, if the slicing process fails and for some reason splits one interaction in half, the following reconstruction steps cannot recover the underlying interaction, even if cheating all the stages of the PandoraNeutrino reconstruction (i.e., making the reconstruction downstream of the slice creation ``perfect''). \autoref{fig:slicingIssue} shows this case with an example. In the figure, a $\PGnGm$CCQE Np event is shown. All the hits in the interaction are shown in the last panel. When the slice creation tool is run, however, it splits the prompt muon into two separate slices (Slice A/B, third and fourth panels). Then, performing the fully cheated reconstruction, thus effectively showing the underlying true particles in the interaction (Slice A/B, first two panels), reveals that what will be selected as a true and reconstructed $1\PGm1\Pp$ slice is Slice A. Slice B contains only half of the muon track and the muon decay Michel electron. 
+
+%% issues (figure)
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.95\linewidth, trim={14cm 0 16cm 0}, clip]{pandora/chapter_4/slicing.pdf}
+    \caption[Slice creation failure mode]{Example of an event where the slice creation tool failed to correctly create one slice for the interaction, splitting it instead into two separate slices. }
+    \label{fig:slicingIssue}
+\end{figure}
+
+% how this tool is implemented
+Since discovering that this was not an isolated case, the cheating of the slice creation tool was also considered. The working principle of the cheated slice creation tool is pretty straightforward. This looks at all the reconstructed hits in the events and associates them with the correct MCParticles, which are arranged in the interaction with the correct hierarchy. Using the underlying MC information, this tool can therefore divide the hits on all three of the readout planes by the underlying interaction. These lists of hits divided by MC interaction are then used to have the downstream reconstruction performed on them. 
 
 
+\section{Evaluating subsequent reconstruction stages}\label{sec:methods}
 
-\section{Evaluating subsequent reconstruction stages}
+% aim of performing this analysis
+Using this set of tools, whose performances have been thoroughly evaluated and whose limitations have been highlighted in the previous paragraphs, it is now possible to get a detailed understanding of where the reconstruction pipeline fails the most; therefore, provide a detailed path to what the problems are that should be addressed, weighing their relevance on the impact these changes can have on the reconstruction and downstream event selection performances. 
 
+In order to achieve this, first the focus was moved to the PandoraNeutrino reconstruction path. Within this stage of the Pandora event reconstruction, five substages are identified: the 2D cluster creation, the 3D vertex creation, the 3D particle creation, the particle hierarchy creation, and the particle classification. As already addressed before, however, the particle hierarchy creation stage is delicate, and for this reason it is left out from this analysis. 
+
+Having divided the PandoraNeutrino reconstruction into these five stages opened up the possibility of replacing any of them in the reconstruction with their cheated version. The idea is to create five reconstruction chains that process the same events. Each one differs from the previous by one stage that is cheated in the former and kept nominal in the latter. Starting from a fully cheated configuration, where the 2D cluster creation, the 3D vertex creation, the 3D particle creation, and the particle classification are cheated, replacing the last with its nominal configuration leaves only the 2D cluster creation, the 3D vertex creation, and the 3D particle creation cheated. Continuing on with the same idea for all the stages in the PandoraNeutrino reconstruction, with the exception of the particle hierarchy creation algorithm, the last configuration has all the stages in their nominal format. 
+
+% method
+Under the assumption that the Pandora reconstruction algorithms are decoupled from one another (see \autoref{sec:TPC_reco_gen} and the references therein), it is possible to say that the reconstruction and event selection efficiency is the result of the product of the efficiency of the signal processing stage (its efficiency in reconstructing the hits on the readout planes) with the efficiencies of the individual steps of the event reconstruction and the event selection efficiency, provided the event reconstruction, \begin{equation}
+    \begin{aligned}
+        \epsilon &= 
+        \epsilon_\mathrm{signal\ processing} \cdot 
+        \epsilon_\mathrm{2D\ clusters} \cdot 
+        \epsilon_\mathrm{vertex\ creation} \cdot \\
+        &\quad\quad\quad\cdot
+        \epsilon_\mathrm{3D\ reconstruction} \cdot 
+        \epsilon_\mathrm{particle\ classification} \cdot 
+        \epsilon_\mathrm{event\ selection}
+    \end{aligned}
+\end{equation} 
+
+Making the reasoned assumption that cheating a step of the reconstruction makes its efficiency effectively \SI{100}{\percent}, and indicating with an asterisk the efficiency of a cheated stage of the reconstruction, it is possible to compare two of the aforementioned configurations that differ only for the cheating of a single step. For example, the ratio between the efficiencies of the ``fully cheated'' configuration (A) and the ``cheated up to the particle classification algorithm'' configuration (B) is \begin{equation}
+    \frac{
+    \epsilon^\mathrm{B}
+    }{
+    \epsilon^\mathrm{A}
+    } = \frac{
+    \epsilon_\mathrm{sig.} \cdot 
+    \epsilon_\mathrm{2D}^* \cdot 
+    \epsilon_\mathrm{vertex}^* \cdot 
+    \epsilon_\mathrm{3D}^* \cdot 
+    \epsilon_\mathrm{class.} \cdot 
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{B}
+    }{
+    \epsilon_\mathrm{sig.} \cdot 
+    \epsilon_\mathrm{2D}^* \cdot 
+    \epsilon_\mathrm{vertex}^* \cdot 
+    \epsilon_\mathrm{3D}^* \cdot 
+    \epsilon_\mathrm{class.}^* \cdot 
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{A}
+    } = \frac{
+    \epsilon_\mathrm{class.}
+    }{
+    \epsilon_\mathrm{class.}^*
+    } \times \qty(\frac{
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{B}
+    }{
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{A}
+    }) \label{eq:methodBase}
+\end{equation} Here the apex refers to which of the configurations is used, except for the asterisks mentioned before. The configurations are presented in \autoref{tab:configurations}, and the configuration Id. is used within the equations. Additionally, the notation is simplified to allow for ease. 
+
+\begin{table}[]
+    \centering
+    \caption[List of configurations]{List of all the configurations used for the evaluation of the reconstruction performances in \autoref{sec:methods}. The red cross mark {\tikzxmark} indicates the steps of the reconstruction that are kept nominal, whereas the green tick mark {\tikzcmark} indicates those that are cheated. }
+    \label{tab:configurations}
+    \small
+    \begin{tabular}{lp{4cm}cccc}
+        \hline
+         & & 2D clusters & Vertex & 3D particles & Particles \\
+         Id. & Configuration name & creation & creation & reconstruction & classification \\
+         \hline
+         A & Fully cheated & \tikzcmark & \tikzcmark & \tikzcmark & \tikzcmark \\
+         B & Cheated up to the particle classification algorithm & \tikzcmark & \tikzcmark & \tikzcmark & \tikzxmark \\
+         C & Cheated up to the particle three-dimensional reconstruction algorithm & \tikzcmark & \tikzcmark & \tikzxmark & \tikzxmark \\
+         D & Cheated up to the vertex reconstruction & \tikzcmark & \tikzxmark & \tikzxmark & \tikzxmark \\
+         E & Nominal & \tikzxmark & \tikzxmark & \tikzxmark & \tikzxmark \\
+         \hline
+    \end{tabular}
+\end{table}
+
+In Eq. \eqref{eq:methodBase} all the common terms in the ratio ($\epsilon_\mathrm{sig.}, \epsilon_\mathrm{2D}^*, \epsilon_\mathrm{vertex}^*, \epsilon_\mathrm{3D}^*$) are cancelled. 
+
+Developing Eq. \eqref{eq:methodBase} further, it is possible to get a value that is proportional to the efficiency of the particle classification algorithm, \begin{equation}
+    \epsilon_\mathrm{class.} \times \qty(\frac{
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{B}
+    }{
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{A}
+    }) = \frac{
+    \epsilon^\mathrm{B}
+    }{
+    \epsilon^\mathrm{A}
+    } \times \epsilon_\mathrm{class.}^* \label{eq:stageEfficiencyPrePID_0}
+\end{equation} It is worth noting that, under the reasoned assumption that $\epsilon_\mathbf{any\ single\ stage}^* = \SI{100}{\percent}$, we can actually drop this term in Eq. \ref{eq:stageEfficiencyPrePID_0}, thus have \begin{equation}
+    \epsilon_\mathrm{class.} \times \qty(\frac{
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{B}
+    }{
+    \epsilon_\mathrm{ev.\ sel.}^\mathrm{A}
+    }) = \frac{
+    \epsilon^\mathrm{B}
+    }{
+    \epsilon^\mathrm{A}
+    } \label{eq:stageEfficiencyPrePID}
+\end{equation}
+
+\subsection{Results}
+
+%% evaluation of the erformances
+%% step by step issues (if any)
+Having established the analysis method, the first operation was to compute the reconstruction and selection efficiency for all the configurations shown in \autoref{tab:configurations}. To perform a preliminary analysis, the integrated efficiency was computed: looking at the total count of true and reconstructed neutrinos over the total number of true neutrino $\PGnGm$CCQE Np  interactions. These efficiencies are compared in \autoref{fig:efficiencyNoNu}. A first remark that can be made is that, as more steps of the reconstruction are cheated, the overall efficiency increases: this suggests that, at least, the addition of any cheated algorithm improves the event reconstruction. A second remark can be made by just visually analysing the different efficiencies achieved by the different configurations. For example, it is clear that once the 2D clusters are created correctly, i.e., cheated, the reconstruction performs better overall by comparing the nominal reconstruction (configuration E) with the ``injected clustering'' (configuration D) bin, \SI{54.7(5)}{\percent} and \SI{63.1(5)}{\percent} respectively. This information tells us the impact of the cluster creation algorithms is high. The same can be said for the difference between the ``injected cluster'' (configuration D) and the ``injected cluster + vertex'' (configuration C) bins, \SI{63.1(5)}{\percent} and \SI{68.1(5)}{\percent} respectively: the vertex creation algorithm has a great impact, and there is a large overhead in terms of improvements that can be achieved. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.85\linewidth]{pandora/chapter_4/CCNp_efficiencyNoNu.pdf}
+    \caption[Evaluation of the reconstruction and selection efficiency for different configurations]{}
+    \label{fig:efficiencyNoNu}
+\end{figure}
+
+% results
+We can now exploit these results to compute a value which is proportional to the efficiency of each reconstruction step, factorising the event selection efficiency for the two configurations considered in the computation; see Eq. \eqref{eq:stageEfficiencyPrePID}. Running the computations for all possible combination of subsequent configurations, we can extract the values proportional to the single-stage efficiencies, \begin{align}
+    \epsilon_\mathrm{2D\ clusters} \times 
+    \qty(\frac{\epsilon_\mathrm{ev.\ sel.}^\mathrm{E}}{\epsilon_\mathrm{ev.\ sel.}^\mathrm{D}}) 
+    &= \frac{\epsilon^\mathrm{E}}{\epsilon^\mathrm{D}} = \frac{\SI{54.7(5)}{\percent}}{\SI{63.1(5)}{\percent}} = 
+    \SI[round-mode = uncertainty]{86.779059+-1.104354}{\percent} \\
+    \epsilon_\mathrm{vertex\ creation} 
+    \times \qty(\frac{\epsilon_\mathrm{ev.\ sel.}^\mathrm{D}}{\epsilon_\mathrm{ev.\ sel.}^\mathrm{C}}) 
+    &= \frac{\epsilon^\mathrm{D}}{\epsilon^\mathrm{C}} = \frac{\SI{63.1(5)}{\percent}}{\SI{68.1(5)}{\percent}} = 
+    \SI[round-mode = uncertainty]{92.575370+-1.024352}{\percent} \\
+    \epsilon_\mathrm{3d\ reconstruction} 
+    \times \qty(\frac{\epsilon_\mathrm{ev.\ sel.}^\mathrm{C}}{\epsilon_\mathrm{ev.\ sel.}^\mathrm{B}}) 
+    &= \frac{\epsilon^\mathrm{C}}{\epsilon^\mathrm{B}} = \frac{\SI{68.1(5)}{\percent}}{\SI{68.4(5)}{\percent}} = 
+    \SI[round-mode = uncertainty]{99.526687+-1.041368}{\percent} \\
+    \epsilon_\mathrm{particle\ classification} 
+    \times \qty(\frac{\epsilon_\mathrm{ev.\ sel.}^\mathrm{B}}{\epsilon_\mathrm{ev.\ sel.}^\mathrm{A}}) 
+    &= \frac{\epsilon^\mathrm{B}}{\epsilon^\mathrm{A}} = \frac{\SI{68.4(5)}{\percent}}{\SI{69.1(5)}{\percent}} = 
+    \SI[round-mode = uncertainty]{99.039894+-1.024644}{\percent}
+\end{align}
+
+It would be sensible to make the educated guess that the selection efficiencies are not drastically different; therefore, it is sensible to assume that the ratios between the selection efficiencies in the two configurations for each pair are close to unity. However, this is a qualitative assumption. To make this quantitative, it would be necessary to constrain the selection efficiency, for example, reducing its impact on the number of events that get selected. 
+
+For this reason, it is interesting to take a detour and look at the impact of cheating the reconstruction on each selection cut. This is equivalent to computing the efficiency, requiring each time more selection cuts. Starting from only the true signal definition, each time adding one selection cut. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+%% here add cfarnese stuff (and new tests) --> this in chapter 5? NO
 
 
 \section{Impact of the vertex reconstruction}
 
+% from previous ... the vertex is quite relevant
+% since its "uncorrelated" and do not depend on the previous step success that much, cheat it alone
+% results in terms of efficiency
+% how this impacts other variables (i.e. is this impacting the selection eff or just the reconstruction eff... of 1µNp events?)
+% show that this is in fact compatible to the result obtained by the previuos computation (8% deficit = 92% efficiency of the stage from 100%) --> this is in chapter 5
+
+\cite{Triozzi:2025_impactNueReconstruction, Sotgia:2025_cheatingPandoraStatus}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.85\linewidth]{pandora/chapter_4/vertexDistance_cheated.pdf}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.85\linewidth]{pandora/chapter_4/CCNp_efficiencyByCut_singles_2d_vtx_only.pdf}
+    \caption{}
+    \label{fig:enter-label}
+\end{figure}

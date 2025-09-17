@@ -224,7 +224,8 @@
 % \addtokomafont{subsubsection}{\sffamily}
 
 \definecolor{chaptergrey}{rgb}{0.6862745098,0.1529411765,0.1843137255}
-\colorlet{chaptergrey}{PineGreen}
+% \colorlet{chaptergrey}{PineGreen}
+\colorlet{chaptergrey}{ForestGreen}
 % \definecolor{chaptergrey}{rgb}{0.2980392157,0.5490196078,0.168627451} % 76, 140, 43
 % \colorlet{chaptergrey}{NavyBlue}
 
@@ -277,7 +278,10 @@
 \renewcommand{\labelitemiii}{$\textcolor{chaptergrey}{\circ}$}
 \renewcommand{\labelitemiv}{$\textcolor{chaptergrey}{\circ}$}
 
-% \lstset{title={\lstname}}
+\renewcommand{\labelenumi}{\textcolor{chaptergrey}{\arabic{enumi}.}}
+\renewcommand{\labelenumii}{\textcolor{chaptergrey}{\alph{enumii})}}
+\renewcommand{\labelenumiii}{\textcolor{chaptergrey}{\roman{enumiii}.}}
+\renewcommand{\labelenumiv}{\textcolor{chaptergrey}{\Alph{enumiv}.}}
 
 \newif\ifdraft
 \draftfalse
@@ -297,3 +301,14 @@
 }
 
 \input{0_preamble/chapterthumbs}
+
+\newcommand{\tikzxmark}{%
+\tikz[scale=0.23] {
+    \draw[Red, line width=0.7,line cap=round] (0,0) to [bend left=6] (1,1);
+    \draw[Red, line width=0.7,line cap=round] (0.2,0.95) to [bend right=3] (0.8,0.05);
+}}
+\newcommand{\tikzcmark}{%
+\tikz[scale=0.23] {
+    \draw[Green, line width=0.7,line cap=round] (0.25,0) to [bend left=10] (1,1);
+    \draw[Green, line width=0.8,line cap=round] (0,0.35) to [bend right=1] (0.23,0);
+}}
