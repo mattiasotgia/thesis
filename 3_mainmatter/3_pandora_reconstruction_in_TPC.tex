@@ -283,11 +283,12 @@ After the 3D showers are finally built, a second pass of the 3D track reconstruc
 After the 3D reconstruction, the next step in the PandoraNeutrino reconstruction is to organise the reconstructed particles into a hierarchy. This follows some subsequent steps, namely \begin{itemize}
     \item An object associated to the neutrino particle is created and associated with the 3D interaction vertex.
     \item The 3D reconstructed particles deemed to be associated with the interaction vertex are added as primary daughters of the neutrino particle.
-    \item Further event ramification takes place by associating secondary particles (if any) to the existing primary daughters of the neutrino, e.g. a decay electron could be associated to a primary muon particle decaying in the active detector volume.
+    \item Further event ramification takes place by associating secondary particles (if any) to the existing primary daughters of the neutrino, e.g., a decay electron could be associated to a primary muon particle decaying in the active detector volume.
     \item 3D vertex position and particle trajectory endpoints are calculated for each of the particles in the neutrino hierarchy. This is the neutrino interaction vertex for primary particles, and the point of closest approach to their parents for secondaries
 \end{itemize}
 
-The last step of the PandoraNeutrino reconstruction handles the classification, by means of a BDT algorithm, of reconstructed particles as tracks or showers. The classification is performed relying on a set of topological and calorimetric variables. A detailed description of the variables, the training process and the classification efficiency is discussed in \autoref{chap:mva_internship}, as part of the work performed during an internship at Fermilab. 
+The last step of the PandoraNeutrino reconstruction handles the classification, by means of a BDT algorithm, of reconstructed particles as tracks or showers. The classification is performed relying on a set of topological and calorimetric variables. Dedicated work on this step of the event reconstruction was performed as part of a summer internship at Fermilab, and details are in Ref. \cite{Sotgia:2024d}. 
+% A detailed description of the variables, the training process and the classification efficiency is discussed in \autoref{chap:mva_internship}, as part of the work performed during an internship at Fermilab. 
 
 \subsection{PandoraCosmic: cosmic-ray muon reconstruction}
 
@@ -299,7 +300,7 @@ The PandoraCosmic path is very similar to the PandoraFastReco path since it aims
 
 Unique to the PandoraCosmic path, before actually performing the creation of the 3D position inside the detector volume (see, for reference, \autoref{fig:PandoraCosmicNeutrino}\ref{sub@fig:PandoraCosmic}), a delta-ray reconstruction step deals with any 2D clusters that have not been assigned to any reconstructed particle. The assumption for these algorithms is that these clusters likely represent fragments of delta-ray showers. The hits leftover from previous reconstruction steps are reclustered and the between-views match is performed primarily exploiting the common $x$ coordinate. Parent cosmic ray particles are identified via comparisons of intra-cluster distances. 
 
-\section{Calorimetry and particle identification} 
+\section{Calorimetry and particle identification} \label{sec:calorimetryAndCalibration}
 
 Following the topological event reconstruction performed by Pandora's set of algorithms, calorimetric information is computed with the use of multiple LArSoft modules. 
 

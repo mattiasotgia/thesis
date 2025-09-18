@@ -173,8 +173,8 @@
     % \hspace{0.1cm}
     \begin{minipage}[b]{8cm}
         \fontfamily{ptm}\selectfont
-        UNIGE / FNAL / THESIS-\the\year-\the\month\\
-        \DTMNow\
+        UNIGE / FNAL / THESIS-\the\year-\the\month\ % \\
+        % \DTMNow\
         (\pageref{LastPage} pp, \totalfigures\ figs.)
     \end{minipage}\includegraphics[height=1cm]{6_figures/FNAL/FNAL-Logo-Black}
 }
@@ -307,8 +307,18 @@
     \draw[Red, line width=0.7,line cap=round] (0,0) to [bend left=6] (1,1);
     \draw[Red, line width=0.7,line cap=round] (0.2,0.95) to [bend right=3] (0.8,0.05);
 }}
+\newcommand{\tikzsmark}{%
+\tikz[scale=0.23] {
+    \draw[Peach, line width=0.7,line cap=round] (0,0.1) to [bend left=6] (1,1);
+    \draw[Peach, line width=0.7,line cap=round] (0.,0.65) to [bend left=4.5] (1.1,0.25);
+    \draw[Peach, line width=0.7,line cap=round] (0.35,1.15) to [bend right=5] (0.6,0.0);
+}}
 \newcommand{\tikzcmark}{%
 \tikz[scale=0.23] {
     \draw[Green, line width=0.7,line cap=round] (0.25,0) to [bend left=10] (1,1);
     \draw[Green, line width=0.8,line cap=round] (0,0.35) to [bend right=1] (0.23,0);
 }}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}

@@ -24,7 +24,7 @@ The $1\PGm N\Pp$ event topologies used in the muon neutrino disappearance study 
 \paragraph{CRT-PMT match} Exploiting the CRT-PMT match performed in the event reconstruction, non-contained neutrinos or cosmic-ray particles are rejected. The cut searches for coincidences in the \SI{150}{\ns} gate between CRT hits and an optical flash. All optical flashes are looked into the \qtyrange{0}{1.6}{\us} spill gate, and only the spills that have no CRT hit associated are kept. This first contributes to reducing the huge amount of cosmic ray interactions in the detector, thus slightly improving on the selection purity. 
 
 \paragraph{Optical flash barycentre match} The light information coming from the PMTs is also used to improve the selection by exploiting its 3D information. Using the light from the triggering PMT flash, the barycenter of the light hit is computed. The barycenter is computed as the mean of optical hits, weighted on the signal integral on each optical hit, \begin{equation}
-    \vec{x} = \frac{\sum_i \vec x_i \cdot \mathrm{PE}_i}{\sum_i \mathrm{PE}_i}.  
+    \vec{x} = \frac{\sum_i \vec x_i \times \mathrm{PE}_i}{\sum_i \mathrm{PE}_i}.  
 \end{equation} Here $\vec x_i$ represents the position of the PMT producing the $i$-th, with a signal integral of $\mathrm{PE}_i$ photoelectrons collected by the $i$-th photomultiplier. This position information is used to reject all slices whose charged $z$-barycenter was more than \SI{1}{\m} away from the light $z$-barycenter. This choice was made considering the best cut to minimise the contamination from other interaction types, as well as maximise the selection efficiency. 
 
 \paragraph{Vertex and tracks containment} Two basic selection cuts are then applied to the vertices and track in the interaction selected by the first two cuts. The vertex is required to be inside the fiducial volume (requiring more than \SI{25}{\cm} apart from the lateral TPC walls and 30/\SI{50}{\cm} from the upstream/downstream walls) of the ICARUS detector, defined in \cite{arteroponsStudyReconstructionNuMuCC}, whereas all the tracks inside the interaction are required to be contained in the active volume of the TPC within \SI{5}{\cm} from all the sides. This request ensures that the PID score described in \eqref{eq:PID} can be computed and provides for a great separation between different particle species. 
@@ -41,13 +41,13 @@ The interactions that pass these preliminary quality cuts are then analysed by t
 
 \paragraph{Proton identification} The identification of the proton follows similar cuts as for the muon, with less strict selections \begin{itemize}
     \item The requirement to be tagged as a primary particle is the same as that which was present for muons.
-    \item The track score, by looking at its distribution, was found to be slightly shifted to lower values, so a lower threshold is required of $\geq 0.45$. 
+    \item The track score, by looking at its distribution, was found to be slightly shifted to lower values, so a lower threshold is required of $\geq 0.4$. 
     \item It is required that primary protons should have a length greater than \SI{2.3}{\cm}, so a request of a minimum of \SI{50}{\mega\electronvolt} of deposited energy is required, which corresponds to a proton length of \SI{2.3}{\cm}. 
      \item The track starting point should be less than \SI{10}{\cm} from the interaction vertex.
      \item PID is then considered, requiring that $\chi^2_\Pp < 100$. 
 \end{itemize} Any number greater than zero of protons is required in the $\PGnGm$CC Np QE selection. 
 
-\paragraph{Pion identification and rejection} Pions are identified using very identical selection cuts as protons, with the only exception of requiring $\chi^2_\Pp > 100$, and a deposited energy of \SI{25}{\mega\electronvolt}. If one or more pions are identified within a certain slice, the slice gets rejected. 
+\paragraph{Pion identification} Pions are identified using very identical selection cuts as protons, with the only exception of requiring $\chi^2_\Pp > 100$, and a deposited energy of \SI{25}{\mega\electronvolt}. If one or more pions are identified within a certain slice, the slice gets rejected. 
 
 \paragraph{Electromagnetic shower identification} Electromagnetic showers are identified by means of trackscore alone; everything with a value lower than 0.5, which is not classified as a proton (so $\chi^2_\Pp > 100$, among other cuts), is identified as an electromagnetic shower. If more than zero showers are reconstructed and identified  in a given slice, the slice gets rejected. 
 
@@ -56,9 +56,9 @@ The performances of the aforementioned selection have been  evaluated \cite{arte
         \mathrm{Efficiency} &\equiv \frac{\text{Selected signal}}{\text{True signal}} = \SI{49}{\percent} \\
         \mathrm{Purity} &\equiv \frac{\text{Selected signal}}{\text{All selected}} = \SI{84}{\percent}
     \end{aligned}
-\end{equation} The selection, with minor changes related to the differences in the reconstruction paradigm, is applied also to data reconstructed with the SPINE chain, described in \autoref{sec:SPINE}. Using this different reconstruction paradigm, the efficiency and purity values obtained are, respectively, of $\sim\SI{75}{\percent}$ and $\sim\SI{80}{\percent}$. 
+\end{equation} The selection, with minor changes related to the differences in the reconstruction paradigm, is applied also to data reconstructed with the SPINE chain, described in \autoref{sec:SPINE}. Using this different reconstruction paradigm, the efficiency and purity values obtained are, respectively, of ${\sim}\SI{75}{\percent}$ and ${\sim}\SI{80}{\percent}$. 
 
-Parallel to both reconstruction chains, the efficiencies and purities were validated by visual scan using a small data sample ($\sim\SI{2e18}{POT}$), confirming the aforementioned values for both analyses. 
+Parallel to both reconstruction chains, the efficiencies and purities were validated by visual scan using a small data sample (${\sim}\SI{2e18}{POT}$), confirming the aforementioned values for both analyses. 
 
 \section{\emph{Cheating} the Pandora reconstruction} 
 
@@ -103,7 +103,7 @@ In practical terms, cheating one or multiple algorithms involves replacing the c
 
 The action of cheating one algorithm can be seen as making the cheated step of the reconstruction have a perfect success rate. Cheating different steps takes into account the action of each step of the reconstruction. The next paragraphs are entirely dedicated to delving into the details of how cheating is applied to different algorithms of the Pandora reconstruction chain. 
 
-Given the $\PGnGm$CC QE Np sample of events used for this study, the following sections are focused on cheating specifically the PandoraNeutrino reconstruction path. However, it should be noted that most of the algorithms that wil be addressed in this section are also implemented in the PandoraFastReco and PandoraCosmic reconstruction paths: this highlights the true power of the Pandora-based reconstruction pipeline, which allows for a large degree of flexibility. 
+Given the $\PGnGm$CC QE Np sample of events used for this study, the following sections are focused on cheating specifically the PandoraNeutrino reconstruction path. However, it should be noted that most of the algorithms that will be addressed in this section are also implemented in the PandoraFastReco and PandoraCosmic reconstruction paths: this highlights the true power of the Pandora-based reconstruction pipeline, which allows for a large degree of flexibility. 
 
 \subsection{Two-dimensional clustering}
 
@@ -303,7 +303,7 @@ Having deeply studied the effect of cheating the particle hierarchy creation alg
 
 The last step of the PandoraNeutrino reconstruction path, aimed at classifying particles, based solely on topological features, into tracks or electromagnetic showers, can be cheated in two different ways. 
 
-The easiest is to just take the Particle Data Group (PDG) code, uniquely identifying each MC particle and assigning it correctly to the reconstructed particle. This is the way that it was originally implemented in the Pandora chain but proved not very useful to the tests performed in this work, since the event selection for the $\PGnGm$CC QE Np analysis, used downstream of the event reconstruction, does not rely on this information but instead makes use of the track/shower classification BDT score that is produced by the nominal reconstruction algorithm. So another way of cheating this stage of the reconstruction was implemented as part of this work. This implementation uses the true PDG code associated with MCParticles to cheat the value of the BDT track score, effectively making the track-shower separation perfect. 
+The easiest way is to just take the Particle Data Group (PDG) code, uniquely identifying each MC particle with a label and assigning it correctly to the reconstructed particle. This is the way that it was originally implemented in the Pandora chain but proved not very useful to the tests performed in this work, since the event selection for the $\PGnGm$CC QE Np analysis, used downstream of the event reconstruction, does not rely on this information but instead makes use of the track/shower classification BDT score that is produced by the nominal reconstruction algorithm. So another way of cheating this stage of the reconstruction was implemented as part of this work. This implementation uses the true PDG label associated with MCParticles to cheat the value of the BDT track score, effectively making the track-shower separation perfect. 
 
 \begin{figure}[!htb]
     \centering
@@ -312,7 +312,7 @@ The easiest is to just take the Particle Data Group (PDG) code, uniquely identif
     \label{fig:trackScoreCheated}
 \end{figure}
 
-Checking this stage downstream of the reconstruction is immediate by looking at the value of the BDT score in the particles that have true PDG code associated with muons and protons, or electrons and photons, that should be classified as tracks and electromagnetic showers, respectively. Tracks have a score of 1, whereas showers have a score of 0. \autoref{fig:trackScoreCheated} shows the assigned BDT score with the nominal (thin line) and cheated (thick line) particle classification stage for protons (blue) and muons (red). 
+Checking this stage downstream of the reconstruction is immediate by looking at the value of the BDT score in the particles that have a true label associated with muons and protons, or electrons and photons, that should be classified as tracks and electromagnetic showers, respectively. Tracks have a score of 1, whereas showers have a score of 0. \autoref{fig:trackScoreCheated} shows the assigned BDT score with the nominal (thin line) and cheated (thick line) particle classification stage for protons (blue) and muons (red). 
 
 \subsection{Slice creation and tagging}
 
@@ -346,14 +346,14 @@ Having divided the PandoraNeutrino reconstruction into these five stages opened 
 Under the assumption that the Pandora reconstruction algorithms are decoupled from one another (see \autoref{sec:TPC_reco_gen} and the references therein), it is possible to say that the reconstruction and event selection efficiency is the result of the product of the efficiency of the signal processing stage (its efficiency in reconstructing the hits on the readout planes) with the efficiencies of the individual steps of the event reconstruction and the event selection efficiency, provided the event reconstruction, \begin{equation}
     \begin{aligned}
         \epsilon &= 
-        \epsilon_\mathrm{signal\ processing} \cdot 
-        \epsilon_\mathrm{2D\ clusters} \cdot 
-        \epsilon_\mathrm{vertex\ creation} \cdot \\
-        &\quad\quad\quad\cdot
-        \epsilon_\mathrm{3D\ reconstruction} \cdot 
-        \epsilon_\mathrm{particle\ classification} \cdot 
+        \epsilon_\mathrm{signal\ processing} \times 
+        \epsilon_\mathrm{2D\ clusters} \times 
+        \epsilon_\mathrm{vertex\ creation} \times \\
+        &\quad\quad\quad\times
+        \epsilon_\mathrm{3D\ reconstruction} \times 
+        \epsilon_\mathrm{particle\ classification} \times 
         \epsilon_\mathrm{event\ selection}
-    \end{aligned}
+    \end{aligned}\label{eq:componentsEfficiency}
 \end{equation} 
 
 Making the reasoned assumption that cheating a step of the reconstruction makes its efficiency effectively \SI{100}{\percent}, and indicating with an asterisk the efficiency of a cheated stage of the reconstruction, it is possible to compare two of the aforementioned configurations that differ only for the cheating of a single step. For example, the ratio between the efficiencies of the ``fully cheated'' configuration (A) and the ``cheated up to the particle classification algorithm'' configuration (B) is \begin{equation}
@@ -362,18 +362,18 @@ Making the reasoned assumption that cheating a step of the reconstruction makes 
     }{
     \epsilon^\mathrm{A}
     } = \frac{
-    \epsilon_\mathrm{sig.} \cdot 
-    \epsilon_\mathrm{2D}^* \cdot 
-    \epsilon_\mathrm{vertex}^* \cdot 
-    \epsilon_\mathrm{3D}^* \cdot 
-    \epsilon_\mathrm{class.} \cdot 
+    \epsilon_\mathrm{sig.} \times 
+    \epsilon_\mathrm{2D}^* \times 
+    \epsilon_\mathrm{vertex}^* \times 
+    \epsilon_\mathrm{3D}^* \times 
+    \epsilon_\mathrm{class.} \times 
     \epsilon_\mathrm{ev.\ sel.}^\mathrm{B}
     }{
-    \epsilon_\mathrm{sig.} \cdot 
-    \epsilon_\mathrm{2D}^* \cdot 
-    \epsilon_\mathrm{vertex}^* \cdot 
-    \epsilon_\mathrm{3D}^* \cdot 
-    \epsilon_\mathrm{class.}^* \cdot 
+    \epsilon_\mathrm{sig.} \times 
+    \epsilon_\mathrm{2D}^* \times 
+    \epsilon_\mathrm{vertex}^* \times 
+    \epsilon_\mathrm{3D}^* \times 
+    \epsilon_\mathrm{class.}^* \times 
     \epsilon_\mathrm{ev.\ sel.}^\mathrm{A}
     } = \frac{
     \epsilon_\mathrm{class.}
@@ -417,7 +417,7 @@ Developing Eq. \eqref{eq:methodBase} further, it is possible to get a value that
     }{
     \epsilon^\mathrm{A}
     } \times \epsilon_\mathrm{class.}^* \label{eq:stageEfficiencyPrePID_0}
-\end{equation} It is worth noting that, under the reasoned assumption that $\epsilon_\mathbf{any\ single\ stage}^* = \SI{100}{\percent}$, we can actually drop this term in Eq. \ref{eq:stageEfficiencyPrePID_0}, thus have \begin{equation}
+\end{equation} It is worth noting that, under the reasoned assumption that $\epsilon_\mathbf{any\ single\ stage}^* = \SI{100}{\percent}$, we can actually drop this term in Eq. \eqref{eq:stageEfficiencyPrePID_0}, thus have \begin{equation}
     \epsilon_\mathrm{class.} \times \qty(\frac{
     \epsilon_\mathrm{ev.\ sel.}^\mathrm{B}
     }{
@@ -429,7 +429,7 @@ Developing Eq. \eqref{eq:methodBase} further, it is possible to get a value that
     } \label{eq:stageEfficiencyPrePID}
 \end{equation}
 
-\subsection{Results}
+\subsection{Results} \label{sec:resultsLadder}
 
 %% evaluation of the erformances
 %% step by step issues (if any)
@@ -438,7 +438,7 @@ Having established the analysis method, the first operation was to compute the r
 \begin{figure}
     \centering
     \includegraphics[width=0.85\linewidth]{pandora/chapter_4/CCNp_efficiencyNoNu.pdf}
-    \caption[Evaluation of the reconstruction and selection efficiency for different configurations]{}
+    \caption[Evaluation of the reconstruction and selection efficiency for different configurations]{Evaluation of the event reconstruction and selection efficiencies for the configuration presented in \autoref{tab:configurations}. Each bin label shows which are the cheated stages, the first having only the clustering creation cheated (configuration D), each time adding a cheated step up to the fully cheated configuration A in the last bin. }
     \label{fig:efficiencyNoNu}
 \end{figure}
 
@@ -464,39 +464,152 @@ We can now exploit these results to compute a value which is proportional to the
 
 It would be sensible to make the educated guess that the selection efficiencies are not drastically different; therefore, it is sensible to assume that the ratios between the selection efficiencies in the two configurations for each pair are close to unity. However, this is a qualitative assumption. To make this quantitative, it would be necessary to constrain the selection efficiency, for example, reducing its impact on the number of events that get selected. 
 
-For this reason, it is interesting to take a detour and look at the impact of cheating the reconstruction on each selection cut. This is equivalent to computing the efficiency, requiring each time more selection cuts. Starting from only the true signal definition, each time adding one selection cut. 
+For this reason, it is interesting to take a detour and look at the impact of cheating the reconstruction on each selection cut. To do so, the event reconstruction and selection efficiency are computed each time, changing the reconstructed signal definition by adding subsequent selection cuts. \autoref{fig:efficiencyByCut} is the result of computing the cut-by-cut efficiency for all five configurations in \autoref{tab:configurations}. 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \includegraphics[width=0.75\linewidth]{thesis/6_figures/pandora/chapter_4/CCNp_efficiencyByCut_noNu_cheatingSlice.pdf}
+    \caption[Event reconstruction and selection efficiency with the cheated vertex creation]{Cut-by-cut event reconstruction and selection efficiency for all configurations in \autoref{tab:configurations}. Each time a selection cut is added to the list. The top table shows the efficiency of each configuration for each selection cut. It is worth remarking that the scale on the $y$ axis is not uniform, but the region from 0.9 to 1 is scaled up to allow for better visual separation of the cuts. }
+    \label{fig:efficiencyByCut}
 \end{figure}
 
-%% here add cfarnese stuff (and new tests) --> this in chapter 5? NO
+Starting from the first selection cut, the CRT-PMT matching, it is possible to see that no difference is present. This is explained by the fact that the sample used for this preliminary analysis is composed of only neutrino interactions, i.e., no in-time cosmic interactions are simulated. The second cut, Flash-match, has little-to-no effect: this follows from the fact that only one neutrino interaction and no cosmic-ray interaction are present in each event. One of the first big differences comes from the request that the vertex has to be located inside the fiducial volume of the detector. This is obviously a request that is strongly dependent on the reconstruction performances; therefore, it is expected that an improved reconstruction efficiency, where the vertex reconstruction is improved, would result in such an improvement. The following request, that all particles are contained in the active volume of the detector, is also strongly dependent on the reconstruction performances: a correct clustering of the hits and start-/endpoint assignation is correlated with a better containment requirement (if the true particles are contained, so should be the reconstructed ones). The following selection cuts are the muon and proton identifications and the no-charged-pion and no-electromagnetic-shower requests. These have a huge impact on the event selection efficiency, and as described before in \autoref{sec:dataSample_and_selection}, are guided not only by the performances of the event reconstruction but also are highly dependent on the TPC calorimetric calibrations (see \autoref{sec:calorimetryAndCalibration}) and on the performances of the particle identification score, which is computed using data from the ArgoNeuT experiment. It was highlighted that differences between the data and MC models of energy loss existed \cite{Sommaggio:2025_updatesdEdxStudies}; therefore, this highly impacted the Pid score, as clearly visible by looking at the ${\sim}\SI{15}{\percent}$ loss in the identification of the proton, followed by the ${\sim}\SI{5}{\percent}$ loss for the identification and rejection of charged pions and electromagnetic showers. In the identification of the reconstructed particles there are, however, cuts that do rely on the goodness of the reconstruction, such as the length requirements, the track and shower classification BDT score, the distance from the interaction vertex and the particle hierarchy requirements. Assuming little correlation between variables that depend on the reconstruction quality and variables that depends on the calorimetric performances, it is possible to factorise their contribution to the final selection efficiency, assigning a ``Pid-related'' event selection efficiency to the latter and a ``reconstruction-related'' event selection efficiency to the former, \begin{equation}
+    \epsilon_\mathrm{event\ selection} = \epsilon_\mathrm{reco.} \times \epsilon_\mathrm{pid}.
+\end{equation} 
 
+Getting back to Eq. \eqref{eq:componentsEfficiency}, which can now be written as \begin{equation}
+    \begin{aligned}
+        \epsilon &= 
+        \epsilon_\mathrm{signal\ processing} \times 
+        \epsilon_\mathrm{2D\ clusters} \times 
+        \epsilon_\mathrm{vertex\ creation} \times 
+        \epsilon_\mathrm{3D\ reconstruction} \times \\
+        &\quad\quad\quad\times
+        \epsilon_\mathrm{particle\ classification} \times 
+        \epsilon_\mathrm{event\ selection,\ reco.} \times 
+        \epsilon_\mathrm{event\ selection,\ pid},
+    \end{aligned}
+\end{equation} it is interesting to evaluate the impact of $\epsilon_\mathrm{ev.\ sel.,\ pid}$, which is assumed, from the motivations presented in the previous paragraph, to have the greatest impact on the event selection performances. For this reason, a modified event selection was developed. In this modified event selection, all the cuts performed on variables that depend on the reconstruction performance are left unaltered, whereas the cuts that are dependent on the calorimetric particle identification are ``deceived'' by looking at the true particle labels. The requirements for this ``modified'' particle identification follow.  
 
-\section{Impact of the vertex reconstruction}
+\noindent
+For the muon in the interaction, the following cuts are applied: \begin{itemize}
+    \item the particle should be tagged as a primary particle by Pandora,
+    \item the conversion gap should be smaller than \SI{10}{\cm},
+    \item the track/shower classification score should be greater than 0.5,
+    \item the track length should be greater than \SI{50}{\cm},
+    \item the true label should be that of a muon. 
+\end{itemize}
+For the proton in the interaction, the following cuts are applied: \begin{itemize}
+    \item the particle should be tagged as a primary particle by Pandora,
+    \item the conversion gap should be smaller than \SI{10}{\cm},
+    \item the track/shower classification score should be greater than 0.4,
+    \item the reconstructed deposited energy and the true kinetic energy should be greater than \SI{50}{\MeV},
+    \item the true label should be that of a proton.
+\end{itemize}
+For pions, the selection is the same as for protons, with the sole difference of requiring the true label of a charged pion and a lower energy threshold of \SI{25}{\MeV}. 
+
+\noindent
+For electromagnetic showers, the following cuts are required: \begin{itemize}
+    \item the particle should be tagged as a primary particle by Pandora,
+    \item the track/shower classification score should be smaller than 0.5,
+    \item the reconstructed deposited energy and the true kinetic energy should be greater than \SI{25}{\MeV},
+    \item the true label should be that of an electron of a photon. 
+\end{itemize}
+
+Using this modified event selection, the same selection efficiencies as in \autoref{fig:efficiencyNoNu} are computed. 
+
+{\color{red} This is TBD when dCache allows for plots to be run...
+
+The it will be possible to have the PID efficiency, and compare it with the rest it will be possible to extract the true single stage efficiency}
+
+\section{Impact of the vertex reconstruction} \label{sec:vertexResults}
 
 % from previous ... the vertex is quite relevant
+From the results shown in \autoref{sec:resultsLadder} it is possible to deduce that assigning correctly the interaction vertex plays a central role in the event reconstruction. This is obviously true for electromagnetic showers, where the distance from the vertex, often referred to as the ``conversion gap'', is key to classifying electron-induced electromagnetic showers from photon-induced ones. Since the radiation length $X_0$ in LAr is approximately \SI{14}{\cm}, having an accurate measurement of the vertex location, with a $\mathcal{O}(\si{\mm})$ precision, is core for future studies. Moreover, it was shown, in previous sections, that there are cases also where, for simpler topologies (such as the $\PGnGm$CC QE Np topologies), improving the vertex results in an overall improvement of the reconstruction. 
+
 % since its "uncorrelated" and do not depend on the previous step success that much, cheat it alone
-% results in terms of efficiency
-% how this impacts other variables (i.e. is this impacting the selection eff or just the reconstruction eff... of 1µNp events?)
-% show that this is in fact compatible to the result obtained by the previuos computation (8% deficit = 92% efficiency of the stage from 100%) --> this is in chapter 5
+Since the vertex reconstruction, differently from other stages in the PandoraNeutrino reconstruction path, is truly disentangled from the other steps, it is also sensible to study the effects of cheating it alone. \autoref{fig:cheatedVertexByCut} shows the impact of cheating the vertex reconstruction, in terms of efficiency, considering each cut of the event selection alone. There are multiple elements in the plot in \autoref{fig:cheatedVertexByCut}. The three bins are the three used configurations, which are also shown in \autoref{tab:configurationsVertexCheating}. As mentioned in \autoref{tab:configurationsVertexCheating}, the ``Inj. vertex selection'' configuration is cheating only the vertex selection, i.e., replacing the BDT algorithm that selects the best interaction vertex from the list of the candidate vertices. 
 
-\cite{Triozzi:2025_impactNueReconstruction, Sotgia:2025_cheatingPandoraStatus}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.85\linewidth]{pandora/chapter_4/vertexDistance_cheated.pdf}
-    \caption{}
-    \label{fig:enter-label}
-\end{figure}
-
-
-\begin{figure}
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.85\linewidth]{pandora/chapter_4/CCNp_efficiencyByCut_singles_2d_vtx_only.pdf}
-    \caption{}
-    \label{fig:enter-label}
+    \caption[Event reconstruction and selection efficiency with the cheated vertex creation]{Cut-by-cut event reconstruction and selection efficiency for all configurations in \autoref{tab:configurationsVertexCheating}. Each time a selection cut is added to the list. The top table shows the efficiency of each configuration for each selection cut. It is worth remarking that the scale on the $y$ axis is not uniform, but the region from 0.9 to 1 is scaled up to allow for better visual separation of the cuts. }
+    \label{fig:cheatedVertexByCut}
 \end{figure}
+
+\begin{table}[]
+    \centering
+    \caption[List of configurations (vertex cheating)]{List of all the configurations used for the evaluation of the reconstruction performances in \autoref{sec:vertexResults}. The red cross mark {\tikzxmark} indicates the steps of the reconstruction that are kept nominal, whereas the green tick mark {\tikzcmark} indicates those that are cheated. The orange asterisk {\tikzsmark} indicates that the cheating is done partially, such as in the case of the CheatedVertexSelection algorithm. }
+    \label{tab:configurationsVertexCheating}
+    \small
+    \begin{tabular}{lp{4cm}cccc}
+        \hline
+         & & 2D clusters & Vertex & 3D particles & Particles \\
+         Id. & Configuration name & creation & creation & reconstruction & classification \\
+         \hline
+         A & Cheated vertex creation algorithm (Inj. vertex) & \tikzxmark & \tikzcmark & \tikzxmark & \tikzxmark \\
+         B & Cheated vertex selection algorithm (Inj. vertex selection) & \tikzxmark & \tikzsmark & \tikzxmark & \tikzxmark \\
+         C & Nominal & \tikzxmark & \tikzxmark & \tikzxmark & \tikzxmark \\
+         \hline
+    \end{tabular}
+\end{table}
+
+% results in terms of efficiency
+% how this impacts other variables (i.e. is this impacting the selection eff or just the reconstruction eff... of 1µNp events?)
+Looking at the result, a similar pattern to that of the previous section is present: improving the reconstruction of the vertex does boost the event reconstruction performances. The efficiencies shown in \autoref{fig:cheatedVertexByCut}, especially the efficiency obtained when adding all selection cuts, provide a quantitative upper limit on the boost one might expect if the vertex reconstruction is improved. Having established that there is enough overhead to improve the vertex reconstruction, A and B configurations in \autoref{tab:configurationsVertexCheating} provide, however, different insight on the event reconstruction performances. 
+
+In configuration B only the vertex selection step is cheated, meaning that the creation of the vertex candidates is still performed by the nominal reconstruction, but only the vertex closest in space to the true one gets selected. This configuration provides an understanding of how much it is possible to improve the algorithm that performs the vertex selection: it is essentially saying that, if the vertex selection process were perfect, the improvement in terms of event reconstruction and selection efficiency would be so much. The results in \autoref{fig:CheatingVertexCreation} show that when cheating the vertex selection, an improvement from the nominal reconstruction and selection efficiency ($\epsilon = \SI{54.4(6)}{\percent}$) of \SI{5.1(8)}{\percent} is achieved. 
+
+Looking at this result, one might conclude that the next step in improving reconstruction efficiency should be to improve the algorithm responsible for selecting the correct interaction vertex. In the ideal case, this would lead to an enhancement in terms of downstream efficiency of about \SI{5}{\percent}. However, before rushing into conclusions, it is sensible to delve into the results obtained with the other configuration. 
+
+Looking at the results from configuration A, it is possible to answer the question <<How would the reconstruction efficiency improve if the vertex were reconstructed and assigned correctly all the time?>>, provided that there is a way to assess that little-to-no impact on the efficiency increase comes from the particle identification. For this reason it  is useful to look, for example, at the distribution of the PID score. These are in \autoref{fig:chi2_cheatedVertex}. Looking at the distribution, and also at the cheated-over-nominal ratio, it is possible to deduce that the hypothesis that cheating the vertex creation does not alter in a significant way the Pid score of the selected particles can be considered acceptable. Thereafter, it is possible to conclude that the $\SI{7.0(8)}{\percent}$ maximum improvement, going from the nominal reconstruction efficiency ($\SI{54.4(6)}{\percent}$) to the reconstruction efficiency for the configuration where the vertex creation is cheated ($\SI{61.4(6)}{\percent}$), is predominately due to improvements in the event reconstruction following the correct assignation of the interaction vertex. 
+
+\begin{sidewaysfigure}
+    \centering
+    \subfloat[]{\includegraphics[width=0.5\linewidth]{pandora/chapter_4/chi2Proton_cheatedVertex.pdf}\label{fig:chi2Proton_cheatedVertex}}
+    \subfloat[]{\includegraphics[width=0.5\linewidth, trim={0 -2.5cm 0 0}]{pandora/chapter_4/chi2Muon_cheatedVertex.pdf}\label{fig:chi2Muon_cheatedVertex}}
+    \caption[Pid scores with the cheated vertex creation]{Particle identification score distributions for protons and muons. On the left the $\chi^2$ distribution, computed under the assumption of a proton track, is shown for both protons (blue) and muons (red), for the nominal (thin line) and cheated vertex reconstruction (thick line). The right plot shows the distribution of the $\chi^2$ score under the muon track hypothesis only for the muon population. The ratio is computed between the cheated reconstruction and the nominal one and shows no significant differences.  }
+    \label{fig:chi2_cheatedVertex}
+\end{sidewaysfigure}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.85\linewidth]{pandora/chapter_4/vertexDistance_cheated.pdf}
+%     \caption{}
+%     \label{fig:vertexDistance}
+% \end{figure}
+
+% remark on \autoref{fig:vertexDistance}?
+
+To strengthen this result, a parallel study was performed using a different sample of events with a completely different topology: electron neutrino charge-current quasi-elastic candidates, $\PGne$CC QE. The $\PGne$CC QE analysis reported an improvement in efficiency of ${\sim}\SI{7.3}{\percent}$, perfectly compatible with that found by this work \SI{7.0(8)}{\percent} \cite{Triozzi:2025_impactNueReconstruction, Sotgia:2025_cheatingPandoraStatus}. 
+
+Finally, another confirmation of such a result can be found by comparing it with that presented in \autoref{sec:resultsLadder}. Although the methods described in the previous \autoref{sec:methods} and in this section aim to achieve two different results, these must be consistent with each other. In the previous section, the efficiency of each stage of reconstruction was computed, while in this section, it was assessed how much room for improvement there is for a single stage, namely the vertex reconstruction. 
+
+It was in fact shown that the vertex creation step in the PandoraNeutrino reconstruction has an overall efficiency of ${\sim}\SI{92.6}{\percent}$. This is equivalent to affirming that the inefficiencies due to the incorrect vertex reconstruction account for approximately ${\sim}\SI{7.4}{\percent}$ of the total. This is completely coherent with the maximum efficiency gain that could be reached if the vertex reconstruction was perfect, which is computed in this section to be \SI{7.0(8)}{\percent}. 
+
+\subsection{Future outlook: improving the vertex creation algorithm}
+
+Having shown that the vertex reconstruction plays a central role in the event reconstruction chain and that there is a large overhead that can be gained from improving this individual step of the reconstruction, this section tries to draw a pathway to what the next steps should be in order to improve the vertex reconstruction, thereby improving the event reconstruction efficiency. This will surely prove core for the $\PGnGm$CC QE Np analysis channel, but also for many future analyses, such as an $\PGne$CC QE analysis, for which preliminary work is now being performed \cite{Triozzi:2025_impactNueReconstruction}. 
+
+To improve the vertex reconstruction, there are two ways. One might take the currently existing algorithms, which are described in \autoref{sec:TPC_reco_gen}, and fine-tune their parameters and retrain the vertex selection algorithm: this is a valid solution, but this work highlights that the maximum improvement which can be achieved in such a way would result in a ${\sim}\SI{5}{\percent}$ boost in the event reconstruction efficiency. Another way is to adopt newer technologies, currently being developed within the Pandora software framework and tested in other LArTPC experiments, such as DUNE, to reinvent completely the way the vertex reconstruction is performed. Such tools employ the use of machine-learning-based technologies, such as Deep Neural Networks (DNNs) and Convolutional Neural Networks (CNNs). 
+
+The idea of the deep learning vertex creation algorithm \cite{DUNE:2025wti} arises from two considerations. The first is that the filtered hits on the readout planes taken as input for the Pandora topological event reconstruction can be assimilated to 2D images, where each hit is a point on the image itself. The second is that, upon a visual inspection of the images of the neutrino interaction by a human expert, the interaction vertex is often, though not always, easily identified. Such a premise suggests that it is reasonable to assume that a machine-learning-based algorithm, employing deep convolutional neural networks, often used in the context of medical imaging \cite{ronneberger2015unetconvolutionalnetworksbiomedical,10.1007/978-3-319-24574-4_28}, would be well suited to automate this inherently visual task. 
+
+The concept for this network design adopted here is to relate each hit to the interaction vertex: each hit contributes to the identification of the interaction vertex, and the network can learn reciprocal hit spatial correlations, providing context to the vertex identification. If the hit is defined as a pixel point of coordinates $(h_x, h_c)$, with $x$ being the drift coordinate and $c$ being the readout channel in $u$, $v$, and $w$, and the same is done for the true interaction vertex, $(v_x, v_c)$, it is possible to define a distance metric as \begin{equation}
+    D = \frac{\sqrt{\qty(v_x - h_x)^2 + \qty(v_c - h_c)^2}}{\floor{\sqrt{2\qty(L - 1)}}}.
+\end{equation} It should be noted that this definition of distance is scale-invariant, being divided by the characteristic dimension of the interaction $L$. This is core to allow the network to not learn any scale-related feature (i.e., not being correlated with the interaction scale). The computed distance is then allocated into one of 19 classes (see \autoref{fig:DLVertexAlgorithm}\ref{sub@fig:DLVertexAlgorithmClasses}). The network then tries to infer the class for each hit. Once the classes are inferred for each hit in the interaction, the class number provides each hit the information of its relative distance to the interaction vertex. This information is used to project rings of appropriate inner and outer radii, centred on each hit. The width of the rings depends on the distance of the hit from the reconstructed vertex and is useful to provide a weight for each hit: the furthest hits are supposedly less spatially correlated with the interaction features closer to the vertex; therefore, the accuracy in their distance to the vertex is supposed to be less. \autoref{fig:DLVertexAlgorithm}\ref{sub@fig:DLVertexAlgorithmHeatmap} shows the projected rings for three hits in the interaction. The reconstructed interaction vertex lies in the common region where the rings cross. 
+
+\begin{figure}
+    \centering
+    \subfloat[]{\includegraphics[width=0.5\linewidth]{pandora/vertex_DL/vtx_classes.png}\label{fig:DLVertexAlgorithmClasses}}
+    \subfloat[]{\includegraphics[width=0.5\linewidth]{pandora/vertex_DL/vtx_infer.png}\label{fig:DLVertexAlgorithmHeatmap}}
+    \caption[Working principle of the DL vertex algorithm]{\ref{sub@fig:DLVertexAlgorithmClasses} shows the input hits and assignment of the first seven of the nineteen true distance classes for those hits. \ref{sub@fig:DLVertexAlgorithmHeatmap} shows a schematic of the heat map produced by three arbitrary hits during inference, for one view ($w$) of an event}
+    \label{fig:DLVertexAlgorithm}
+\end{figure}
+
+Further details on the implementation and technicalities of the deep learning (DL) vertex algorithm are presented in Ref. \cite{DUNE:2025wti}. 
+
+Implementing this algorithm, which in preliminary tests claims incredible performances, requires some attention. Firstly, it is important to remark that it was originally developed for use within DUNE, where the rate of cosmic-ray interaction is significantly lower. This means that a lower rate of cosmic contamination in neutrino interaction is present, helping the performance of the algorithm. This leads directly to the second remark. In order to both train the algorithm, and then use it in inference with real data, some upgrades are required on the reconstruction chain, to ensure that slices are created correctly and no particles get broken between interaction slices. 
+
+% \section{Refining the slice creation tool}
+
