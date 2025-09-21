@@ -19,7 +19,7 @@
 
 % \usepackage{fixmetodonotes}
 
-\drafttrue %%> Change to \draftfalse to remove draft in titlepage
+% \drafttrue %%> Change to \draftfalse to remove draft in titlepage
 
 \ifdraft
 \usepackage[displaymath, mathlines, switch*]{lineno}
@@ -71,7 +71,7 @@
 \let\theoldpage\thepage
 \counterwithin{page}{chapter}
 \renewcommand{\thepage}{\Alph{chapter}--\arabic{page}}
-% \input{3_mainmatter/z1_mva_trackscore_insternship}
+\input{3_mainmatter/z1_mva_trackscore_insternship}
 \input{3_mainmatter/z0_glossary.tex}
 
 % \input{3_mainmatter/z1_cheating_mva}
@@ -83,6 +83,6 @@
 \setcounter{page}{1}
 \bibliographystyle{5_bsts/utphys}
 % \bibliography{4_references/references, 4_references/bibsets, 4_references/Theses}
-\bibliography{4_references/EXPERIMENTAL/experimentalICARUS,4_references/EXPERIMENTAL/experimentalSoftware,4_references/THEORY/theoryNeutrinos, 4_references/THEORY/theorySterile, 4_references/THEORY/theoryThesis,4_references/EXPERIMENTAL/experimentalThesis} 
+\bibliography{4_references/EXPERIMENTAL/experimentalICARUS,4_references/EXPERIMENTAL/experimentalSoftware,4_references/THEORY/theoryNeutrinos, 4_references/THEORY/theorySterile, 4_references/THEORY/theoryThesis,4_references/EXPERIMENTAL/experimentalThesis,4_references/APPENDIXES/appendixMvaSummer} 
 
 \end{document}

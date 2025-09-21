@@ -468,71 +468,26 @@ For this reason, it is interesting to take a detour and look at the impact of ch
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{thesis/6_figures/pandora/chapter_4/CCNp_efficiencyByCut_noNu_cheatingSlice.pdf}
-    \caption[Event reconstruction and selection efficiency with the cheated vertex creation]{Cut-by-cut event reconstruction and selection efficiency for all configurations in \autoref{tab:configurations}. Each time a selection cut is added to the list. The top table shows the efficiency of each configuration for each selection cut. It is worth remarking that the scale on the $y$ axis is not uniform, but the region from 0.9 to 1 is scaled up to allow for better visual separation of the cuts. }
+    \includegraphics[height=9cm]{thesis/6_figures/pandora/chapter_4/CCNp_efficiencyByCut_noNu_cheatingSlice.pdf}
+    \caption[Event reconstruction and selection efficiency for different cuts]{Cut-by-cut event reconstruction and selection efficiency for all configurations in \autoref{tab:configurations}. Each time a selection cut is added to the list. The top table shows the efficiency of each configuration for each selection cut. It is worth remarking that the scale on the $y$ axis is not uniform, but the region from 0.9 to 1 is scaled up to allow for better visual separation of the cuts. }
     \label{fig:efficiencyByCut}
 \end{figure}
 
-Starting from the first selection cut, the CRT-PMT matching, it is possible to see that no difference is present. This is explained by the fact that the sample used for this preliminary analysis is composed of only neutrino interactions, i.e., no in-time cosmic interactions are simulated. The second cut, Flash-match, has little-to-no effect: this follows from the fact that only one neutrino interaction and no cosmic-ray interaction are present in each event. One of the first big differences comes from the request that the vertex has to be located inside the fiducial volume of the detector. This is obviously a request that is strongly dependent on the reconstruction performances; therefore, it is expected that an improved reconstruction efficiency, where the vertex reconstruction is improved, would result in such an improvement. The following request, that all particles are contained in the active volume of the detector, is also strongly dependent on the reconstruction performances: a correct clustering of the hits and start-/endpoint assignation is correlated with a better containment requirement (if the true particles are contained, so should be the reconstructed ones). The following selection cuts are the muon and proton identifications and the no-charged-pion and no-electromagnetic-shower requests. These have a huge impact on the event selection efficiency, and as described before in \autoref{sec:dataSample_and_selection}, are guided not only by the performances of the event reconstruction but also are highly dependent on the TPC calorimetric calibrations (see \autoref{sec:calorimetryAndCalibration}) and on the performances of the particle identification score, which is computed using data from the ArgoNeuT experiment. It was highlighted that differences between the data and MC models of energy loss existed \cite{Sommaggio:2025_updatesdEdxStudies}; therefore, this highly impacted the Pid score, as clearly visible by looking at the ${\sim}\SI{15}{\percent}$ loss in the identification of the proton, followed by the ${\sim}\SI{5}{\percent}$ loss for the identification and rejection of charged pions and electromagnetic showers. In the identification of the reconstructed particles there are, however, cuts that do rely on the goodness of the reconstruction, such as the length requirements, the track and shower classification BDT score, the distance from the interaction vertex and the particle hierarchy requirements. Assuming little correlation between variables that depend on the reconstruction quality and variables that depends on the calorimetric performances, it is possible to factorise their contribution to the final selection efficiency, assigning a ``Pid-related'' event selection efficiency to the latter and a ``reconstruction-related'' event selection efficiency to the former, \begin{equation}
-    \epsilon_\mathrm{event\ selection} = \epsilon_\mathrm{reco.} \times \epsilon_\mathrm{pid}.
-\end{equation} 
-
-Getting back to Eq. \eqref{eq:componentsEfficiency}, which can now be written as \begin{equation}
-    \begin{aligned}
-        \epsilon &= 
-        \epsilon_\mathrm{signal\ processing} \times 
-        \epsilon_\mathrm{2D\ clusters} \times 
-        \epsilon_\mathrm{vertex\ creation} \times 
-        \epsilon_\mathrm{3D\ reconstruction} \times \\
-        &\quad\quad\quad\times
-        \epsilon_\mathrm{particle\ classification} \times 
-        \epsilon_\mathrm{event\ selection,\ reco.} \times 
-        \epsilon_\mathrm{event\ selection,\ pid},
-    \end{aligned}
-\end{equation} it is interesting to evaluate the impact of $\epsilon_\mathrm{ev.\ sel.,\ pid}$, which is assumed, from the motivations presented in the previous paragraph, to have the greatest impact on the event selection performances. For this reason, a modified event selection was developed. In this modified event selection, all the cuts performed on variables that depend on the reconstruction performance are left unaltered, whereas the cuts that are dependent on the calorimetric particle identification are ``deceived'' by looking at the true particle labels. The requirements for this ``modified'' particle identification follow.  
-
-\noindent
-For the muon in the interaction, the following cuts are applied: \begin{itemize}
-    \item the particle should be tagged as a primary particle by Pandora,
-    \item the conversion gap should be smaller than \SI{10}{\cm},
-    \item the track/shower classification score should be greater than 0.5,
-    \item the track length should be greater than \SI{50}{\cm},
-    \item the true label should be that of a muon. 
-\end{itemize}
-For the proton in the interaction, the following cuts are applied: \begin{itemize}
-    \item the particle should be tagged as a primary particle by Pandora,
-    \item the conversion gap should be smaller than \SI{10}{\cm},
-    \item the track/shower classification score should be greater than 0.4,
-    \item the reconstructed deposited energy and the true kinetic energy should be greater than \SI{50}{\MeV},
-    \item the true label should be that of a proton.
-\end{itemize}
-For pions, the selection is the same as for protons, with the sole difference of requiring the true label of a charged pion and a lower energy threshold of \SI{25}{\MeV}. 
-
-\noindent
-For electromagnetic showers, the following cuts are required: \begin{itemize}
-    \item the particle should be tagged as a primary particle by Pandora,
-    \item the track/shower classification score should be smaller than 0.5,
-    \item the reconstructed deposited energy and the true kinetic energy should be greater than \SI{25}{\MeV},
-    \item the true label should be that of an electron of a photon. 
-\end{itemize}
-
-Using this modified event selection, the same selection efficiencies as in \autoref{fig:efficiencyNoNu} are computed. 
-
-{\color{red} This is TBD when dCache allows for plots to be run...
-
-The it will be possible to have the PID efficiency, and compare it with the rest it will be possible to extract the true single stage efficiency}
+% \cleardoublepage
+\input{3_mainmatter/4.1_pidCheating}
+% \cleardoublepage
 
 \section{Impact of the vertex reconstruction} \label{sec:vertexResults}
 
 % from previous ... the vertex is quite relevant
-From the results shown in \autoref{sec:resultsLadder} it is possible to deduce that assigning correctly the interaction vertex plays a central role in the event reconstruction. This is obviously true for electromagnetic showers, where the distance from the vertex, often referred to as the ``conversion gap'', is key to classifying electron-induced electromagnetic showers from photon-induced ones. Since the radiation length $X_0$ in LAr is approximately \SI{14}{\cm}, having an accurate measurement of the vertex location, with a $\mathcal{O}(\si{\mm})$ precision, is core for future studies. Moreover, it was shown, in previous sections, that there are cases also where, for simpler topologies (such as the $\PGnGm$CC QE Np topologies), improving the vertex results in an overall improvement of the reconstruction. 
+From the results shown in \autoref{sec:resultsLadder} and \autoref{sec:efficiencyPidExtraction} it is possible to deduce that assigning correctly the interaction vertex plays a central role in the event reconstruction. This is obviously true for electromagnetic showers, where the distance from the vertex, often referred to as the ``conversion gap'', is key to classifying electron-induced electromagnetic showers from photon-induced ones. Since the radiation length $X_0$ in LAr is approximately \SI{14}{\cm}, having an accurate measurement of the vertex location, with a $\mathcal{O}(\si{\mm})$ precision, is core for future studies. Moreover, it was shown, in previous sections, that there are cases also where, for simpler topologies (such as the $\PGnGm$CC QE Np topologies), improving the vertex results in an overall improvement of the reconstruction. 
 
 % since its "uncorrelated" and do not depend on the previous step success that much, cheat it alone
 Since the vertex reconstruction, differently from other stages in the PandoraNeutrino reconstruction path, is truly disentangled from the other steps, it is also sensible to study the effects of cheating it alone. \autoref{fig:cheatedVertexByCut} shows the impact of cheating the vertex reconstruction, in terms of efficiency, considering each cut of the event selection alone. There are multiple elements in the plot in \autoref{fig:cheatedVertexByCut}. The three bins are the three used configurations, which are also shown in \autoref{tab:configurationsVertexCheating}. As mentioned in \autoref{tab:configurationsVertexCheating}, the ``Inj. vertex selection'' configuration is cheating only the vertex selection, i.e., replacing the BDT algorithm that selects the best interaction vertex from the list of the candidate vertices. 
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.85\linewidth]{pandora/chapter_4/CCNp_efficiencyByCut_singles_2d_vtx_only.pdf}
+    \includegraphics[height=9cm]{pandora/chapter_4/CCNp_efficiencyByCut_singles_2d_vtx_only.pdf}
     \caption[Event reconstruction and selection efficiency with the cheated vertex creation]{Cut-by-cut event reconstruction and selection efficiency for all configurations in \autoref{tab:configurationsVertexCheating}. Each time a selection cut is added to the list. The top table shows the efficiency of each configuration for each selection cut. It is worth remarking that the scale on the $y$ axis is not uniform, but the region from 0.9 to 1 is scaled up to allow for better visual separation of the cuts. }
     \label{fig:cheatedVertexByCut}
 \end{figure}
@@ -585,7 +540,7 @@ To strengthen this result, a parallel study was performed using a different samp
 
 Finally, another confirmation of such a result can be found by comparing it with that presented in \autoref{sec:resultsLadder}. Although the methods described in the previous \autoref{sec:methods} and in this section aim to achieve two different results, these must be consistent with each other. In the previous section, the efficiency of each stage of reconstruction was computed, while in this section, it was assessed how much room for improvement there is for a single stage, namely the vertex reconstruction. 
 
-It was in fact shown that the vertex creation step in the PandoraNeutrino reconstruction has an overall efficiency of ${\sim}\SI{92.6}{\percent}$. This is equivalent to affirming that the inefficiencies due to the incorrect vertex reconstruction account for approximately ${\sim}\SI{7.4}{\percent}$ of the total. This is completely coherent with the maximum efficiency gain that could be reached if the vertex reconstruction was perfect, which is computed in this section to be \SI{7.0(8)}{\percent}. 
+It was in fact shown that the vertex creation step in the PandoraNeutrino reconstruction has an overall efficiency of ${\sim}\SI{91.9}{\percent}$. This is equivalent to affirming that the inefficiencies due to the incorrect vertex reconstruction account for approximately ${\sim}\SI{8.1}{\percent}$ of the total. This is coherent with the maximum efficiency gain that could be reached if the vertex reconstruction was perfect, which is computed in this section to be \SI{7.0(8)}{\percent}. 
 
 \subsection{Future outlook: improving the vertex creation algorithm}
 

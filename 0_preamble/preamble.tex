@@ -119,7 +119,7 @@
 
 \addtokomafont{chapterentry}{\mdseries}
 \DeclareTOCStyleEntry[
-  entrynumberformat=\bfseries\sffamily,
+  entrynumberformat=\bfseries,%\sffamily,
   dynnumwidth
 ]{chapter}{chapter}
 \let\oldaddchaptertocentry\addchaptertocentry
@@ -170,13 +170,13 @@
     angle=90
 }
 \SetBgContents{
-    % \hspace{0.1cm}
-    \begin{minipage}[b]{8cm}
-        \fontfamily{ptm}\selectfont
-        UNIGE / FNAL / THESIS-\the\year-\the\month\ % \\
-        % \DTMNow\
-        (\pageref{LastPage} pp, \totalfigures\ figs.)
-    \end{minipage}\includegraphics[height=1cm]{6_figures/FNAL/FNAL-Logo-Black}
+    % % \hspace{0.1cm}
+    % \begin{minipage}[b]{8cm}
+    %     \fontfamily{ptm}\selectfont
+    %     UNIGE / FNAL / THESIS-\the\year-\the\month\ % \\
+    %     % \DTMNow\
+    %     (\pageref{LastPage} pp, \totalfigures\ figs.)
+    % \end{minipage}\includegraphics[height=1cm]{6_figures/FNAL/FNAL-Logo-Black}
 }
 
 % bibliography pageref

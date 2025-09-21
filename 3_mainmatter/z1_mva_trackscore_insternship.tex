@@ -4,18 +4,18 @@
 
 The content of this chapter is taken from the technical report produced during the two-month internship I attended at Fermilab in the 2024 summer as part of the ``\emph{2024 Summer Student Italian Program at Fermi National Accelerator Laboratory and at Other US Laboratories}''. 
 
-% \section{The track/shower Boosted Decision Tree in Pandora} \label{sec:A_bdt}
+\section{The track/shower Boosted Decision Tree in Pandora} \label{sec:A_bdt}
 
-% At the very basic level, a \textbf{b}oosted \textbf{d}ecision \textbf{t}ree (BDT) algorithm involves a set of subsequent cuts made on the input dataset, each at a different node, and multiple node combinations lead to different outcomes of the selection. 
-% The end nodes are called leaves, in agreement with the tree analogy. 
-% The single decision tree described here is then copied over multiple times to provide for better stability in the classification \cite{Cornell:2021gut, FREUND1997119}. A schematic representation of the idea behind a boosted decision tree is shown in \autoref{fig:BDT_trees}. 
+At the very basic level, a Doosted Decision Tree (BDT) algorithm involves a set of subsequent cuts made on the input dataset, each at a different node, and multiple node combinations lead to different outcomes of the selection. 
+The end nodes are called leaves, in agreement with the tree analogy. 
+The single decision tree described here is then copied over multiple times to provide for better stability in the classification \cite{Cornell:2021gut, FREUND1997119}. A schematic representation of the idea behind a boosted decision tree is shown in \autoref{fig:BDT_trees}. 
 
-% \begin{figure*}
-%     \centering
-%     \includegraphics[width=\linewidth]{appendix/BDT_trees.pdf}
-%     \caption{The underlying structure of a boosted decision tree algorithm, showing the individual subsequent trees. In the inset plots, the performance of a single decision tree classifier is compared to the boosted version, implemented in the AdaBoost \cite{FREUND1997119} algorithm.}
-%     \label{fig:BDT_trees}
-% \end{figure*}
+\begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{appendix/BDT_trees.pdf}
+    \caption[Boosted decision tree working principle]{The underlying structure of a boosted decision tree algorithm, showing the individual subsequent trees. In the inset plots, the performance of a single decision tree classifier is compared to the boosted version, implemented in the AdaBoost \cite{FREUND1997119} algorithm.}
+    \label{fig:BDT_trees}
+\end{figure*}
 
 % The algorithm is composed of two fundamental phases; the first is the training/testing phase, where, comparing the true information from the Monte Carlo simulation with the reconstructed information from the PandoraPFA chain, the cuts are chosen, the interesting variables selected, and the algorithm performance is fully characterised; the second is the offline analysis phase, where the algorithm is used to perform data analysis and test the results. The results from the first phase are used to take into account every possible uncertainty introduced by the algorithm itself. 
 
