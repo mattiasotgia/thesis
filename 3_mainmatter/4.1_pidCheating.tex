@@ -1,6 +1,13 @@
 \subsection{Extracting the selection efficiency} \label{sec:efficiencyPidExtraction}
 
-Starting from the first selection cut, the CRT-PMT matching, it is possible to see that no difference is present. This is explained by the fact that the sample used for this preliminary analysis is composed of only neutrino interactions, i.e., no in-time cosmic interactions are simulated. The second cut, Flash-match, has little-to-no effect: this follows from the fact that only one neutrino interaction and no cosmic-ray interaction are present in each event. One of the first big differences comes from the request that the vertex has to be located inside the fiducial volume of the detector. This is obviously a request that is strongly dependent on the reconstruction performances; therefore, it is expected that an improved reconstruction efficiency, where the vertex reconstruction is improved, would result in such an improvement. The following request, that all particles are contained in the active volume of the detector, is also strongly dependent on the reconstruction performances: a correct clustering of the hits and start-/endpoint assignation is correlated with a better containment requirement (if the true particles are contained, so should be the reconstructed ones). The following selection cuts are the muon and proton identifications and the no-charged-pion and no-electromagnetic-shower requests. These have a huge impact on the event selection efficiency, and as described before in \autoref{sec:dataSample_and_selection}, are guided not only by the performances of the event reconstruction but also are highly dependent on the TPC calorimetric calibrations (see \autoref{sec:calorimetryAndCalibration}) and on the performances of the particle identification score, which is computed using data from the ArgoNeuT experiment. It was highlighted that differences between the data and MC models of energy loss existed \cite{Sommaggio:2025_updatesdEdxStudies}; therefore, this highly impacted the Pid score, as clearly visible by looking at the ${\sim}\SI{15}{\percent}$ loss in the identification of the proton, followed by the ${\sim}\SI{5}{\percent}$ loss for the identification and rejection of charged pions and electromagnetic showers. In the identification of the reconstructed particles there are, however, cuts that do rely on the goodness of the reconstruction, such as the length requirements, the track and shower classification BDT score, the distance from the interaction vertex and the particle hierarchy requirements. Assuming little correlation between variables that depend on the reconstruction quality and variables that depends on the calorimetric performances, it is possible to factorise their contribution to the final selection efficiency, assigning a ``Pid-related'' event selection efficiency to the latter and a ``reconstruction-related'' event selection efficiency to the former, \begin{equation}
+Starting from the first selection cut, the CRT-PMT matching, it is possible to see that no difference is present. 
+This is explained by the fact that the sample used for this preliminary analysis is composed of only neutrino interactions, i.e., no in-time cosmic interactions are simulated. 
+The second cut, Flash-match, has little-to-no effect: this follows from the fact that only one neutrino interaction and no cosmic-ray interaction are present in each event. 
+One of the first big differences comes from the request that the vertex has to be located inside the fiducial volume of the detector. 
+This is obviously a request that is strongly dependent on the reconstruction performances; therefore, it is expected that an improved reconstruction efficiency, where the vertex reconstruction is improved, would result in such an improvement. 
+The following request, that all particles are contained in the active volume of the detector, is also strongly dependent on the reconstruction performances. Correct clustering of the hits and start-/end-point assignation is correlated with a better containment requirement (if the true particles are contained, so should be the reconstructed ones). 
+The last selection cuts concern the muon and proton identifications and the no-charged-pion and no-electromagnetic-shower requests. These have a huge impact on the event selection efficiency and, as described before in \autoref{sec:dataSample_and_selection}, are guided not only by the performances of the event reconstruction but also are highly dependent on the TPC calorimetric calibrations (see \autoref{sec:calorimetryAndCalibration}) and on the performances of the particle identification score. This is not only determined by the quality of the topological event reconstruction performed by Pandora, but it is also affected by the calorimetric performances downstream of the Pandora topological event reconstruction. Most of the efficiency loss, namely the ${\sim}\SI{15}{\percent}$ loss in the identification of the proton, followed by the ${\sim}\SI{5}{\percent}$ loss for the identification and rejection of charged pions and electromagnetic showers, is a consequence of the particle identification performed using the calorimetric information.
+In the identification of the reconstructed particles there are, however, cuts that do rely on the goodness of the reconstruction, such as the length requirements, the track and shower classification BDT score, the distance from the interaction vertex, and the particle hierarchy requirements. Assuming little correlation between variables that depend on the reconstruction quality and variables that depends on the calorimetric performances, it is possible to factorise their contribution to the final selection efficiency, assigning a ``Pid-related'' event selection efficiency to the latter and a ``reconstruction-related'' event selection efficiency to the former, \begin{equation}
     \epsilon_\mathrm{event\ selection} = \epsilon_\mathrm{ev.\ sel.,\ reco.} \times \epsilon_\mathrm{ev.\ sel.,\ pid}.
 \end{equation} 
 
@@ -17,7 +24,7 @@ Getting back to Eq. \eqref{eq:componentsEfficiency}, which can now be written as
         \epsilon_\mathrm{event\ selection,\ pid}
     \end{aligned} \label{eq:componentsEfficiencyPid}
 \end{equation} it is reasonable to postulate a further assumption. 
-Since the term $\epsilon_\mathrm{event\ selection,\ reco.}$ is related with the reconstruction efficiency, it is reasonable to assume that this term can be adsorbed in terms of the efficiency of each singel stage. Supporting this hypothesis is the fact, for example, that once the vertex reconstruction is cheated, the selection request that the vertex is inside the TPC fiducial volume is satisfied, as is possible to deduce from \autoref{fig:efficiencyByCut}. Therefore, Eq. \eqref{eq:componentsEfficiencyPid} can be written as \begin{equation}
+Since the term $\epsilon_\mathrm{event\ selection,\ reco.}$ is related to the reconstruction efficiency, it is reasonable to assume that this term can be absorbed in terms of the efficiency of each single stage. Supporting this hypothesis is the fact, for example, that once the vertex reconstruction is cheated, the selection request that the vertex is inside the TPC fiducial volume is satisfied, as is possible to deduce from \autoref{fig:efficiencyByCut}. Therefore, Eq. \eqref{eq:componentsEfficiencyPid} can be written as \begin{equation}
     \begin{aligned}
         \epsilon &= 
         \epsilon_\mathrm{signal\ processing} \times 
@@ -43,7 +50,7 @@ Since the term $\epsilon_\mathrm{event\ selection,\ reco.}$ is related with the 
     }{
     \epsilon^\mathrm{A}
     }. 
-\end{equation} For notation ease the prime is dropped, by performing a notation change $\epsilon' \to \epsilon$. At this point, rewriting this equation as \begin{equation}
+\end{equation} For notation ease, the prime is dropped by performing a notation change $\epsilon' \to \epsilon$. At this point, rewriting this equation as \begin{equation}
     \epsilon_\mathrm{particle\ class.} = \frac{
     \epsilon^\mathrm{B}
     }{
@@ -52,8 +59,8 @@ Since the term $\epsilon_\mathrm{event\ selection,\ reco.}$ is related with the 
     \epsilon_\mathrm{ev.\ sel., pid}^\mathrm{A}
     }{
     \epsilon_\mathrm{ev.\ sel., pid}^\mathrm{B}
-    }. \label{eq:stageEfficiencyPostPID}
-\end{equation} it is clear that it is interesting to evaluate the impact of $\epsilon_\mathrm{ev.\ sel.,\ pid}$. To extract such parameter the idea was to develop a modified event selection that allowed to decouple the effects of particle identification from the effects of the event reconstruction. In this modified event selection, all the cuts performed on variables that depend on the reconstruction performance are left unaltered, whereas the cuts that are dependent on the calorimetric particle identification are ``deceived'' by looking at the true particle labels. The requirements for this ``modified'' particle identification follow.  
+    }, \label{eq:stageEfficiencyPostPID}
+\end{equation} it is clear that it is interesting to evaluate the impact of $\epsilon_\mathrm{ev.\ sel.,\ pid}$. To extract such a parameter, the idea was to develop a modified event selection that allowed the effects of particle identification to be decoupled from the effects of the event reconstruction. In this modified event selection, all the cuts performed on variables that depend on the reconstruction performance are left unaltered, whereas the cuts that are dependent on the calorimetric particle identification are ``deceived'' by looking at the true particle labels. The requirements for this ``modified'' particle identification follow.  
 
 \noindent
 For the muon in the interaction, the following cuts are applied: \begin{itemize}
@@ -85,7 +92,7 @@ Using this modified event selection, the same selection efficiencies as in \auto
 \begin{figure}
     \centering
     \includegraphics[width=0.85\linewidth]{pandora/chapter_4/CCNp_efficiencyNoNu_cheatingPid.pdf}
-    \caption[Evaluation of the reconstruction and selection efficiency for different configurations with the modified event selection]{Evaluation of the event reconstruction and selection efficiency for all the configuration in \autoref{tab:configurations}. Both the event selection with the nominal particle identification (black markers) as well as the event selection with the modified particle identification (green markers) is shown. }
+    \caption[Evaluation of the reconstruction and selection efficiency for different configurations with the modified event selection]{Evaluation of the event reconstruction and selection efficiency for all the configurations in \autoref{tab:configurations}. Both the event selection with the nominal particle identification (black markers) and the event selection with the modified particle identification (green markers) are shown. }
     \label{fig:CCNp_efficiencyNoNu_cheatingPid}
 \end{figure}
 
@@ -95,7 +102,7 @@ For this modified event selection it is possible to assume that the event recons
         \epsilon_\mathrm{reco.} \times 
         \epsilon_\mathrm{ev.\ sel.,\ pid}^\mathrm{mod.\ selection}. 
         \label{eq:modifiedPidEfficiency}
-\end{equation} It can be assumed that whith this modified event selection the term $\epsilon_\mathrm{ev.\ sel.,\ pid}^\mathrm{mod.\ selection}\simeq1$; therefore, comparing Eq. \eqref{eq:modifiedPidEfficiency} and \eqref{eq:componentsEfficiencyPidNew}, it is possible to extract the efficiency of the particle identification stage for each configuration of \autoref{tab:configurations}. Their ratio leads to \begin{equation}
+\end{equation} It can be assumed that with this modified event selection, the term $\epsilon_\mathrm{ev.\ sel.,\ pid}^\mathrm{mod.\ selection}\simeq1$; therefore, comparing Eq. \eqref{eq:modifiedPidEfficiency} and \eqref{eq:componentsEfficiencyPidNew}, it is possible to extract the efficiency of the particle identification stage for each configuration of \autoref{tab:configurations}. Their ratio leads to \begin{equation}
     \frac{
     \epsilon^{\mathrm{mod.\ selection,}\ c}
     }{
@@ -119,7 +126,7 @@ For this modified event selection it is possible to assume that the event recons
 
 \begin{table}[]
     \centering
-    \caption[Particle identification efficiency for all configurations]{For each configuration the corresponding efficiency is shown, both using the nominal event selection and the modifiend event selection described in \autoref{sec:efficiencyPidExtraction}. The third column is the resulting efficiency of the particle identification step. The details are discussed in the text. }
+    \caption[Particle identification efficiency for all configurations]{For each configuration the corresponding efficiency is shown, using both the nominal event selection and the modified event selection described in \autoref{sec:efficiencyPidExtraction}. The third column is the resulting efficiency of the particle identification step. The details are discussed in the text. }
     \label{tab:pidEfficiencyPerConfiguration}
     \begin{tabular}{lp{4cm}ccc}
         \hline
@@ -140,8 +147,8 @@ Replacing the corresponding values in Eq. \eqref{eq:stageEfficiencyPostPID} it i
         \epsilon_\mathrm{2D\ clusters} &\times&\ 
         \epsilon_\mathrm{vertex\ creation} &\times&\ 
         \epsilon_\mathrm{3D\ reco.} &\times&\ 
-        \epsilon_\mathrm{particle\ class.} \\  
-        &\ \SI{89.7(1.8)}{\percent} &\times&\ 
+        \epsilon_\mathrm{particle\ class.} =\\  
+        =&\ \SI{89.7(1.8)}{\percent} &\times&\ 
         \SI{91.9(1.6)}{\percent} &\times&\ 
         \SI{97.7(1.6)}{\percent} &\times&\ 
         \SI{98.6(1.5)}{\percent}

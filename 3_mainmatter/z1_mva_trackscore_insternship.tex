@@ -1,6 +1,7 @@
 \chapter{The track/shower classification BDT in the Pandora reconstruction}
 \label{chap:mva_internship}
-\stepcounter{page}
+\setcounter{page}{1}
+\renewcommand{\thepage}{\Alph{chapter}--\arabic{page}}
 
 The content of this chapter is taken from the technical report produced during the two-month internship I attended at Fermilab in the 2024 summer as part of the ``\emph{2024 Summer Student Italian Program at Fermi National Accelerator Laboratory and at Other US Laboratories}''. 
 
@@ -16,6 +17,8 @@ The single decision tree described here is then copied over multiple times to pr
     \caption[Boosted decision tree working principle]{The underlying structure of a boosted decision tree algorithm, showing the individual subsequent trees. In the inset plots, the performance of a single decision tree classifier is compared to the boosted version, implemented in the AdaBoost \cite{FREUND1997119} algorithm.}
     \label{fig:BDT_trees}
 \end{figure*}
+
+% Machine learning algorithms, such as the BDT implemented for track and electromagnetic shower classification presented in this appendix, require two ``phases'': a first mainly ``offline'' phase where the network is trained, i.e., learns how to perform the node cuts using both the 
 
 % The algorithm is composed of two fundamental phases; the first is the training/testing phase, where, comparing the true information from the Monte Carlo simulation with the reconstructed information from the PandoraPFA chain, the cuts are chosen, the interesting variables selected, and the algorithm performance is fully characterised; the second is the offline analysis phase, where the algorithm is used to perform data analysis and test the results. The results from the first phase are used to take into account every possible uncertainty introduced by the algorithm itself. 
 
@@ -48,7 +51,7 @@ The single decision tree described here is then copied over multiple times to pr
 
 % \subsection{Features in the track/shower BDT}
 
-% The BDT implemented in the \pandosmic\ chain to discriminate between showerlike and tracklike particles is based on a set of 13 variables; those variables are features associated by the PandoraPFA chain to every \texttt{PFObject}/\texttt{PFP}. Those are gathered in three groups, by their common characteristics, and the way those are computed. 
+The BDT implemented in the \pandosmic\ chain to discriminate between showerlike and tracklike particles is based on a set of 13 variables; those variables are features associated by the PandoraPFA chain to every \texttt{PFObject}/\texttt{PFP}. Those are gathered in three groups, by their common characteristics, and the way those are computed. 
 
 % \paragraph*{Linear fit variables} As described before, one of the last stages in the Pandora chain is to perform a linear fit of every \texttt{PFP}. This fit is used to extrapolate key features that help discriminate between tracklike and showerlike particles. Those are \begin{itemize}
 %     \item \emph{linear fit length} ($L_\text{fit}$), the actual length of the fitted track/shower in centimeters; usually a good discriminator between longer tracklike ($\mu, \dots$) and shorter showerlike ($e^-,\dots$), but as seen in the figure \ref{fig:bdt_variables_by_variable_linearvars} (top left) it is not true for all the particles;

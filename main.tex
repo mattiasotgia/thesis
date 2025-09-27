@@ -19,7 +19,7 @@
 
 % \usepackage{fixmetodonotes}
 
-% \drafttrue %%> Change to \draftfalse to remove draft in titlepage
+\drafttrue %%> Change to \draftfalse to remove draft in titlepage
 
 \ifdraft
 \usepackage[displaymath, mathlines, switch*]{lineno}
@@ -51,7 +51,7 @@
 \input{2_frontmatter/1_abstract}
 
 \frontmatter
-\input{2_frontmatter/1_acknowledgment}
+% \input{2_frontmatter/1_acknowledgment}
 \tableofcontents
 
 \listoffigures
@@ -62,16 +62,13 @@
 \input{3_mainmatter/2_ICARUS}
 \input{3_mainmatter/3_pandora_reconstruction_in_TPC}
 \input{3_mainmatter/4_validating_the_reconstruction.tex}
-\input{3_mainmatter/5_conclusions.tex}
 
 \backmatter
+\input{3_mainmatter/5_conclusions.tex}
 \mainmatter
-\appendix
 
-\let\theoldpage\thepage
-\counterwithin{page}{chapter}
-\renewcommand{\thepage}{\Alph{chapter}--\arabic{page}}
-\input{3_mainmatter/z1_mva_trackscore_insternship}
+\appendix
+% \input{3_mainmatter/z1_mva_trackscore_insternship}
 \input{3_mainmatter/z0_glossary.tex}
 
 % \input{3_mainmatter/z1_cheating_mva}
