@@ -24,3 +24,12 @@ Since this stage is run upstream of the PandoraNeutrino reconstruction path, ens
 
 % how this tool is implemented
 Since discovering that this was not an isolated case, the cheating of the slice creation tool was also considered. The working principle of the cheated slice creation tool is pretty straightforward. This looks at all the reconstructed hits in the events and associates them with the correct MC particles, which are arranged in the interaction with the correct hierarchy. Using the underlying MC information, this tool can therefore divide the hits on all three of the readout planes by the underlying interaction. These lists of hits divided by MC interaction are then used to have the downstream reconstruction performed on them. 
+
+\begin{figure}
+    \centering
+    \subfloat[]{\includegraphics[width=0.9\linewidth,trim={7cm 1cm 7cm 1cm}, clip, page=1]{pandora/chapter_4/sliceIssue.pdf}}
+    
+    \subfloat[]{\includegraphics[width=0.9\linewidth,trim={7cm 3.5cm 7cm 3.5cm}, clip, page=2]{pandora/chapter_4/sliceIssue.pdf}}
+    \caption[Examples of issues with the slice creation]{Two events where the slice cr4eation fails and two slices are created. Both events feature a ``noisy'' induction-1 ($w$) plane. }
+    \label{fig:sliceIssue}
+\end{figure}
