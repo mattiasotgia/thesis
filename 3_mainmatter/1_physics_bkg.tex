@@ -51,23 +51,21 @@ The SM includes three families of neutrinos, each paired with the corresponding 
 
 In the SM neutrinos can, therefore, only interact via the weak interaction, which is mediated by three vector bosons, $\PWpm$ and $\PZz$. The experimental evidence of the $\PWpm$ and $\PZz$ bosons, constituting a strong proof of the SM theory, arrived between 1982 and 1983. The experiments UA1/UA2, led by Nobel physics laureate Carlo Rubbia, and located inside the CERN-S$\Pp\PAp$S accelerator ring, saw signatures of these bosons with proton-antiproton collisions with a high significance \cite{arnisonExperimentalObservationLepton1983, bannerObservationSingleIsolated1983a}. 
 
+\begin{figure}[!htb]
+    \centering
+    \subfloat[]{\includegraphics[width=0.7\linewidth, trim={0 0.5cm 0 0.5cm}]{theory/cc_inclusive_nu.pdf}\label{fig:xs_nu}}
+    
+    \subfloat[]{\includegraphics[width=0.7\linewidth, trim={0 0.5cm 0 0.5cm}]{theory/cc_inclusive_nubar.pdf}\label{fig:xs_nubar}}
+    \caption[(Anti)Neutrino-matter cross-sections]{Cross-section measurements for (anti)neutrino-nucleon charged current interactions, showing the contributions of quasi-elastic, resonant, and deep-inelastic-scattering processes, both for neutrinos \ref{sub@fig:xs_nu} and for antineutrinos \ref{sub@fig:xs_nubar}. Figures adapted from Ref. \cite{formaggioEVEeVNeutrino2012}.}
+    \label{fig:xs_both}
+\end{figure}
+
 % some details of the type of interactions in the SM
 The types of interactions that are possible for neutrinos are multiple. In general a neutrino can interact with other SM particles via the exchange of either a $\PW$ boson --- thus resulting in a charged current (CC) event, with the corresponding charged lepton on the other side of such vertices --- or of a $\PZ$ boson --- resulting in a neutral current (NC) interaction, where the outgoing particle is the same flavour neutrino. In both cases, the diagram is completed by stitching on the other side of the boson line the interaction with the matter. The interaction in its entirety is required to conserve both charge and momentum. 
 According to what the final state particles of the interaction are, the interactions themselves can be classified. 
 A brief description of the most relevant interaction modes is provided in the following.
 
 %% CC interaction
-
-\begin{figure}
-    \centering
-    \subfloat[]{\includegraphics[width=0.85\linewidth, trim={0 0.5cm 0 0.5cm}]{theory/cc_inclusive_nu.pdf}\label{fig:xs_nu}}
-    
-    \subfloat[]{\includegraphics[width=0.85\linewidth, trim={0 0.5cm 0 0.5cm}]{theory/cc_inclusive_nubar.pdf}\label{fig:xs_nubar}}
-    \caption[(Anti)Neutrino-matter cross-sections]{Cross-section measurements for (anti)neutrino-nucleon charged current interactions, showing the contributions of quasi-elastic, resonant, and deep-inelastic-scattering processes, both for neutrinos \ref{sub@fig:xs_nu} and for antineutrinos \ref{sub@fig:xs_nubar}. Figures adapted from Ref. \cite{formaggioEVEeVNeutrino2012}.}
-    \label{fig:xs_both}
-\end{figure}
-
-\input{6_figures/theory/interactions}
 
 \paragraph{Charged current interactions} Neutrino-matter interactions show a rich phenomenology that varies dramatically across different energy scales. Multiple mechanisms determine the total cross-section of the $\PGn$-matter interaction, as shown by \autoref{fig:xs_both}. \begin{itemize}
     \item Starting on the lower part of the energy spectrum, the first mechanism we encounter is the so-called quasielastic interaction. This mechanism has an energy peak around $E_\PGn\simeq \mathcal O (\SI{1}{GeV})$. In a QE event, the neutrino scatters off an entire nucleon rather than its constituent partons, converting the neutron to a proton and emitting a charged lepton \begin{equation}
@@ -82,6 +80,8 @@ A brief description of the most relevant interaction modes is provided in the fo
         \PGn_\ell + N^{(0)} \to \ell^- + X^{(+)}, \quad \PAGn_\ell + N^{(0)} \to \ell^+ + X^{(-)}
     \end{equation} where $X^{(\pm)}$ indicates the ensemble of the final state particles, with this notation highlighting that charge is still conserved, so an overall positive charge is expected. This kind of interaction is known as Deep Inelastic Scattering (DIS) \cite{formaggioEVEeVNeutrino2012}. This is exemplified in Figure \ref{fig:interaction_CCDIS}. 
 \end{itemize}
+
+\input{6_figures/theory/interactions}
 
 %% NC interaction (and Gargamelle!)
 \paragraph{Neutral current interactions} The possible interactions include neutral current topologies mediated by the exchange of a $\PZz$ boson. Looking at the classification for CC events, we also have a similar classification for neutral current (NC) topologies. \begin{itemize}
